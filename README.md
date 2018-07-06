@@ -8,12 +8,15 @@ Takes in a list of interests determined by the user and provides a smart list of
 * **List of recommended places based on location**
 
 ## Optional User Stories
-* Brief list of rating metrics and yelp reviews
+* add subinterests to main categories
+* Brief list of rating metrics and yelp reviews + google map image 
+
 * Store a list of favorites
-* Filter places based on interest
 * Recommendations change based on size of geofence
-* Recommend cities/areas that contain multiple matches to user's interests
 * One-day itinerary by minimizing distance
+
 * Look at FB profile for interests
 * Sharing locations/post features 
+* Recommend cities/areas that contain multiple matches to user's interests
 * Login screen (maybe)
+
