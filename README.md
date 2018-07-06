@@ -8,6 +8,7 @@ Takes in a list of interests determined by the user and provides a smart list of
 * **List of recommended places based on location**
 
 ## Optional User Stories
+* Brief list of rating metrics and yelp reviews
 * Store a list of favorites
 * Filter places based on interest
 * Recommendations change based on size of geofence
