@@ -32,6 +32,11 @@ Jayjoska allows users to create a customized travel itinerary based off a presel
 * Login screen (maybe)
 * One-day itinerary by minimizing distance
 
-Models 
+## Models 
 * place model - name, rating, location, category imageUrl
 * destinations model extends place model - includes time 
+
+## Week 1 goals 
+* onboarding 5 task selection 
+* framework / rough UI - bottom navigation view, 3 screens available, map view + recycler itinerary view - must be reorderable 
+* populate place class 
