@@ -1,11 +1,13 @@
 # jayjoska
 
 ## App Description
-Takes in a list of interests determined by the user and provides a smart list of recommendations of locations near the user within a certain radius. Recommendations will be based on age, gender, food interests, activity interests, etc.
+Jayjoska allows users to create a customized travel itinerary based off a preselected list of interests. Upon filling out their interests, a list of recommended places to visit is provided. Users can then add their most interesting stops to a day calendar and customize time spent, location, travel time. Jayjoska is aimed towards travelers in new cities or people who want to visit new places in their hometown.
+
 
 ##  Required User Stories
 * **Filling out interests** 
 * **List of recommended places based on location**
+* **Reorganizeable travel itinerary**
 
 ## Optional User Stories
 * add subinterests to main categories
