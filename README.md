@@ -32,3 +32,6 @@ Jayjoska allows users to create a customized travel itinerary based off a presel
 * Login screen (maybe)
 * One-day itinerary by minimizing distance
 
+Models 
+* place model - name, rating, location, category imageUrl
+* destinations model extends place model - includes time 
