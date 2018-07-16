@@ -41,6 +41,6 @@ Paste the token from the webpage into the prompt on terminal.
 * use ```arc help``` for a list of arc commands. Similarly, use ```git help``` for a list of git commands. 
 
 
-#References
+# References
 * [Syncing Google Places with Yelp] https://7webpages.com/blog/yelp-and-google-places-api-combined/
 
