@@ -32,7 +32,7 @@ Paste the token from the webpage into the prompt on terminal.
 
 5. View the diff made by holding command and hovering over the hyperlink on terminal. 
 
-5. Make sure to add a summary, test plan, and add all teammates (Karena, Jaynicka, Jose, Michelle) excluding yourself. 
+5. Make sure to add a summary, a test plan, link the task that you are completing with this diff, and add all teammates (Karena, Jaynicka, Jose, Michelle) excluding yourself for review.
 
 6. Once your diff has been approved, land it using ```arc diff```. 
 
@@ -40,4 +40,7 @@ Paste the token from the webpage into the prompt on terminal.
 
 * [Example commit](https://our.intern.facebook.com/intern/diff/D8863972/)
 
+* [Task list](https://our.intern.facebook.com/intern/tasks/?q=237727237042012)
+
 * use ```arc help``` for a list of arc commands. Similarly, use ```git help``` for a list of git commands. 
+
