@@ -58,11 +58,11 @@ public class MainActivity extends AppCompatActivity {
     public void getCategories() {
         String url = getString(R.string.base_url) + getString(R.string.search);
         RequestParams params = new RequestParams();
-        client.addHeader("Authorization HTTP", "Bearer " + getString(R.string.api_key));
+        client.addHeader("Authorization", "Bearer " + getString(R.string.api_key));
         params.put("categories", CATEGORY_ALIASES[8]);
-        params.put("location", "san+francisco,+ca");
-        // params.put("latitude", TEMP_LATITUDE);
-        //params.put("longitude", TEMP_LONGITUDE);
+        // params.put("location", "san+francisco,+ca");
+        params.put("latitude", TEMP_LATITUDE);
+        params.put("longitude", TEMP_LONGITUDE);
         client.get(url, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
