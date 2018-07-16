@@ -39,3 +39,5 @@ Paste the token from the webpage into the prompt on terminal.
 * [Arcanist tutorial](https://secure.phabricator.com/book/phabricator/article/arcanist/)
 
 * [Example commit](https://our.intern.facebook.com/intern/diff/D8863972/)
+
+* use ```arc help``` for a list of arc commands. Similarly, use ```git help``` for a list of git commands. 
