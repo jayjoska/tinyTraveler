@@ -2,11 +2,7 @@
 
 * [git handbook](https://guides.github.com/introduction/git-handbook/) for reference
 * tutorial on [git branching](https://learngitbranching.js.org/) - **follow!**
-* [visualizing git tutorial](http://git-school.github.io/visualizing-git/) - **follow!**
-
-# Yelp
-
-* [API docs](https://www.yelp.com/developers/documentation/v3) 
+* [visualizing git tutorial](http://git-school.github.io/visualizing-git/) - **follow!** 
 
 # Setting up Phabricator / Arcanist 
 
