@@ -32,7 +32,9 @@ Paste the token from the webpage into the prompt on terminal.
 
 5. View the diff made by holding command and hovering over the hyperlink on terminal. 
 
-5. Make sure to add a summary, test plan, and add all teammates (Karena, Jaynicka, Jose, Michelle) excluding youreslf. 
+5. Make sure to add a summary, test plan, and add all teammates (Karena, Jaynicka, Jose, Michelle) excluding yourself. 
+
+6. Once your diff has been approved, land it using ```arc diff```. 
 
 * [Arcanist tutorial](https://secure.phabricator.com/book/phabricator/article/arcanist/)
 
