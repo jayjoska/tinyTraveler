@@ -20,11 +20,11 @@ Paste the token from the webpage into the prompt on terminal.
 
 3.  ```git pull``` to make sure you have the latest version on git. 
 
-4. Make sure you are on a different branch (not master) when trying to submit something to Arcanist. Check using ```git branch```. If you are on master, checkout a new branch using ```git checkout -b branchName```. 
+4. Make sure you are on a different branch (not master) when trying to submit something to Arcanist. Check using ```git branch```. If you are on master, checkout a new branch using ```git checkout -b karena/branchName```. Always preface the name of your branch with your name so we know whose branch is whose.
 
 3. Make sure all the changes you have made have been committed on that separate branch. Multiple commits are okay.
 
-4. Submit this change for review using ```arc diff```. 
+4. Submit this change for review using ```arc diff```. If you have multiple commits (e.g. 5), use ```arc diff HEAD^^^^^```
 
 5. View the diff made by holding command and hovering over the hyperlink on terminal. 
 
