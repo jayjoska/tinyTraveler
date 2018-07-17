@@ -32,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
                     "publicservicesgovt", "religiousorgs", "restaurants",
                     "shopping"};
 
-    private static final double TEMP_LATITUDE = 37.484377;
-    private static final double TEMP_LONGITUDE = -122.148304;
+    // private static final double TEMP_LATITUDE = 37.484377;
+    // private static final double TEMP_LONGITUDE = -122.148304;
 
 
     @BindView(R.id.rvCategories)
@@ -85,12 +85,21 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                    Log.i(TAG, "Unable to fetch from API");
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    try {
+                        Log.i(TAG, errorResponse.getJSONObject("error").getString("code"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
+             try {
+                 Thread.sleep(200);
+             } catch (InterruptedException e) {
+                 e.printStackTrace();
+             }
 
-        }
+         }
 
 
 

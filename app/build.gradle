@@ -18,6 +18,10 @@ android {
     }
 }
 
+ext {
+    supportLibVersion = '27.1.1'  // variable that can be referenced to keep support libs consistent
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:27.1.1'
@@ -32,4 +36,8 @@ dependencies {
     compile 'com.loopj.android:android-async-http:1.4.9'
     // Recycler View
     implementation 'com.android.support:recyclerview-v7:27.1.1'
+    // Design support library
+    implementation "com.android.support:appcompat-v7:${supportLibVersion}"
+    implementation "com.android.support:design:${supportLibVersion}"
+
 }

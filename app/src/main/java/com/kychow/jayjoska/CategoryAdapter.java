@@ -1,6 +1,7 @@
 package com.kychow.jayjoska;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,9 +16,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     private ArrayList<String> mCategories;
     private Context context;
+    private ArrayList<String> selection;
 
     public CategoryAdapter(ArrayList<String> categories) {
         mCategories = categories;
+        selection = new ArrayList<>();
     }
 
     @NonNull
@@ -42,7 +45,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         return mCategories.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+    
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView mIcon;
         private TextView mName;
 
@@ -51,6 +60,24 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
             mIcon = itemView.findViewById(R.id.ivIcon);
             mName = itemView.findViewById(R.id.tvName);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int pos = getAdapterPosition();
+            if (pos != RecyclerView.NO_POSITION) {
+                String category = mCategories.get(pos);
+                if (selection.contains(category) || selection.size() > 4) {
+                    selection.remove(category);
+                    itemView.setBackgroundColor(Color.TRANSPARENT);
+                } else {
+                    selection.add(category);
+                    itemView.setBackgroundColor(Color.GREEN);
+                }
+            }
+            // Log.i("Adapter", selection.toString());
         }
     }
 
