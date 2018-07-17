@@ -6,9 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <GridView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvCategories"
         android:layout_width="match_parent"
-        android:id="@+id/gvCategories"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true" />
 </RelativeLayout>
