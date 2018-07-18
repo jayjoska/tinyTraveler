@@ -3,6 +3,7 @@ package com.kychow.jayjoska;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -87,7 +88,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                     itemView.setBackgroundColor(Color.TRANSPARENT);
                 } else {
                     selection.add(category);
-                    itemView.setBackgroundColor(Color.GREEN);
+                    itemView.setBackgroundColor(ContextCompat.getColor(v.getContext(), R.color.soft_green));
                 }
             }
 

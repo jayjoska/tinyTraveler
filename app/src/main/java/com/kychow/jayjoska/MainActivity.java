@@ -80,30 +80,30 @@ public class MainActivity extends AppCompatActivity {
          for (int i = 0; i < CATEGORY_ALIASES.length; i++) {
              url = getString(R.string.base_url) + getString(R.string.categories) + CATEGORY_ALIASES[i];
 
-            client.get(url, new JsonHttpResponseHandler() {
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    String title = null;
-                    try {
-                        JSONObject category = response.getJSONObject("category");
-                        title = category.getString("title");
-                        mCategories.add(title);
-                        mAdapter.notifyItemInserted(mCategories.size() - 1);
-                        Log.i(TAG, title);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
+             client.get(url, new JsonHttpResponseHandler() {
+                 @Override
+                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                     String title = null;
+                     try {
+                         JSONObject category = response.getJSONObject("category");
+                         title = category.getString("title");
+                         mCategories.add(title);
+                         mAdapter.notifyItemInserted(mCategories.size() - 1);
+                         Log.i(TAG, title);
+                     } catch (JSONException e) {
+                         e.printStackTrace();
+                     }
+                 }
 
-                @Override
-                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                    try {
-                        Log.i(TAG, errorResponse.getJSONObject("error").getString("code"));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
+                 @Override
+                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                     try {
+                         Log.i(TAG, errorResponse.getJSONObject("error").getString("code"));
+                     } catch (JSONException e) {
+                         e.printStackTrace();
+                     }
+                 }
+             });
              try {
                  Thread.sleep(200);
              } catch (InterruptedException e) {
