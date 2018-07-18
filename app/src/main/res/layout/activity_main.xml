@@ -19,6 +19,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_margin="5dp"
-        android:clickable="false"
-        app:fabSize="normal" />
+        android:clickable="false" />
+
 </RelativeLayout>

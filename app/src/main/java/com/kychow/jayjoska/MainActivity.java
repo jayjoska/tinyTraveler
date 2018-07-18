@@ -32,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
                     "publicservicesgovt", "religiousorgs", "restaurants",
                     "shopping"};
 
-    private static final double TEMP_LATITUDE = 37.484377;
-    private static final double TEMP_LONGITUDE = -122.148304;
+    // private static final double TEMP_LATITUDE = 37.484377;
+    // private static final double TEMP_LONGITUDE = -122.148304;
 
 
     @BindView(R.id.rvCategories)
