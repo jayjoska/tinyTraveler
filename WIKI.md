@@ -8,13 +8,14 @@
 
 * Add a description at the top of each Java class and each significant method. For now just adding an @brief is fine, but later when we have many more components try to be more detailed for our models (e.g. Place.java) so we know which method to use. 
 ```
-/* @brief Factorial takes in a whole number and computes its factorial. 
-* 
-* @input  int   n   takes in a whole number n
-* @output int   n!  returns the value n!
-*/
+/* 
+ *@brief Factorial takes in a whole number and computes its factorial. 
+ * 
+ * @input  int   n   takes in a whole number n
+ * @output int   n!  returns the value n!
+ */
 ``` 
-* for xml files, add a brief description at the top of the class using ```<!-- [comment content] -->```. Ex:
+* for xml files, add a brief description on the second line under the xml version using ```<!-- [comment content] -->```. Ex:
 ```
 <!-- @brief item_category displays a single category item in the Recyclerview grid. 
 @utilizes CategoryAdapter
