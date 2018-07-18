@@ -14,10 +14,11 @@
 
     <TextView
         android:id="@+id/tvName"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_width="100dp"
         android:layout_below="@+id/ivIcon"
         android:layout_alignLeft="@+id/ivIcon"
         android:layout_alignRight="@+id/ivIcon"
+        android:gravity="center"
         android:text="TextView" />
 </RelativeLayout>
