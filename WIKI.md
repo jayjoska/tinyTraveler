@@ -51,14 +51,15 @@ Paste the token from the webpage into the prompt on terminal.
 
 7. Once your diff has been approved, land it using ```arc diff```. 
 
+# Arcanist help 
+
 * [Arcanist tutorial](https://secure.phabricator.com/book/phabricator/article/arcanist/)
-
-* [Example commit](https://our.intern.facebook.com/intern/diff/D8863972/)
-
-* [Task list](https://our.intern.facebook.com/intern/tasks/?q=237727237042012)
-
 * use ```arc help``` for a list of arc commands. Similarly, use ```git help``` for a list of git commands. 
 
+* [Example diff](https://our.intern.facebook.com/intern/diff/D8863972/)
+
+# Task list 
+* [Task list](https://our.intern.facebook.com/intern/tasks/?q=237727237042012)
 
 # References
 * [Syncing Google Places with Yelp](https://7webpages.com/blog/yelp-and-google-places-api-combined/)
