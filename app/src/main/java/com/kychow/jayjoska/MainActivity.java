@@ -32,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
                     "publicservicesgovt", "religiousorgs", "restaurants",
                     "shopping"};
 
-    // private static final double TEMP_LATITUDE = 37.484377;
-    // private static final double TEMP_LONGITUDE = -122.148304;
+    private static final double TEMP_LATITUDE = 37.484377;
+    private static final double TEMP_LONGITUDE = -122.148304;
 
 
     @BindView(R.id.rvCategories)
@@ -101,13 +101,15 @@ public class MainActivity extends AppCompatActivity {
 
          }
 
+    }
 
-
-        /*
-        // params.put("location", "san+francisco,+ca");
+    /*
+    private void getRecs(String category) {
+        String url = getString(R.string.base_url) + getString(R.string.search);
+        RequestParams params = new RequestParams();
         params.put("latitude", TEMP_LATITUDE);
         params.put("longitude", TEMP_LONGITUDE);
-        params.put("categories", CATEGORY_ALIASES[8]);
+        params.put("categories", category);
         client.get(url, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -127,11 +129,14 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                super.onFailure(statusCode, headers, responseString, throwable);
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    Log.i(TAG, errorResponse.getJSONObject("error").getString("code"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
-        */
-
     }
+    */
 }
