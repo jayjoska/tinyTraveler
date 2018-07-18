@@ -12,7 +12,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-
+/*
+ * @brief CategoryAdapter is the adapter for the RecyclerView in the opening screen
+ *
+ * Even if the RecyclerView is eventually moved to another activity/fragment, this class should not
+ * need major modification.
+ *
+ */
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 
     private ArrayList<String> mCategories;
@@ -51,6 +57,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         return position;
     }
 
+
+    /*
+     * @brief ViewHolder this class holds the view corresponding to the individual category items.
+     *
+     * Each category includes a TextView and an ImageView
+     *
+     */
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView mIcon;
         private TextView mName;

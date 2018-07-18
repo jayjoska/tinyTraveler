@@ -18,13 +18,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cz.msebera.android.httpclient.Header;
 
+/*
+ * @brief MainActivity activity that holds a RecyclerView of all the categories
+ *
+ * The contents of this class will probably be migrated at some point to the final activity/fragments
+ */
 public class MainActivity extends AppCompatActivity {
 
-    private static final String CLIENT_KEY = "client_id";
-    private static final String API_KEY = "api_key";
-    private static final String BASE_URL = "base_url";
-    private static final String ENDPOINT_SEARCH = "search";
     private static final String TAG = "MainActivity";
+    // Hardcoded aliases for the main 22 categories.
     private static final String[] CATEGORY_ALIASES =
             {"active", "arts", "auto", "beautysvc", "bicycles", "education", "eventservices", "financialservices",
                     "food", "health", "homeservices", "hotelstravel", "localflavor",
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
                     "publicservicesgovt", "religiousorgs", "restaurants",
                     "shopping"};
 
+    // Temporal variables for testing
     // private static final double TEMP_LATITUDE = 37.484377;
     // private static final double TEMP_LONGITUDE = -122.148304;
 
@@ -63,6 +66,14 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "after getCategories");
     }
 
+    /*
+     * @brief getCategories fetches the categories from the Yelp api and populates the recycler view.
+     * In order to get the full category name, the alias must be placed directly into the url, and not
+     * passed as an argument.
+     *
+     * @input  -
+     * @output void
+     */
     public void getCategories() {
         String url = "";
 
@@ -103,6 +114,16 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /*
+     * @brief getRecs takes in a category and provides recomendations
+     *
+     * ############################
+     * NOT YET IMPLEMENTED
+     * ############################
+     *
+     * @input  String      The category to be searched
+     * @output void
+     */
     /*
     private void getRecs(String category) {
         String url = getString(R.string.base_url) + getString(R.string.search);
