@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
         client = new AsyncHttpClient();
         // Provide API with API key
-        client.addHeader("Authorization", "Bearer " + getString(R.string.maps_api_key));
+        client.addHeader("Authorization", "Bearer " + getString(R.string.yelp_api_key));
         mCategories = new ArrayList<>(); // change to array of categories
         mAdapter = new CategoryAdapter(mCategories);
 

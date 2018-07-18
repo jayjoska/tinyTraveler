@@ -22,12 +22,12 @@ android {
 ext {
     supportLibVersion = '27.1.1'  // variable that can be referenced to keep support libs consistent
     permissionDispatcherVersion = "3.2.0"
-    googlePlayVersion = "15.0.0"
+    googlePlayVersion = "15.0.1"
 }
 
 dependencies {
     // maps dependencies
-    implementation 'com.google.maps.android:android-maps-utils:0.5+'
+    implementation 'com.google.maps.android:android-maps-utils:0.5'
     implementation "com.android.support:support-v13:$supportLibVersion" // to remove lint error, found in .idea/libraries
     implementation "com.google.android.gms:play-services-maps:$googlePlayVersion"
     implementation "com.google.android.gms:play-services-location:$googlePlayVersion"
@@ -41,8 +41,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     // Butterkinfe
-    implementation 'com.jakewharton:butterknife:8.4.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     // Async HTTP client
     implementation 'com.loopj.android:android-async-http:1.4.9'
     // Recycler View
