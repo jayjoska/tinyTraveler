@@ -13,7 +13,13 @@
 * @input  int   n   takes in a whole number n
 * @output int   n!  returns the value n!
 */
-
+``` 
+* for xml files, add a brief description at the top of the class using ```<!-- [comment content] -->```. Ex:
+```
+<!-- @brief item_category displays a single category item in the Recyclerview grid. 
+@utilizes CategoryAdapter
+-->
+```
 # Setting up Phabricator / Arcanist 
 
 * [Arcanist Reference](https://our.intern.facebook.com/intern/wiki/Arcanist/#installing-an-arcanist-c)
