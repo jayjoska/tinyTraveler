@@ -47,7 +47,9 @@ Paste the token from the webpage into the prompt on terminal.
 
 5. Make sure to add a summary, a test plan, link the task that you are completing with this diff, and add all teammates (Karena, Jaynicka, Jose, Michelle) excluding yourself for review.
 
-6. Once your diff has been approved, land it using ```arc diff```. 
+6. To update your diff, make sure you are on a branch called ```arc-patch[D1243]```. Once you have commited the changes you want to make, do ```arc patch --update D1243```.
+
+7. Once your diff has been approved, land it using ```arc diff```. 
 
 * [Arcanist tutorial](https://secure.phabricator.com/book/phabricator/article/arcanist/)
 
