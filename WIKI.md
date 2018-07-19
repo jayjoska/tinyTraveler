@@ -64,3 +64,4 @@ Paste the token from the webpage into the prompt on terminal.
 # References
 * [Syncing Google Places with Yelp](https://7webpages.com/blog/yelp-and-google-places-api-combined/)
 * [interesting read](https://books.google.com/books?id=rFxCDwAAQBAJ&pg=PA298&lpg=PA298&dq=yelp+categories+aliases+api+call+example&source=bl&ots=Mqi2cgvGfq&sig=Ckyr8otWOuijnwTNoCVOpnAFMfQ&hl=en&sa=X&ved=0ahUKEwiX6tjg86TcAhUtnOAKHUjPAKcQ6AEIaTAF#v=onepage&q&f=true) about places of interest from yelp, google, facebook, and foursquare (p. 297-300)
+* [Documentation on the Distance Matrix API](https://developers.google.com/maps/documentation/distance-matrix/intro) which is used for calculating distances and travel times between points.
