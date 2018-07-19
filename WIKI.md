@@ -41,15 +41,17 @@ Paste the token from the webpage into the prompt on terminal.
 
 3. Make sure all the changes you have made have been committed on that separate branch. Multiple commits are okay.
 
-4. Submit this change for review using ```arc diff```. If you have multiple commits (e.g. 5), use ```arc diff HEAD^^^^^```
+4. Submit this change for review using ```arc diff```. If you have multiple commits (e.g. 5), use ```arc diff HEAD^^^^^```. If you are unsure of how many commits you want to include in your diff, use ```git log``` and enter ```q``` for quit when you are done. 
 
-5. View the diff made by holding command and hovering over the hyperlink on terminal. 
+5. If you are blocked and want to show other people your code, use ```arc diff --only```. This will create an unofficial diff.(make sure you have commited all the changes you want other people to see as described in later 2 steps). More commits can be specified using ```arc diff HEAD^^^ --only```. 
 
-5. Make sure to add a summary, a test plan, link the task that you are completing with this diff, and add all teammates (Karena, Jaynicka, Jose, Michelle) excluding yourself for review.
+6. View the diff made by holding command and hovering over the hyperlink on terminal. 
 
-6. To update your diff, make sure you are on a branch called ```arc-patch[D1243]```. Once you have commited the changes you want to make, do ```arc patch --update D1243```.
+7. Make sure to add a summary, a test plan, link the task that you are completing with this diff, and add all teammates (Karena, Jaynicka, Jose, Michelle) excluding yourself for review.
 
-7. Once your diff has been approved, land it using ```arc diff```. 
+8. To update your diff, make sure you are on a branch called ```arc-patch[D1243]```. Once you have commited the changes you want to make, do ```arc patch --update D1243```.
+
+9. Once your diff has been approved, land it using ```arc diff```. 
 
 # Arcanist help 
 
