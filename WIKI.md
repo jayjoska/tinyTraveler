@@ -1,9 +1,3 @@
-# Git
-
-* [git handbook](https://guides.github.com/introduction/git-handbook/) for reference
-* tutorial on [git branching](https://learngitbranching.js.org/) - **follow!**
-* [visualizing git tutorial](http://git-school.github.io/visualizing-git/) - **follow!** 
-
 # Coding Conventions
 
 * Add a description at the top of each Java class and each significant method. For now just adding an @brief is fine, but later when we have many more components try to be more detailed for our models (e.g. Place.java) so we know which method to use. 
@@ -21,23 +15,18 @@
 @utilizes CategoryAdapter
 -->
 ```
-# Setting up Phabricator / Arcanist 
 
-* [Arcanist Reference](https://our.intern.facebook.com/intern/wiki/Arcanist/#installing-an-arcanist-c)
+# Git
 
-1. Install an Arcanist Certificate: open terminal and enter the line ```arc set-config default https://phabricator.intern.facebook.com/```
-
-2. Enter ```arc install-certificate``` and click on the link under "Login to Phabricator" as shown below.
-
-![image](https://i.imgur.com/HX463YP.png)
-
-Paste the token from the webpage into the prompt on terminal.   
+* [git handbook](https://guides.github.com/introduction/git-handbook/) for reference
+* tutorial on [git branching](https://learngitbranching.js.org/) - **follow!**
+* [visualizing git tutorial](http://git-school.github.io/visualizing-git/) - **follow!** 
 
 # Submitting a Diff to Phabricator / Arcanist 
 
-3.  ```git pull``` to make sure you have the latest version on git. 
+1.  ```git pull``` to make sure you have the latest version on git. 
 
-4. Make sure you are on a different branch (not master) when trying to submit something to Arcanist. Check using ```git branch```. If you are on master, checkout a new branch using ```git checkout -b karena/branchName```. Always preface the name of your branch with your name so we know whose branch is whose.
+2. Make sure you are on a different branch (not master) when trying to submit something to Arcanist. Check using ```git branch```. If you are on master, checkout a new branch using ```git checkout -b karena/branchName```. Always preface the name of your branch with your name so we know whose branch is whose.
 
 3. Make sure all the changes you have made have been committed on that separate branch. Multiple commits are okay.
 
@@ -67,3 +56,15 @@ Paste the token from the webpage into the prompt on terminal.
 * [Syncing Google Places with Yelp](https://7webpages.com/blog/yelp-and-google-places-api-combined/)
 * [interesting read](https://books.google.com/books?id=rFxCDwAAQBAJ&pg=PA298&lpg=PA298&dq=yelp+categories+aliases+api+call+example&source=bl&ots=Mqi2cgvGfq&sig=Ckyr8otWOuijnwTNoCVOpnAFMfQ&hl=en&sa=X&ved=0ahUKEwiX6tjg86TcAhUtnOAKHUjPAKcQ6AEIaTAF#v=onepage&q&f=true) about places of interest from yelp, google, facebook, and foursquare (p. 297-300)
 * [Documentation on the Distance Matrix API](https://developers.google.com/maps/documentation/distance-matrix/intro) which is used for calculating distances and travel times between points.
+
+# Setting up Phabricator / Arcanist 
+
+* [Arcanist Reference](https://our.intern.facebook.com/intern/wiki/Arcanist/#installing-an-arcanist-c)
+
+1. Install an Arcanist Certificate: open terminal and enter the line ```arc set-config default https://phabricator.intern.facebook.com/```
+
+2. Enter ```arc install-certificate``` and click on the link under "Login to Phabricator" as shown below.
+
+![image](https://i.imgur.com/HX463YP.png)
+
+Paste the token from the webpage into the prompt on terminal.   
