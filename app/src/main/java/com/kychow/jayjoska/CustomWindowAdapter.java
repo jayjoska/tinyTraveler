@@ -9,7 +9,7 @@ import com.google.android.gms.maps.model.Marker;
 
 /*
  * @brief CustomWindowAdapter displays a window with custom text set by the user above a pin in maps.
- * @uses MapDemoActivity for basic maps functionality
+ * @uses MapActivity for basic maps functionality
  */
 class CustomWindowAdapter implements GoogleMap.InfoWindowAdapter {
     LayoutInflater mInflater;
