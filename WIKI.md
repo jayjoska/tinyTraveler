@@ -20,6 +20,7 @@
 @utilizes CategoryAdapter
 -->
 ```
+* for for xml ids, use ```rv + name```
 
 # 3. Git
 
