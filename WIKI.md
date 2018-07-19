@@ -7,7 +7,7 @@
 
 * Add a description at the top of each Java class and each significant method. For now just adding an @brief is fine, but later when we have many more components try to be more detailed for our models (e.g. Place.java) so we know which method to use. 
 ```
-/* 
+/**
  *@brief Factorial takes in a whole number and computes its factorial. 
  * 
  * @input  int   n   takes in a whole number n
