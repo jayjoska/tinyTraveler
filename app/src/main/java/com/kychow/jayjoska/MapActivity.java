@@ -72,7 +72,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.maps_fragment);
+        setContentView(R.layout.fragment_maps);
 
         if (TextUtils.isEmpty(getResources().getString(R.string.maps_api_key))) {
             throw new IllegalStateException("You forgot to supply a Google Maps API key");
@@ -84,7 +84,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
             mCurrentLocation = savedInstanceState.getParcelable(KEY_LOCATION);
         }
 
-        mapFragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_fragment));
+        mapFragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentMaps));
         if (mapFragment != null) {
             mapFragment.getMapAsync(new OnMapReadyCallback() {
                 @Override
@@ -286,12 +286,12 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
 
     // Display the alert that adds the marker
     private void showAlertDialogForPoint(final LatLng point) {
-        // inflate message_item.xml view
+        // inflate item_message.xml view
         View messageView = LayoutInflater.from(MapActivity.this).
-                inflate(R.layout.message_item, null);
+                inflate(R.layout.item_message, null);
         // Create alert dialog builder
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        // set message_item.xml to AlertDialog builder
+        // set item_message.xml to AlertDialog builder
         alertDialogBuilder.setView(messageView);
 
         // Create alert dialog

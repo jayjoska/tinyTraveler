@@ -2,16 +2,13 @@ package com.kychow.jayjoska;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -46,12 +43,12 @@ public class MainActivity extends AppCompatActivity {
     // private static final double TEMP_LATITUDE = 37.484377;
     // private static final double TEMP_LONGITUDE = -122.148304;
 
-    @BindView(R.id.rvCategories)
-    RecyclerView mRecyclerView;
+    @Null@BindView(R.id.rvCategories) RecyclerView mRecyclerView;
 
     private CategoryAdapter mAdapter;
     private ArrayList<String> mCategories;
     private AsyncHttpClient client;
+    private ArrayList<String> mSelections;
 
     @BindView(R.id.bottom_navigation) BottomNavigationView bottomNavigationView;
     @BindView(R.id.next_btn) FloatingActionButton next_btn;
@@ -65,14 +62,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        categoriesFragment = fragmentManager.findFragmentById(R.id.categories_fragment);
-        mapFragment = fragmentManager.findFragmentById(R.id.map_fragment) ;
+        categoriesFragment = fragmentManager.findFragmentById(R.id.fragmentCategories);
+        mapFragment = fragmentManager.findFragmentById(R.id.fragmentMaps);
 
         client = new AsyncHttpClient();
         // Provide API with API key
         client.addHeader("Authorization", "Bearer " + getString(R.string.yelp_api_key));
         mCategories = new ArrayList<>(); // change to array of categories
         mAdapter = new CategoryAdapter(mCategories);
+        mSelections = mAdapter.getSelection();
 
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         mRecyclerView.setAdapter(mAdapter);
@@ -81,15 +79,16 @@ public class MainActivity extends AppCompatActivity {
         next_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mCategories.size() == 5) {
+                if (mSelections.size() == 5) {
                     Intent mapIntent = new Intent(MainActivity.this, MapActivity.class);
-                    mapIntent.putExtra("categories", mCategories);
+                    mapIntent.putExtra("categories", mCategories); // TODO connect categories to map
                     startActivity(mapIntent);
                 }
             }
         });
 
-        //symotion-s) handle navigation selection
+        /*
+        // handle navigation selection
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -108,13 +107,13 @@ public class MainActivity extends AppCompatActivity {
                                 /*
                                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                                 fragmentTransaction.replace(R.id.flContainer, fragment3).commit();
-                                */
                                 return true;
                             default:
                                 return true;
                         }
                     }
                 });
+                */
     }
 
     public static String[] getCategoryAliases() {

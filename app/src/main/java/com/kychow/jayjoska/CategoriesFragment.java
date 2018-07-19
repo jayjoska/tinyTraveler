@@ -16,6 +16,7 @@ import java.util.ArrayList;
 /**
  * Created by Karena Chow on 7/18/18.
  */
+ // TODO Fix categories fragment
 public class CategoriesFragment extends Fragment
 {
     private RecyclerView mRecyclerView;
@@ -24,7 +25,7 @@ public class CategoriesFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.categories_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_categories, container, false);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rvCategories);
 

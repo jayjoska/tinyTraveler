@@ -57,6 +57,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         return position;
     }
 
+    public ArrayList<String> getSelection() {
+        return selection;
+    }
+
+    public void setSelection(ArrayList<String> selection) {
+        this.selection = selection;
+    }
+
     public ArrayList<String> getmCategories() {
         return mCategories;
     }

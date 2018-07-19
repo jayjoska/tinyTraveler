@@ -11,12 +11,14 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/etSnippet"
         android:paddingTop="20dp"
-        android:hint="Title"></EditText>
+        android:hint="Title">
+    </EditText>
 
     <EditText
         android:id="@+id/etSnippet"
         android:layout_below="@id/etTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Snippet"></EditText>
+        android:hint="Snippet">
+    </EditText>
 </RelativeLayout>
