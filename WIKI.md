@@ -1,3 +1,8 @@
+# Objectives
+
+* a complete, 2-minute demonstration of the most critical and useful features in our application 
+* Functionality is not as potential in terms in features 
+
 # Coding Conventions
 
 * Add a description at the top of each Java class and each significant method. For now just adding an @brief is fine, but later when we have many more components try to be more detailed for our models (e.g. Place.java) so we know which method to use. 
@@ -42,9 +47,9 @@
 
 9. Once your diff has been approved, land it using ```arc diff```. 
 
-# Arcanist help 
+# Arcanist troubleshooting 
 
-* [Arcanist tutorial](https://secure.phabricator.com/book/phabricator/article/arcanist/)
+* [Arcanist tutorial](https://secure.phabricator.com/book/phabricator/article/arcanist/) for a list of commonly used arc commands 
 * use ```arc help``` for a list of arc commands. Similarly, use ```git help``` for a list of git commands. 
 
 * [Example diff](https://our.intern.facebook.com/intern/diff/D8863972/)
