@@ -65,8 +65,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        mapFragment = getSupportFragmentManager().findFragmentById(R.id.map_fragment);
-        categoriesFragment = getSupportFragmentManager().findFragmentById(R.id.rvCategories);
+        categoriesFragment = fragmentManager.findFragmentById(R.id.categories_fragment);
+        mapFragment = fragmentManager.findFragmentById(R.id.map_fragment) ;
 
         client = new AsyncHttpClient();
         // Provide API with API key
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // handle navigation selection
+        //symotion-s) handle navigation selection
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override

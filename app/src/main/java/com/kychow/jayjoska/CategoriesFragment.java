@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,7 @@ public class CategoriesFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.activity_main, container, false);
+        View view = inflater.inflate(R.layout.categories_fragment, container, false);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rvCategories);
 
@@ -36,6 +37,7 @@ public class CategoriesFragment extends Fragment
         for (int i = 0; i < categoryAliases.length; i++)
         {
             data.add(categoryAliases[i]);
+            Log.d("categoryAliases", categoryAliases[i]);
         }
 
         mListadapter = new ListAdapter(data);
