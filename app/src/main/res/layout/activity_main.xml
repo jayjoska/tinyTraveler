@@ -24,9 +24,11 @@
         android:layout_margin="5dp"
         android:layout_above="@+id/bottom_navigation"
         android:layout_alignParentRight="true"
+        android:src="@drawable/chevron_right"
         android:padding="5dp"
         android:clickable="false"
-        app:fabSize="normal" />
+        app:fabSize="normal"
+        app:backgroundTint="@color/v_soft_green"/>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"
