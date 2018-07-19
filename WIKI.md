@@ -1,9 +1,9 @@
-# Objectives
+# 1. Objectives
 
 * a complete, 2-minute demonstration of the most critical and useful features in our application 
 * Functionality is not as potential in terms in features 
 
-# Coding Conventions
+# 2. Coding Conventions
 
 * Add a description at the top of each Java class and each significant method. For now just adding an @brief is fine, but later when we have many more components try to be more detailed for our models (e.g. Place.java) so we know which method to use. 
 ```
@@ -21,13 +21,13 @@
 -->
 ```
 
-# Git
+# 3. Git
 
 * [git handbook](https://guides.github.com/introduction/git-handbook/) for reference
 * tutorial on [git branching](https://learngitbranching.js.org/) - **follow!**
 * [visualizing git tutorial](http://git-school.github.io/visualizing-git/) - **follow!** 
 
-# Submitting a Diff to Phabricator / Arcanist 
+# 4. Submitting a Diff to Phabricator / Arcanist 
 
 1.  ```git pull``` to make sure you have the latest version on git. 
 
@@ -47,22 +47,22 @@
 
 9. Once your diff has been approved, land it using ```arc diff```. 
 
-# Arcanist troubleshooting 
+# 5. Arcanist troubleshooting 
 
 * [Arcanist tutorial](https://secure.phabricator.com/book/phabricator/article/arcanist/) for a list of commonly used arc commands 
 * use ```arc help``` for a list of arc commands. Similarly, use ```git help``` for a list of git commands. 
 
 * [Example diff](https://our.intern.facebook.com/intern/diff/D8863972/)
 
-# Task list 
+# 6. Task list 
 * [Task list](https://our.intern.facebook.com/intern/tasks/?q=237727237042012)
 
-# References
+# 7. References
 * [Syncing Google Places with Yelp](https://7webpages.com/blog/yelp-and-google-places-api-combined/)
 * [interesting read](https://books.google.com/books?id=rFxCDwAAQBAJ&pg=PA298&lpg=PA298&dq=yelp+categories+aliases+api+call+example&source=bl&ots=Mqi2cgvGfq&sig=Ckyr8otWOuijnwTNoCVOpnAFMfQ&hl=en&sa=X&ved=0ahUKEwiX6tjg86TcAhUtnOAKHUjPAKcQ6AEIaTAF#v=onepage&q&f=true) about places of interest from yelp, google, facebook, and foursquare (p. 297-300)
 * [Documentation on the Distance Matrix API](https://developers.google.com/maps/documentation/distance-matrix/intro) which is used for calculating distances and travel times between points.
 
-# Setting up Phabricator / Arcanist 
+# 8. Setting up Phabricator / Arcanist 
 
 * [Arcanist Reference](https://our.intern.facebook.com/intern/wiki/Arcanist/#installing-an-arcanist-c)
 
