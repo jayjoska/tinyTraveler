@@ -1,22 +1,13 @@
 package com.kychow.jayjoska;
 
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cz.msebera.android.httpclient.Header;
 
 /*
  * @brief MainActivity activity that holds a RecyclerView of all the categories
@@ -38,80 +29,56 @@ public class MainActivity extends AppCompatActivity {
     // private static final double TEMP_LATITUDE = 37.484377;
     // private static final double TEMP_LONGITUDE = -122.148304;
 
-
-    @BindView(R.id.rvCategories)
-    RecyclerView mRecyclerView;
-
-    private CategoryAdapter mAdapter;
-    private ArrayList<String> mCategories;
-    private AsyncHttpClient client;
+    @BindView(R.id.bottom_navigation) BottomNavigationView bottomNavigationView;
+    final FragmentManager fragmentManager = getSupportFragmentManager();
+    android.support.v4.app.Fragment categoriesFragment;
+    android.support.v4.app.Fragment mapFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        Log.i(TAG, "in onCreate");
 
-        client = new AsyncHttpClient();
-        // Provide API with API key
-        client.addHeader("Authorization", "Bearer " + getString(R.string.yelp_api_key));
-        mCategories = new ArrayList<>(); // change to array of categories
-        mAdapter = new CategoryAdapter(mCategories);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-        mRecyclerView.setAdapter(mAdapter);
-        Log.i(TAG, "before getCategories");
-        getCategories();
-        Log.i(TAG, "after getCategories");
+        CategoriesFragment categoriesFragment = new CategoriesFragment();
+        fragmentTransaction.add(R.id.flContainerCategores, categoriesFragment);
+        fragmentTransaction.commit();
+
+        /* TODO in later diff
+        // handle navigation selection
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        FragmentTransaction fragmentTransaction;
+                        switch (item.getItemId()) {
+                            case R.id.action_categories:
+                                fragmentTransaction = fragmentManager.beginTransaction();
+                                fragmentTransaction.replace(R.id.rvCategories, categoriesFragment).commit();
+                                return true;
+                            case R.id.action_map:
+                                fragmentTransaction = fragmentManager.beginTransaction();
+                                fragmentTransaction.replace(R.id.map_fragment, mapFragment).commit();
+                                return true;
+                            case R.id.action_itinerary:
+                                /*
+                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                fragmentTransaction.replace(R.id.flContainer, fragment3).commit();
+                                return true;
+                            default:
+                                return true;
+                        }
+                    }
+                });
+                */
     }
 
-    /*
-     * @brief getCategories fetches the categories from the Yelp api and populates the recycler view.
-     * In order to get the full category name, the alias must be placed directly into the url, and not
-     * passed as an argument.
-     *
-     * @input  -
-     * @output void
-     */
-    public void getCategories() {
-        String url = "";
-
-         for (int i = 0; i < CATEGORY_ALIASES.length; i++) {
-             url = getString(R.string.base_url) + getString(R.string.categories) + CATEGORY_ALIASES[i];
-
-             client.get(url, new JsonHttpResponseHandler() {
-                 @Override
-                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                     String title = null;
-                     try {
-                         JSONObject category = response.getJSONObject("category");
-                         title = category.getString("title");
-                         mCategories.add(title);
-                         mAdapter.notifyItemInserted(mCategories.size() - 1);
-                         Log.i(TAG, title);
-                     } catch (JSONException e) {
-                         e.printStackTrace();
-                     }
-                 }
-
-                 @Override
-                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                     try {
-                         Log.i(TAG, errorResponse.getJSONObject("error").getString("code"));
-                     } catch (JSONException e) {
-                         e.printStackTrace();
-                     }
-                 }
-             });
-             try {
-                 Thread.sleep(200);
-             } catch (InterruptedException e) {
-                 e.printStackTrace();
-             }
-
-         }
-
+    // TODO migrate category aliases
+    public static String[] getCategoryAliases() {
+        return CATEGORY_ALIASES;
     }
 
     /*

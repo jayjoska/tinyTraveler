@@ -22,7 +22,7 @@ import java.util.ArrayList;
  */
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 
-    private ArrayList<String> mCategories;
+    ArrayList<String> mCategories;
     private Context context;
     private ArrayList<String> selection;
 
@@ -58,6 +58,21 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         return position;
     }
 
+    public ArrayList<String> getSelection() {
+        return selection;
+    }
+
+    public void setSelection(ArrayList<String> selection) {
+        this.selection = selection;
+    }
+
+    public ArrayList<String> getmCategories() {
+        return mCategories;
+    }
+
+    public void setmCategories(ArrayList<String> mCategories) {
+        this.mCategories = mCategories;
+    }
 
     /*
      * @brief ViewHolder this class holds the view corresponding to the individual category items.

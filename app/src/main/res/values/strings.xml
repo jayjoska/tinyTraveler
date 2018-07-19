@@ -3,4 +3,5 @@
     <string name="base_url">https://api.yelp.com/v3</string>
     <string name="search">/businesses/search/</string>
     <string name="categories">/categories/</string>
+
 </resources>

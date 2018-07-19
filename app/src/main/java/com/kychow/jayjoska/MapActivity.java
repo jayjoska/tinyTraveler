@@ -47,12 +47,12 @@ import permissions.dispatcher.RuntimePermissions;
 
 import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
 
-/* @brief MapDemoActivity adds basic maps functionality.
+/* @brief MapActivity adds basic maps functionality.
  *
  * @feature can tap on a location and add a pin and enter custom text in information window
  */
 @RuntimePermissions
-public class MapDemoActivity extends AppCompatActivity implements GoogleMap.OnMapLongClickListener {
+public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLongClickListener {
 
     private SupportMapFragment mapFragment;
     private GoogleMap map;
@@ -72,7 +72,7 @@ public class MapDemoActivity extends AppCompatActivity implements GoogleMap.OnMa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.map_demo_activity);
+        setContentView(R.layout.fragment_maps);
 
         if (TextUtils.isEmpty(getResources().getString(R.string.maps_api_key))) {
             throw new IllegalStateException("You forgot to supply a Google Maps API key");
@@ -84,7 +84,7 @@ public class MapDemoActivity extends AppCompatActivity implements GoogleMap.OnMa
             mCurrentLocation = savedInstanceState.getParcelable(KEY_LOCATION);
         }
 
-        mapFragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map));
+        mapFragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentMaps));
         if (mapFragment != null) {
             mapFragment.getMapAsync(new OnMapReadyCallback() {
                 @Override
@@ -104,8 +104,8 @@ public class MapDemoActivity extends AppCompatActivity implements GoogleMap.OnMa
         if (map != null) {
             // Map is ready
             Toast.makeText(this, "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
-            MapDemoActivityPermissionsDispatcher.getMyLocationWithPermissionCheck(this);
-            MapDemoActivityPermissionsDispatcher.startLocationUpdatesWithPermissionCheck(this);
+            MapActivityPermissionsDispatcher.getMyLocationWithPermissionCheck(this);
+            MapActivityPermissionsDispatcher.startLocationUpdatesWithPermissionCheck(this);
             map.setOnMapLongClickListener(this);
         } else {
             Toast.makeText(this, "Error - Map was null!!", Toast.LENGTH_SHORT).show();
@@ -115,7 +115,7 @@ public class MapDemoActivity extends AppCompatActivity implements GoogleMap.OnMa
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        MapDemoActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
+        MapActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
     }
 
     @SuppressWarnings({"MissingPermission"})
@@ -136,7 +136,7 @@ public class MapDemoActivity extends AppCompatActivity implements GoogleMap.OnMa
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.d("MapDemoActivity", "Error trying to get last GPS location");
+                        Log.d("MapActivity", "Error trying to get last GPS location");
                         e.printStackTrace();
                     }
                 });
@@ -197,7 +197,7 @@ public class MapDemoActivity extends AppCompatActivity implements GoogleMap.OnMa
         } else {
             Toast.makeText(this, "Current location was null, enable GPS on emulator!", Toast.LENGTH_SHORT).show();
         }
-        MapDemoActivityPermissionsDispatcher.startLocationUpdatesWithPermissionCheck(this);
+        MapActivityPermissionsDispatcher.startLocationUpdatesWithPermissionCheck(this);
     }
 
     @NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
@@ -286,12 +286,12 @@ public class MapDemoActivity extends AppCompatActivity implements GoogleMap.OnMa
 
     // Display the alert that adds the marker
     private void showAlertDialogForPoint(final LatLng point) {
-        // inflate message_item.xml view
-        View messageView = LayoutInflater.from(MapDemoActivity.this).
-                inflate(R.layout.message_item, null);
+        // inflate item_message.xml view
+        View messageView = LayoutInflater.from(MapActivity.this).
+                inflate(R.layout.item_message, null);
         // Create alert dialog builder
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        // set message_item.xml to AlertDialog builder
+        // set item_message.xml to AlertDialog builder
         alertDialogBuilder.setView(messageView);
 
         // Create alert dialog
