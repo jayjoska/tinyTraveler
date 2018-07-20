@@ -96,7 +96,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             mIcon = itemView.findViewById(R.id.ivIcon);
             mName = itemView.findViewById(R.id.tvName);
             // Super shady syntax. Taken from https://stackoverflow.com/questions/11227591/how-to-reference-the-current-or-main-activity-from-another-class
-            mBtn = ((MainActivity)context).findViewById(R.id.btnNext);
+            mBtn = ((MainActivity)context).findViewById(R.id.next_btn);
 
             itemView.setOnClickListener(this);
         }
