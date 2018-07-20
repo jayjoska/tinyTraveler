@@ -22,7 +22,7 @@ Jayjoska allows users to create a customized travel itinerary based off a presel
 * [ ] There is a "Recalculate" button to recalculate the route after the user reorganizes the suggestions
 
 ## Optional User Stories
-* [ ] There should be a button to export/share
+* There should be a button to export/share
 * The detail view includes Image, Name, Rating, Price, Hours, Learn More (a link te Yelp), and Reviews.
 ------------
 * Recommendations change based on size of geofence
