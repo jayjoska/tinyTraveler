@@ -14,7 +14,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
+
 /*
  * @brief CategoryAdapter is the adapter for the RecyclerView in the opening screen
  *
@@ -27,11 +30,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     ArrayList<String> mCategories;
     private Context context;
     private ArrayList<String> selection;
+    private Icons drawables;
 
 
     public CategoryAdapter(ArrayList<String> categories) {
         mCategories = categories;
         selection = new ArrayList<>();
+        drawables = new Icons();
     }
 
     @NonNull
@@ -48,6 +53,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String category = mCategories.get(position);
         holder.mName.setText(category);
+
+        Glide.with(context)
+             .load(drawables.matchDrawable(category))
+             .into(holder.mIcon);
     }
 
     @Override
