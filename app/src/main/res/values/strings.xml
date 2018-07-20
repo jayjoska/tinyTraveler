@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Jayjoska</string>
     <string name="base_url">https://api.yelp.com/v3</string>
-    <string name="search">/businesses/search/</string>
+    <string name="search">/businesses/search</string>
     <string name="categories">/categories/</string>
     <string name="categories_message">You can only select 5 categories</string>
     <string name="MESSAGE">Cannot select more than 5 categories.</string>

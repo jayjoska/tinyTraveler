@@ -6,10 +6,26 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.kychow.jayjoska.models.Place;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
+import cz.msebera.android.httpclient.Header;
 
 
 /**
@@ -32,7 +48,12 @@ public class RecommendationsFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+
+    // Added by Jose (most of the code in this file is auto-generated
     private RecyclerView mRecyclerView;
+    private RecsAdapter mAdapter;
+    private ArrayList<Place> mRecs;
+    private AsyncHttpClient client;
 
     public RecommendationsFragment() {
         // Required empty public constructor
@@ -63,6 +84,18 @@ public class RecommendationsFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        mRecs = new ArrayList<>();
+        mAdapter = new RecsAdapter(mRecs);
+        client = new AsyncHttpClient();
+        client.addHeader("Authorization", "Bearer " + getString(R.string.yelp_api_key));
+
+        // For testing purposes only
+        /*
+        mRecs.add("1");
+        mRecs.add("2");
+        mRecs.add("3");
+        */
     }
 
     @Override
@@ -76,6 +109,10 @@ public class RecommendationsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         mRecyclerView = view.findViewById(R.id.rvRecs);
+
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setAdapter(mAdapter);
+        getRecs();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -88,12 +125,16 @@ public class RecommendationsFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
+        /*
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+    }
+        }*/
     }
 
     @Override
@@ -115,5 +156,56 @@ public class RecommendationsFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    /*
+     * @brief getRecs fetches a list of businesses for a particular category
+     *
+     * #################
+     * Current status: hardcoded the "food" category
+     * #################
+     *
+     * @input -
+     * @output void
+     */
+    private void getRecs() {
+        final double TEMP_LATITUDE = 37.484377;
+        final double TEMP_LONGITUDE = -122.148304;
+        String url = getString(R.string.base_url) + getString(R.string.search);
+
+        RequestParams params = new RequestParams();
+
+        // params.put("location", "san+francisco");
+        params.put("categories", "food");
+        params.put("latitude", TEMP_LATITUDE);
+        params.put("longitude", TEMP_LONGITUDE);
+
+
+        client.get(url, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    JSONArray businesses = response.getJSONArray("businesses");
+                    Place place = new Place();
+                    for (int i = 0; i < 20; i++) {
+                        place = Place.fromJSON(businesses.getJSONObject(i));
+                        mRecs.add(place);
+                        mAdapter.notifyItemInserted(mRecs.size() - 1);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    Log.i("RecsFragment", errorResponse.getJSONObject("error").getString("code"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
 }

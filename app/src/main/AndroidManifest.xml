@@ -34,7 +34,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MapDemoActivity"/>
 
         <uses-library
             android:name="com.google.android.maps"
@@ -48,6 +47,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".CategoriesTestActivity"></activity>
+        <activity android:name=".RecsTempActivity"></activity>
     </application>
 
 </manifest>

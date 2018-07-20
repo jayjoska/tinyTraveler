@@ -1,10 +1,12 @@
 package com.kychow.jayjoska;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         CategoriesFragment categoriesFragment = new CategoriesFragment();
-        fragmentTransaction.add(R.id.flContainerCategores, categoriesFragment);
+        fragmentTransaction.add(R.id.flContainerCategories, categoriesFragment);
         fragmentTransaction.commit();
 
         /* TODO in later diff

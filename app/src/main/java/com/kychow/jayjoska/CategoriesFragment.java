@@ -1,7 +1,6 @@
 package com.kychow.jayjoska;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -121,9 +120,13 @@ public class CategoriesFragment extends Fragment
             @Override
             public void onClick(View v) {
                 if (mSelections.size() == 5) {
-                    Intent mapIntent = new Intent(getContext(), MapActivity.class);
-                    //mapIntent.putExtra("categories", mCategories); // TODO connect categories to map
-                    startActivity(mapIntent);
+                    // Syntax copied from https://stackoverflow.com/questions/21028786/how-do-i-open-a-new-fragment-from-another-fragment
+                    // Consider changing tempTag for something better (once you figure out what that tag is used for)
+                    RecommendationsFragment recsFrag = new RecommendationsFragment();
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.flContainerCategories, recsFrag,"tempTag")
+                            .addToBackStack(null)
+                            .commit();
                 }
             }
         });

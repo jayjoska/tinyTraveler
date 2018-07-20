@@ -47,7 +47,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String category = mCategories.get(position);
-
         holder.mName.setText(category);
     }
 
@@ -61,7 +60,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         return position;
     }
 
-
+    /*
+     * @brief getSelection returns the selection field
+     *
+     * @input -
+     * @output ArrayList<String> selection
+     */
     public ArrayList<String> getSelection() {
         return selection;
     }
@@ -90,6 +94,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         private FloatingActionButton mBtn;
         private static final int NUM_OF_CATEGORIES = 5;
 
+
         public ViewHolder(View itemView) {
             super(itemView);
 
@@ -97,7 +102,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             mName = itemView.findViewById(R.id.tvName);
             // Super shady syntax. Taken from https://stackoverflow.com/questions/11227591/how-to-reference-the-current-or-main-activity-from-another-class
             mBtn = ((MainActivity)context).findViewById(R.id.next_btn);
-
             itemView.setOnClickListener(this);
         }
 
@@ -123,7 +127,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             } else {
                 mBtn.setVisibility(View.INVISIBLE);
             }
-
             Log.i("Adapter", selection.toString());
 
         }

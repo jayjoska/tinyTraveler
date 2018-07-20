@@ -24,7 +24,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvTitle"
         android:layout_toRightOf="@+id/ivPicture"
-        style="?android:attr/ratingBarStyleSmall"/>
+        style="?android:attr/ratingBarStyleSmall"
+        android:stepSize="0.1"/>
 
     <TextView
         android:id="@+id/tvDistance"

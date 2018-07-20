@@ -5,21 +5,23 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
-/**
- * @brief CategoriesTestActivity displays the recyclerview of Categories in a fragment
+/*
+ * ###############################
+ * TEST CLASS, PLEASE IGNORE
+ * ###############################
  */
-public class CategoriesTestActivity extends AppCompatActivity {
+public class RecsTempActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test_categories);
+        setContentView(R.layout.activity_recs_temp);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        CategoriesFragment fragment = new CategoriesFragment();
-        fragmentTransaction.add(R.id.flContainerCategories, fragment);
+        RecommendationsFragment fragment = new RecommendationsFragment();
+        fragmentTransaction.add(R.id.flContainer, fragment);
         fragmentTransaction.commit();
     }
 }

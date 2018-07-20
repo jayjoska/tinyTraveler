@@ -1,5 +1,6 @@
 package com.kychow.jayjoska.models;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,8 +22,8 @@ public class Place {
         //extracting values from JSON
         place.name = jsonObject.getString("name");
         //access Category and grab title string
-        JSONObject categories = jsonObject.getJSONObject("categories");
-        place.category = categories.getString("title");
+        JSONArray categories = jsonObject.getJSONArray("categories");
+        // place.category = categories.getString("title");
         place.businessURL = jsonObject.getString("url");
         place.imgURL = jsonObject.getString("image_url");
         place.rating = jsonObject.getLong("rating");
