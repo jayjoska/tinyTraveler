@@ -8,13 +8,13 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
 
 /**
- * @brief CustomWindowAdapter displays a window with custom text set by the user above a pin in maps.
+ * @brief MapsInfoWindowAdapter displays a window with custom text set by the user above a pin in maps.
  * @uses MapActivity for basic maps functionality
  */
-class CustomWindowAdapter implements GoogleMap.InfoWindowAdapter {
+class MapsInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
     LayoutInflater mInflater;
 
-    public CustomWindowAdapter(LayoutInflater i){
+    public MapsInfoWindowAdapter(LayoutInflater i){
         mInflater = i;
     }
 
@@ -22,7 +22,7 @@ class CustomWindowAdapter implements GoogleMap.InfoWindowAdapter {
     @Override
     public View getInfoContents(Marker marker) {
         // Getting view from the layout file
-        View v = mInflater.inflate(R.layout.custom_info_window, null);
+        View v = mInflater.inflate(R.layout.maps_info_window, null);
         // Populate fields
         TextView title = (TextView) v.findViewById(R.id.tv_info_window_title);
         title.setText(marker.getTitle());

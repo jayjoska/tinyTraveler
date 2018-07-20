@@ -51,7 +51,7 @@ public class RecommendationsFragment extends Fragment {
 
     // Added by Jose (most of the code in this file is auto-generated
     private RecyclerView mRecyclerView;
-    private RecsAdapter mAdapter;
+    private RecommendationsAdapter mAdapter;
     private ArrayList<Place> mRecs;
     private AsyncHttpClient client;
 
@@ -86,7 +86,7 @@ public class RecommendationsFragment extends Fragment {
         }
 
         mRecs = new ArrayList<>();
-        mAdapter = new RecsAdapter(mRecs);
+        mAdapter = new RecommendationsAdapter(mRecs);
         client = new AsyncHttpClient();
         client.addHeader("Authorization", "Bearer " + getString(R.string.yelp_api_key));
 

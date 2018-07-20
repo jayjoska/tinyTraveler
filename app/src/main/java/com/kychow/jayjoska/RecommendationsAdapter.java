@@ -15,12 +15,12 @@ import com.kychow.jayjoska.models.Place;
 import java.util.ArrayList;
 
 
-public class RecsAdapter extends RecyclerView.Adapter<RecsAdapter.ViewHolder> {
+public class RecommendationsAdapter extends RecyclerView.Adapter<RecommendationsAdapter.ViewHolder> {
 
     private ArrayList<Place> mRecs;
     private Context context;
 
-    public RecsAdapter(ArrayList<Place> recs) {
+    public RecommendationsAdapter(ArrayList<Place> recs) {
         mRecs = recs;
     }
 

@@ -90,7 +90,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                 @Override
                 public void onMapReady(GoogleMap map) {
                     loadMap(map);
-                    map.setInfoWindowAdapter(new CustomWindowAdapter(getLayoutInflater()));
+                    map.setInfoWindowAdapter(new MapsInfoWindowAdapter(getLayoutInflater()));
                 }
             });
         } else {

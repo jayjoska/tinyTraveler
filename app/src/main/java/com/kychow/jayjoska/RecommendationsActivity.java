@@ -10,7 +10,7 @@ import android.support.v7.app.AppCompatActivity;
  * TEST CLASS, PLEASE IGNORE
  * ###############################
  */
-public class RecsTempActivity extends AppCompatActivity {
+public class RecommendationsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
