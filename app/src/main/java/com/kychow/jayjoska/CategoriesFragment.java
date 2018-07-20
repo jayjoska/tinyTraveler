@@ -1,6 +1,7 @@
 package com.kychow.jayjoska;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,6 +24,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import cz.msebera.android.httpclient.Header;
 
 /**
@@ -41,12 +44,11 @@ public class CategoriesFragment extends Fragment
     private OnFragmentInteractionListener mListener;
 
     private AsyncHttpClient client;
-    private ArrayList<String> mSelections;
     private RecyclerView mRecyclerView;
     private CategoryAdapter mAdapter;
     private ArrayList<String> mCategories;
-    //@BindView(R.id.next_btn) FloatingActionButton next_btn;
-    FloatingActionButton nextBtn;
+    @BindView(R.id.next_btn) FloatingActionButton nextBtn;
+    private ArrayList<String> mSelections;
 
     public CategoriesFragment() {
         // Required empty public constructor
@@ -93,6 +95,7 @@ public class CategoriesFragment extends Fragment
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_categories, container, false);
+        ButterKnife.bind(this, view);
         return view;
     }
 
@@ -114,18 +117,16 @@ public class CategoriesFragment extends Fragment
         mRecyclerView.setAdapter(mAdapter);
         getCategories();
 
-        /*
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mSelections.size() == 5) {
-                    Intent mapIntent = new Intent(MainActivity.this, MapActivity.class);
-                    mapIntent.putExtra("categories", mCategories); // TODO connect categories to map
+                    Intent mapIntent = new Intent(getContext(), MapActivity.class);
+                    //mapIntent.putExtra("categories", mCategories); // TODO connect categories to map
                     startActivity(mapIntent);
                 }
             }
         });
-        */
     }
 
     /*
