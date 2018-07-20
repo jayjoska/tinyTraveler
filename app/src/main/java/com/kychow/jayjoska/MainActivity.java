@@ -1,10 +1,28 @@
 package com.kychow.jayjoska;
 
+import android.content.Intent;
 import android.os.Bundle;
+<<<<<<< HEAD
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.View;
+
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+=======
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+>>>>>>> master
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     // Temporal variables for testing
     // private static final double TEMP_LATITUDE = 37.484377;
     // private static final double TEMP_LONGITUDE = -122.148304;
+
 
     @BindView(R.id.bottom_navigation) BottomNavigationView bottomNavigationView;
     final FragmentManager fragmentManager = getSupportFragmentManager();

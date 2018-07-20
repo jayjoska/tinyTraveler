@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 /*
@@ -25,6 +27,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     ArrayList<String> mCategories;
     private Context context;
     private ArrayList<String> selection;
+
 
     public CategoryAdapter(ArrayList<String> categories) {
         mCategories = categories;
@@ -58,6 +61,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         return position;
     }
 
+
     public ArrayList<String> getSelection() {
         return selection;
     }
@@ -83,12 +87,16 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView mIcon;
         private TextView mName;
+        private FloatingActionButton mBtn;
+        private static final int NUM_OF_CATEGORIES = 5;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             mIcon = itemView.findViewById(R.id.ivIcon);
             mName = itemView.findViewById(R.id.tvName);
+            // Super shady syntax. Taken from https://stackoverflow.com/questions/11227591/how-to-reference-the-current-or-main-activity-from-another-class
+            mBtn = ((MainActivity)context).findViewById(R.id.btnNext);
 
             itemView.setOnClickListener(this);
         }
@@ -98,13 +106,22 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             int pos = getAdapterPosition();
             if (pos != RecyclerView.NO_POSITION) {
                 String category = mCategories.get(pos);
-                if (selection.contains(category) || selection.size() > 4) {
+                if (selection.contains(category)) {
                     selection.remove(category);
                     itemView.setBackgroundColor(Color.TRANSPARENT);
                 } else {
-                    selection.add(category);
-                    itemView.setBackgroundColor(ContextCompat.getColor(v.getContext(), R.color.soft_green));
+                    if (selection.size() < NUM_OF_CATEGORIES) {
+                        selection.add(category);
+                        itemView.setBackgroundColor(ContextCompat.getColor(v.getContext(), R.color.soft_green));
+                    } else {
+                        Toast.makeText(context, context.getString(R.string.categories_message), Toast.LENGTH_SHORT).show();
+                    }
                 }
+            }
+            if (selection.size() == NUM_OF_CATEGORIES) {
+                mBtn.setVisibility(View.VISIBLE);
+            } else {
+                mBtn.setVisibility(View.INVISIBLE);
             }
 
             Log.i("Adapter", selection.toString());
