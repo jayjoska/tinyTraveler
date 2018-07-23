@@ -28,6 +28,10 @@
 * tutorial on [git branching](https://learngitbranching.js.org/) - **follow!**
 * [visualizing git tutorial](http://git-school.github.io/visualizing-git/) - **follow!** 
 
+# 4. Facebook Android source code search 
+
+* if you want to search for a certain string in the Facebook android search code, search with the format ```abgs stringToSearch``` in bunnylol (android big grep string). For instance, if you want to see how often the .replace method for fragments is used, search [```abds .replace(```](https://our.intern.facebook.com/intern/codesearch/?q=.replace%28+repo%3Afbandroid+regex%3Aoff&source=redirect). 
+
 # 4. Submitting a Diff to Phabricator / Arcanist 
 
 1.  ```git pull``` to make sure you have the latest version on git. 
