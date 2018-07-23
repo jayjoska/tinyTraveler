@@ -11,7 +11,7 @@ TODO create maps fragment so this file is used -->
 		android:id="@+id/mapView"
 		android:layout_width="wrap_content"
 		android:layout_height="400dp"
-		android:layout_alignParentStart="true"
+		android:layout_alignParentLeft="true"
 		android:layout_alignParentTop="true" >
 	</com.google.android.gms.maps.MapView>
 

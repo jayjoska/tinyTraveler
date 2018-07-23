@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
-import com.google.android.gms.maps.SupportMapFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

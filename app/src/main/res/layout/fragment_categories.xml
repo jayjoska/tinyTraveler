@@ -22,7 +22,7 @@
         android:clickable="false"
         android:src="@drawable/chevron_right"
         app:fabSize="normal"
-        app:backgroundTint="@color/v_soft_green"
+        app:backgroundTint="@color/soft_green"
         app:useCompatPadding="true"/>
 
 </RelativeLayout>

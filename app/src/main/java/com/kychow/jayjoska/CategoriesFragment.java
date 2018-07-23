@@ -85,7 +85,7 @@ public class CategoriesFragment extends Fragment
         for (int i = 0; i < categoryAliases.length; i++)
         {
             mCategories.add(categoryAliases[i]);
-            Log.d("categoryAliases", categoryAliases[i]);
+            Log.d("CategoriesFragment", categoryAliases[i]);
         }
     }
 
@@ -137,7 +137,7 @@ public class CategoriesFragment extends Fragment
      * @output void
      */
     public void getCategories() {
-        String url = "";
+        String url;
 
         // todo migrate category aliases to categories fragment
         final String[] categoryAliases = MainActivity.getCategoryAliases();
@@ -147,13 +147,15 @@ public class CategoriesFragment extends Fragment
             client.get(url, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    String alias = null;
+                    String alias;
                     try {
                         JSONObject category = response.getJSONObject("category");
                         alias = category.getString("alias");
-                        mCategories.add(alias);
-                        mAdapter.notifyItemInserted(mCategories.size() - 1);
-                        Log.i("getCategories", alias);
+                        if (Categories.getAliasAndTitle().containsKey(alias)) {
+                            mCategories.add(alias);
+                            mAdapter.notifyItemInserted(mCategories.size() - 1);
+                            Log.i("getCategories", alias);
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -162,7 +164,7 @@ public class CategoriesFragment extends Fragment
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                     try {
-                        Log.i("getCategories", errorResponse.getJSONObject("error").getString("code"));
+                        Log.i("CategoriesFragment", errorResponse.getJSONObject("error").getString("code"));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

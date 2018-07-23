@@ -4,7 +4,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/*@brief Place model utilizes Yelp Fusion API to parse corresponding data for initial recommendations*/
+/**
+ * @brief Place model utilizes Yelp Fusion API to parse corresponding data for initial recommendations
+ * */
 public class Place {
     private String name;
     private String category;
@@ -23,6 +25,7 @@ public class Place {
         place.name = jsonObject.getString("name");
         //access Category and grab title string
         JSONArray categories = jsonObject.getJSONArray("categories");
+        //TODO: figure out how to grab single category (initially returns JSONArray)
         // place.category = categories.getString("title");
         place.businessURL = jsonObject.getString("url");
         place.imgURL = jsonObject.getString("image_url");

@@ -15,9 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.kychow.jayjoska.models.Icons;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /*
  * @brief CategoryAdapter is the adapter for the RecyclerView in the opening screen
@@ -31,13 +31,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     ArrayList<String> mCategories;
     private Context context;
     private ArrayList<String> selection;
-    private Icons drawables;
-
+    private HashMap<String, Object> drawables;
+    private HashMap<String, String> alias;
 
     public CategoryAdapter(ArrayList<String> categories) {
         mCategories = categories;
         selection = new ArrayList<>();
-        drawables = new Icons();
+        drawables = Categories.getDrawables();
+        alias = Categories.getAliasAndTitle();
     }
 
     @NonNull
@@ -53,10 +54,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String category = mCategories.get(position);
-        holder.mName.setText(category);
+        if (drawables.containsKey(category)) {
+            holder.mName.setText(alias.get(category));
+        }
 
         Glide.with(context)
-             .load(drawables.matchDrawable(category))
+             .load(drawables.get(category))
              .into(holder.mIcon);
     }
 
@@ -126,7 +129,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                 } else {
                     if (selection.size() < NUM_OF_CATEGORIES) {
                         selection.add(category);
-                        itemView.setBackgroundColor(ContextCompat.getColor(v.getContext(), R.color.soft_green));
+                        itemView.setBackgroundColor(ContextCompat.getColor(v.getContext(), R.color.v_soft_green));
                     } else {
                         Toast.makeText(context, context.getString(R.string.categories_message), Toast.LENGTH_SHORT).show();
                     }
