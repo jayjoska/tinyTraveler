@@ -286,12 +286,12 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
 
     // Display the alert that adds the marker
     private void showAlertDialogForPoint(final LatLng point) {
-        // inflate item_message.xml view
+        // inflate item_maps_message.xml view
         View messageView = LayoutInflater.from(MapActivity.this).
-                inflate(R.layout.item_message, null);
+                inflate(R.layout.item_maps_message, null);
         // Create alert dialog builder
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        // set item_message.xml to AlertDialog builder
+        // set item_maps_message.xml to AlertDialog builder
         alertDialogBuilder.setView(messageView);
 
         // Create alert dialog

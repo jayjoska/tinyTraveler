@@ -1,12 +1,14 @@
 package com.kychow.jayjoska;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
+import com.google.android.gms.maps.SupportMapFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,11 +33,11 @@ public class MainActivity extends AppCompatActivity {
     // private static final double TEMP_LATITUDE = 37.484377;
     // private static final double TEMP_LONGITUDE = -122.148304;
 
-
     @BindView(R.id.bottom_navigation) BottomNavigationView bottomNavigationView;
     final FragmentManager fragmentManager = getSupportFragmentManager();
     android.support.v4.app.Fragment categoriesFragment;
     android.support.v4.app.Fragment mapFragment;
+    android.support.v4.app.Fragment itineraryFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +45,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        final CategoriesFragment categoriesFragment= new CategoriesFragment();
+        final SupportMapFragment mapFragment        = new SupportMapFragment();
+        final RecommendationsFragment recommendationsFragment = new RecommendationsFragment();
+        final ItineraryFragment itineraryFragment   = new ItineraryFragment();
 
-        CategoriesFragment categoriesFragment = new CategoriesFragment();
-        fragmentTransaction.add(R.id.flContainerCategories, categoriesFragment);
-        fragmentTransaction.commit();
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.fragmentContainer, categoriesFragment)
+                .add(R.id.fragmentContainer, itineraryFragment)
+                .commit();
 
-        /* TODO in later diff
         // handle navigation selection
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -60,23 +65,25 @@ public class MainActivity extends AppCompatActivity {
                         switch (item.getItemId()) {
                             case R.id.action_categories:
                                 fragmentTransaction = fragmentManager.beginTransaction();
-                                fragmentTransaction.replace(R.id.rvCategories, categoriesFragment).commit();
+                                // TODO refactor fragment transaction logic for separate map/rec container
+                                //fragmentTransaction.show(categoriesFragment).commit();
+                                fragmentTransaction.replace(R.id.fragmentContainer, categoriesFragment).commit();
                                 return true;
                             case R.id.action_map:
                                 fragmentTransaction = fragmentManager.beginTransaction();
-                                fragmentTransaction.replace(R.id.map_fragment, mapFragment).commit();
+                                //fragmentTransaction.hide(categoriesFragment);
+                                fragmentTransaction.replace(R.id.fragmentContainer, mapFragment).commit();
                                 return true;
                             case R.id.action_itinerary:
-                                /*
-                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                fragmentTransaction.replace(R.id.flContainer, fragment3).commit();
+                                fragmentTransaction = fragmentManager.beginTransaction();
+                                //fragmentTransaction.show(itineraryFragment);
+                                fragmentTransaction.replace(R.id.fragmentContainer, itineraryFragment).commit();
                                 return true;
                             default:
                                 return true;
                         }
                     }
                 });
-                */
     }
 
     // TODO migrate category aliases

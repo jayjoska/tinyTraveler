@@ -1,4 +1,6 @@
-package com.kychow.jayjoska;
+package com.kychow.jayjoska.models;
+
+import com.kychow.jayjoska.R;
 
 import java.util.HashMap;
 

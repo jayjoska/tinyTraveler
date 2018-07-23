@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.kychow.jayjoska.models.Icons;
 
 import java.util.ArrayList;
 

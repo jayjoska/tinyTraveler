@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -120,13 +121,9 @@ public class CategoriesFragment extends Fragment
             @Override
             public void onClick(View v) {
                 if (mSelections.size() == 5) {
-                    // Syntax copied from https://stackoverflow.com/questions/21028786/how-do-i-open-a-new-fragment-from-another-fragment
-                    // Consider changing tempTag for something better (once you figure out what that tag is used for)
-                    RecommendationsFragment recsFrag = new RecommendationsFragment();
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.flContainerCategories, recsFrag,"tempTag")
-                            .addToBackStack(null)
-                            .commit();
+                    RecommendationsFragment recommendationsFragment = new RecommendationsFragment();
+                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.fragmentContainer, recommendationsFragment).commit();
                 }
             }
         });
