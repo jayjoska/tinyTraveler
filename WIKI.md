@@ -32,7 +32,7 @@
 
 * if you want to search for a certain string in the Facebook android search code, search with the format ```abgs stringToSearch``` in bunnylol (android big grep string). For instance, if you want to see how often the .replace method for fragments is used, search [```abds .replace(```](https://our.intern.facebook.com/intern/codesearch/?q=.replace%28+repo%3Afbandroid+regex%3Aoff&source=redirect). 
 
-# 4. Submitting a Diff to Phabricator / Arcanist 
+# 5. Submitting a Diff to Phabricator / Arcanist 
 
 1.  ```git pull``` to make sure you have the latest version on git. 
 
@@ -52,23 +52,23 @@
 
 9. Once your diff has been approved, land it using ```arc diff```. 
 
-# 5. Arcanist troubleshooting 
+# 6. Arcanist troubleshooting 
 
 * [Arcanist tutorial](https://secure.phabricator.com/book/phabricator/article/arcanist/) for a list of commonly used arc commands 
 * use ```arc help``` for a list of arc commands. Similarly, use ```git help``` for a list of git commands. 
 
 * [Example diff](https://our.intern.facebook.com/intern/diff/D8863972/)
 
-# 6. Task list 
+# 7. Task list 
 * [Task list](https://our.intern.facebook.com/intern/tasks/?q=237727237042012)
 
-# 7. References
+# 8. References for stretch goals 
 * [Syncing Google Places with Yelp](https://7webpages.com/blog/yelp-and-google-places-api-combined/)
 * [interesting read](https://books.google.com/books?id=rFxCDwAAQBAJ&pg=PA298&lpg=PA298&dq=yelp+categories+aliases+api+call+example&source=bl&ots=Mqi2cgvGfq&sig=Ckyr8otWOuijnwTNoCVOpnAFMfQ&hl=en&sa=X&ved=0ahUKEwiX6tjg86TcAhUtnOAKHUjPAKcQ6AEIaTAF#v=onepage&q&f=true) about places of interest from yelp, google, facebook, and foursquare (p. 297-300)
 * [Documentation on the Distance Matrix API](https://developers.google.com/maps/documentation/distance-matrix/intro) which is used for calculating distances and travel times between points.
 * [Communicating between fragments](https://developer.android.com/training/basics/fragments/communicating) 
 
-# 8. Setting up Phabricator / Arcanist 
+# 9. Setting up Phabricator / Arcanist 
 
 * [Arcanist Reference](https://our.intern.facebook.com/intern/wiki/Arcanist/#installing-an-arcanist-c)
 
