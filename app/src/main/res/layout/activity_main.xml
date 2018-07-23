@@ -14,7 +14,13 @@
         android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/bottom_navigation" />
+        android:layout_below="@id/flContainerMap"
+        android:layout_above="@id/bottom_navigation"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/flContainerMap" />
 
     <FrameLayout
         android:id="@+id/fragmentMapsContainer"

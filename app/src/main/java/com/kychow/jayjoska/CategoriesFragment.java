@@ -1,13 +1,11 @@
 package com.kychow.jayjoska;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -41,7 +39,8 @@ public class CategoriesFragment extends Fragment
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+
+    private OnNextButtonClicked mListener;
 
     private AsyncHttpClient client;
     private RecyclerView mRecyclerView;
@@ -121,9 +120,9 @@ public class CategoriesFragment extends Fragment
             @Override
             public void onClick(View v) {
                 if (mSelections.size() == 5) {
-                    RecommendationsFragment recommendationsFragment = new RecommendationsFragment();
-                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.fragmentContainer, recommendationsFragment).commit();
+                    // Syntax copied from https://stackoverflow.com/questions/21028786/how-do-i-open-a-new-fragment-from-another-fragment
+                    RecommendationsFragment recsFrag = new RecommendationsFragment();
+                    mListener.sendCategories(mSelections);
                 }
             }
         });
@@ -148,13 +147,13 @@ public class CategoriesFragment extends Fragment
             client.get(url, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    String title = null;
+                    String alias = null;
                     try {
                         JSONObject category = response.getJSONObject("category");
-                        title = category.getString("title");
-                        mCategories.add(title);
+                        alias = category.getString("alias");
+                        mCategories.add(alias);
                         mAdapter.notifyItemInserted(mCategories.size() - 1);
-                        Log.i("getCategories", title);
+                        Log.i("getCategories", alias);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -179,23 +178,26 @@ public class CategoriesFragment extends Fragment
 
     }
 
+    // Commented out because it's unused. Also the name of onFragmentInteraction changed to onNextButtonClicked
+    /*
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
     }
+    */
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        /*
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }*/
+
+        try {
+            mListener = (OnNextButtonClicked) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnNextButtonClicked");
+        }
     }
 
 
@@ -215,9 +217,8 @@ public class CategoriesFragment extends Fragment
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    public interface OnNextButtonClicked {
+        void sendCategories(ArrayList<String> categories);
     }
 
     /*

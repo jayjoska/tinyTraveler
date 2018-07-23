@@ -8,8 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +51,11 @@ public class RecommendationsFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecommendationsAdapter mAdapter;
     private ArrayList<Place> mRecs;
+    private ArrayList<String> mCategories;
     private AsyncHttpClient client;
+
+    // Bad style (I think). We need to figure out how to make this better
+    private int iteratorCounter;
 
     public RecommendationsFragment() {
         // Required empty public constructor
@@ -89,13 +91,6 @@ public class RecommendationsFragment extends Fragment {
         mAdapter = new RecommendationsAdapter(mRecs);
         client = new AsyncHttpClient();
         client.addHeader("Authorization", "Bearer " + getString(R.string.yelp_api_key));
-
-        // For testing purposes only
-        /*
-        mRecs.add("1");
-        mRecs.add("2");
-        mRecs.add("3");
-        */
     }
 
     @Override
@@ -112,7 +107,7 @@ public class RecommendationsFragment extends Fragment {
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
-        getRecs();
+        getRecs(mCategories);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -133,8 +128,7 @@ public class RecommendationsFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
-    }
-        }*/
+        */
     }
 
     @Override
@@ -158,54 +152,52 @@ public class RecommendationsFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    /*
+    /**
      * @brief getRecs fetches a list of businesses for a particular category
-     *
-     * #################
-     * Current status: hardcoded the "food" category
-     * #################
      *
      * @input -
      * @output void
+     *
+     * TODO: GET LOCATION DYNAMICALLY (I.E. GET THE LATITUDE AND LONGITUDE FROM GPS)
      */
-    private void getRecs() {
+    private void getRecs(ArrayList<String> categories) {
         final double TEMP_LATITUDE = 37.484377;
         final double TEMP_LONGITUDE = -122.148304;
+        final int catSize = categories.size();
+        final int RECS_PER_CATEGORY = 5;
+
         String url = getString(R.string.base_url) + getString(R.string.search);
 
         RequestParams params = new RequestParams();
 
-        // params.put("location", "san+francisco");
-        params.put("categories", "food");
-        params.put("latitude", TEMP_LATITUDE);
-        params.put("longitude", TEMP_LONGITUDE);
+        params.put("location", "san+francisco");
+        // params.put("latitude", TEMP_LATITUDE);
+        // params.put("longitude", TEMP_LONGITUDE);
 
-
-        client.get(url, params, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    JSONArray businesses = response.getJSONArray("businesses");
-                    Place place = new Place();
-                    for (int i = 0; i < 20; i++) {
-                        place = Place.fromJSON(businesses.getJSONObject(i));
-                        mRecs.add(place);
-                        mAdapter.notifyItemInserted(mRecs.size() - 1);
+        for (iteratorCounter = 0; iteratorCounter < catSize; iteratorCounter++) {
+            params.put("categories", categories.get(iteratorCounter));
+            client.get(url, params, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    try {
+                        for (int i = 0; i < RECS_PER_CATEGORY; i++) {
+                            JSONArray businesses = response.getJSONArray("businesses");
+                            Place place = Place.fromJSON(businesses.getJSONObject(i));
+                            mRecs.add(place);
+                            mAdapter.notifyItemInserted(mRecs.size() - 1);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                try {
-                    Log.i("RecsFragment", errorResponse.getJSONObject("error").getString("code"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
-            }
-        });
+            });
+            params.remove("categories");
+        }
 
+    }
+
+    public void setCategories(ArrayList<String> categories) {
+        mCategories = categories;
     }
 }
