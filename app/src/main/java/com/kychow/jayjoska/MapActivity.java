@@ -93,54 +93,54 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMapLon
                     map.setInfoWindowAdapter(new MapsInfoWindowAdapter(getLayoutInflater()));
                 }
             });
-        } else {
-            Toast.makeText(this, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
+} else {
+        Toast.makeText(this, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
         }
 
-    }
+        }
 
-    protected void loadMap(GoogleMap googleMap) {
+protected void loadMap(GoogleMap googleMap) {
         map = googleMap;
         if (map != null) {
-            // Map is ready
-            Toast.makeText(this, "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
-            MapActivityPermissionsDispatcher.getMyLocationWithPermissionCheck(this);
-            MapActivityPermissionsDispatcher.startLocationUpdatesWithPermissionCheck(this);
-            map.setOnMapLongClickListener(this);
+        // Map is ready
+        Toast.makeText(this, "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
+        MapActivityPermissionsDispatcher.getMyLocationWithPermissionCheck(this);
+        MapActivityPermissionsDispatcher.startLocationUpdatesWithPermissionCheck(this);
+        map.setOnMapLongClickListener(this);
         } else {
-            Toast.makeText(this, "Error - Map was null!!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Error - Map was null!!", Toast.LENGTH_SHORT).show();
         }
-    }
+        }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+@Override
+public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         MapActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
-    }
+        }
 
-    @SuppressWarnings({"MissingPermission"})
-    @NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
+@SuppressWarnings({"MissingPermission"})
+@NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
     void getMyLocation() {
-        map.setMyLocationEnabled(true);
+            map.setMyLocationEnabled(true);
 
-        FusedLocationProviderClient locationClient = getFusedLocationProviderClient(this);
-        locationClient.getLastLocation()
-                .addOnSuccessListener(new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        if (location != null) {
-                            onLocationChanged(location);
-                        }
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("MapActivity", "Error trying to get last GPS location");
-                        e.printStackTrace();
-                    }
-                });
-    }
+            FusedLocationProviderClient locationClient = getFusedLocationProviderClient(this);
+            locationClient.getLastLocation()
+            .addOnSuccessListener(new OnSuccessListener<Location>() {
+@Override
+public void onSuccess(Location location) {
+        if (location != null) {
+        onLocationChanged(location);
+        }
+        }
+        })
+        .addOnFailureListener(new OnFailureListener() {
+@Override
+public void onFailure(@NonNull Exception e) {
+        Log.d("MapActivity", "Error trying to get last GPS location");
+        e.printStackTrace();
+        }
+        });
+        }
 
     /*
      * Called when the Activity becomes visible.

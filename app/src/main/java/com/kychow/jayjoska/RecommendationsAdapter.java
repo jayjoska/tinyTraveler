@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.kychow.jayjoska.models.Place;
 
 import java.util.ArrayList;
@@ -42,6 +43,10 @@ public class RecommendationsAdapter extends RecyclerView.Adapter<Recommendations
         holder.mDistance.setText(Long.toString(place.getDistance()));
         holder.mCategory.setText(place.getCategory());
         holder.mRating.setRating(place.getRating());
+
+        Glide.with(context)
+                .load(place.getImgURL())
+                .into(holder.mImage);
     }
 
     @Override

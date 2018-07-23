@@ -3,16 +3,28 @@ package com.kychow.jayjoska;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.kychow.jayjoska.models.Place;
 import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import cz.msebera.android.httpclient.Header;
 
 
 /**
@@ -83,6 +95,15 @@ public class ItineraryFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_itinerary, container, false);
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        mRecyclerView = view.findViewById(R.id.rvItinerary);
+
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setAdapter(mAdapter);
+        getItinerary();
+    }
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -122,5 +143,55 @@ public class ItineraryFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    /*
+     * @brief getRecs fetches a list of businesses for a particular category
+     *
+     * #################
+     * Current status: hardcoded the "food" category
+     * #################
+     *
+     * @input -
+     * @output void
+     */
+    private void getItinerary() {
+        final double TEMP_LATITUDE = 37.484377;
+        final double TEMP_LONGITUDE = -122.148304;
+        String url = getString(R.string.base_url) + getString(R.string.search);
+
+        RequestParams params = new RequestParams();
+
+        // params.put("location", "san+francisco");
+        params.put("categories", "food");
+        params.put("latitude", TEMP_LATITUDE);
+        params.put("longitude", TEMP_LONGITUDE);
+
+        client.get(url, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    JSONArray businesses = response.getJSONArray("businesses");
+                    Place place = new Place();
+                    for (int i = 0; i < 20; i++) {
+                        place = Place.fromJSON(businesses.getJSONObject(i));
+                        mItinerary.add(place);
+                        mAdapter.notifyItemInserted(mItinerary.size() - 1);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    Log.i("ItineraryFragment", errorResponse.getJSONObject("error").getString("code"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
 }
