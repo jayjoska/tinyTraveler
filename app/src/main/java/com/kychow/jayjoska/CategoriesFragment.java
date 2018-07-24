@@ -120,8 +120,6 @@ public class CategoriesFragment extends Fragment
             @Override
             public void onClick(View v) {
                 if (mSelections.size() == 5) {
-                    // Syntax copied from https://stackoverflow.com/questions/21028786/how-do-i-open-a-new-fragment-from-another-fragment
-                    RecommendationsFragment recsFrag = new RecommendationsFragment();
                     mListener.sendCategories(mSelections);
                 }
             }

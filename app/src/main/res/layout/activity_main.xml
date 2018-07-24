@@ -14,26 +14,7 @@
         android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/flContainerMap"
         android:layout_above="@id/bottom_navigation"/>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:id="@+id/flContainerMap" />
-
-    <FrameLayout
-        android:id="@+id/fragmentMapsContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/fragmentRecommendationsContainer" />
-    <!-- todo how should we format the size of the map vs rec e.g. on ipads? -->
-
-    <FrameLayout
-        android:id="@+id/fragmentRecommendationsContainer"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_above="@id/bottom_navigation" />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"

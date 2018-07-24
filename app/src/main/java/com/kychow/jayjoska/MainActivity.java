@@ -34,8 +34,7 @@ public class MainActivity extends AppCompatActivity implements CategoriesFragmen
     final FragmentManager fragmentManager = getSupportFragmentManager();
     // TODO: Should fragments be Final onCreate?
     CategoriesFragment categoriesFragment;
-    RecommendationsFragment recommendationsFragment;
-    MapFragment mapFragment;
+    MapsRecsFragment mapsRecsFragment;
     ItineraryFragment itineraryFragment;
 
     @Override
@@ -45,14 +44,12 @@ public class MainActivity extends AppCompatActivity implements CategoriesFragmen
         ButterKnife.bind(this);
 
         categoriesFragment = new CategoriesFragment();
-        recommendationsFragment = new RecommendationsFragment();
-        mapFragment = new MapFragment();
+        mapsRecsFragment = new MapsRecsFragment();
         itineraryFragment = new ItineraryFragment();
 
         final FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragmentContainer, categoriesFragment)
-                .add(R.id.fragmentContainer, itineraryFragment)
                 .commit();
 
         // handle navigation selection
@@ -66,17 +63,20 @@ public class MainActivity extends AppCompatActivity implements CategoriesFragmen
                                 fragmentTransaction = fragmentManager.beginTransaction();
                                 // TODO refactor fragment transaction logic for separate map/rec container
                                 //fragmentTransaction.show(categoriesFragment).commit();
-                                fragmentTransaction.replace(R.id.fragmentContainer, categoriesFragment).commit();
+                                fragmentTransaction.replace(R.id.fragmentContainer, categoriesFragment)
+                                        .commit();
                                 return true;
                             case R.id.action_map:
                                 fragmentTransaction = fragmentManager.beginTransaction();
                                 //fragmentTransaction.hide(categoriesFragment);
-                                fragmentTransaction.replace(R.id.fragmentContainer, mapFragment).commit();
+                                fragmentTransaction.replace(R.id.fragmentContainer, mapsRecsFragment)
+                                        .commit();
                                 return true;
                             case R.id.action_itinerary:
                                 fragmentTransaction = fragmentManager.beginTransaction();
                                 //fragmentTransaction.show(itineraryFragment);
-                                fragmentTransaction.replace(R.id.fragmentContainer, itineraryFragment).commit();
+                                fragmentTransaction.replace(R.id.fragmentContainer, itineraryFragment)
+                                        .commit();
                                 return true;
                             default:
                                 return true;
@@ -96,15 +96,14 @@ public class MainActivity extends AppCompatActivity implements CategoriesFragmen
      */
     @Override
     public void sendCategories(ArrayList<String> categories) {
-        recommendationsFragment.setCategories(categories);
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction
-                .replace(R.id.fragmentRecommendationsContainer, recommendationsFragment,"recsFrag")
-                .addToBackStack(null);
-        fragmentTransaction
-                .replace(R.id.flContainerMap, mapFragment, "mapFrag")
-                .addToBackStack(null);
-        fragmentTransaction.commit();
+        if (categories != null) {
+            mapsRecsFragment.setCategories(categories);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction
+                    .replace(R.id.fragmentContainer, mapsRecsFragment, "mapsRecsFrag")
+                    .addToBackStack(null)
+                    .commit();
+        }
     }
 }
