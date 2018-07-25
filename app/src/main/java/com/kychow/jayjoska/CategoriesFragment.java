@@ -2,12 +2,9 @@ package com.kychow.jayjoska;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -40,14 +37,15 @@ public class CategoriesFragment extends Fragment
     private String mParam2;
 
 
-    private OnNextButtonClicked mListener;
+    private OnNextButtonClicked mListener; // Handles communications with activity
+    private AsyncHttpClient client; // Talks to the Yelp Fusion API
+    private RecyclerView mRecyclerView; // Holds the grid of Categories
+    private CategoryAdapter mAdapter; // Handles the communication between RV and mCategories
+    private ArrayList<String> mCategories; // Holds all the categories from the Fusion API
+    @BindView(R.id.next_btn) FloatingActionButton nextBtn; // Button that takes you to the next frag
+    private ArrayList<String> mSelections; // Contains the categories that the user selects
+    private Bundle savedState;
 
-    private AsyncHttpClient client;
-    private RecyclerView mRecyclerView;
-    private CategoryAdapter mAdapter;
-    private ArrayList<String> mCategories;
-    @BindView(R.id.next_btn) FloatingActionButton nextBtn;
-    private ArrayList<String> mSelections;
 
     public CategoriesFragment() {
         // Required empty public constructor
@@ -78,15 +76,6 @@ public class CategoriesFragment extends Fragment
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-        mCategories = new ArrayList<>();
-        mAdapter = new CategoryAdapter(mCategories);
-        String[] categoryAliases = MainActivity.getCategoryAliases();
-        for (int i = 0; i < categoryAliases.length; i++)
-        {
-            mCategories.add(categoryAliases[i]);
-            Log.d("CategoriesFragment", categoryAliases[i]);
-        }
     }
 
     @Override
@@ -95,26 +84,26 @@ public class CategoriesFragment extends Fragment
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_categories, container, false);
         ButterKnife.bind(this, view);
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         mRecyclerView = view.findViewById(R.id.rvCategories);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerView.setAdapter(mAdapter);
-
+        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
         client = new AsyncHttpClient();
         // Provide API with API key
         client.addHeader("Authorization", "Bearer " + getString(R.string.yelp_api_key));
-        mCategories = new ArrayList<>(); // change to array of categories
-        mAdapter = new CategoryAdapter(mCategories);
-        mSelections = mAdapter.getSelection();
-        mRecyclerView = view.findViewById(R.id.rvCategories);
 
-        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        mRecyclerView.setAdapter(mAdapter);
-        getCategories();
+        if (savedState == null) {
+            savedState = new Bundle();
+            mCategories = new ArrayList<>(); // change to array of categories
+            mAdapter = new CategoryAdapter(mCategories);
+            mSelections = mAdapter.getSelection();
+            mRecyclerView.setAdapter(mAdapter);
+            getCategories();
+        } else {
+            mCategories = (ArrayList<String>) savedState.getSerializable("mCategories");
+            mSelections = (ArrayList<String>) savedState.getSerializable("mSelections");
+            mAdapter = new CategoryAdapter(mCategories);
+            mRecyclerView.setAdapter(mAdapter);
+            mAdapter.setSelection(mSelections);
+        }
 
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,6 +113,14 @@ public class CategoriesFragment extends Fragment
                 }
             }
         });
+        return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        savedState.putSerializable("mCategories", mCategories);
+        savedState.putSerializable("mSelections", mSelections);
     }
 
     /*
@@ -211,84 +208,7 @@ public class CategoriesFragment extends Fragment
         void sendCategories(ArrayList<String> categories);
     }
 
-    /*
-    private RecyclerView mRecyclerView;
-    private ListAdapter mListadapter;
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
-        View view = inflater.inflate(R.layout.fragment_categories, container, false);
-
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.rvCategories);
-
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(layoutManager);
-
-        String[] categoryAliases = MainActivity.getCategoryAliases();
-        ArrayList data = new ArrayList<String>();
-        for (int i = 0; i < categoryAliases.length; i++)
-        {
-            data.add(categoryAliases[i]);
-            Log.d("categoryAliases", categoryAliases[i]);
-        }
-
-        mListadapter = new ListAdapter(data);
-        mRecyclerView.setAdapter(mListadapter);
-
-        return view;
-    }
-
-    public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>
-    {
-        private ArrayList<String> dataList;
-
-        public ListAdapter(ArrayList<String> data)
-        {
-            this.dataList = data;
-        }
-
-        public class ViewHolder extends RecyclerView.ViewHolder
-        {
-            TextView textViewText;
-
-            public ViewHolder(View itemView)
-            {
-                super(itemView);
-                this.textViewText = (TextView) itemView.findViewById(R.id.text);
-            }
-        }
-
-        @Override
-        public ListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
-        {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category, parent, false);
-
-            ViewHolder viewHolder = new ViewHolder(view);
-            return viewHolder;
-        }
-
-        @Override
-        public void onBindViewHolder(ListAdapter.ViewHolder holder, final int position)
-        {
-            holder.textViewText.setText(dataList.get(position));
-
-            holder.itemView.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    Toast.makeText(getActivity(), "Item " + position + " is clicked.", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-
-        @Override
-        public int getItemCount()
-        {
-            return dataList.size();
-        }
-    }
-    */
+    // nothing
+    // more nothing
+    // Testing again
 }

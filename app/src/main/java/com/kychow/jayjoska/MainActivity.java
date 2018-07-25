@@ -67,18 +67,21 @@ public class MainActivity extends AppCompatActivity
                                 // TODO refactor fragment transaction logic for separate map/rec container
                                 //fragmentTransaction.show(categoriesFragment).commit();
                                 fragmentTransaction.replace(R.id.fragmentContainer, categoriesFragment)
+                                        .addToBackStack("cats")
                                         .commit();
                                 return true;
                             case R.id.action_map:
                                 fragmentTransaction = fragmentManager.beginTransaction();
                                 //fragmentTransaction.hide(categoriesFragment);
                                 fragmentTransaction.replace(R.id.fragmentContainer, mapsRecsFragment)
+                                        .addToBackStack("map")
                                         .commit();
                                 return true;
                             case R.id.action_itinerary:
                                 fragmentTransaction = fragmentManager.beginTransaction();
                                 //fragmentTransaction.show(itineraryFragment);
                                 fragmentTransaction.replace(R.id.fragmentContainer, itineraryFragment)
+                                        .addToBackStack("itinerary")
                                         .commit();
                                 return true;
                             default:
