@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.kychow.jayjoska.models.Place;
+
 import java.util.ArrayList;
 
 
@@ -20,7 +22,7 @@ import java.util.ArrayList;
  * Use the {@link MapsRecsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MapsRecsFragment extends Fragment {
+public class MapsRecsFragment extends Fragment implements RecommendationsFragment.OnPlacesPopulatedListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -108,6 +110,15 @@ public class MapsRecsFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void sendRecs(ArrayList<Place> places) {
+        if (mapFragment == null) {
+            mapFragment = new MapFragment();
+        }
+        mapFragment.setPlaces(places);
+        mapFragment.addMarkers();
     }
 
     /**

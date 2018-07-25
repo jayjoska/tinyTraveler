@@ -178,16 +178,6 @@ public class CategoriesFragment extends Fragment
 
     }
 
-    // Commented out because it's unused. Also the name of onFragmentInteraction changed to onNextButtonClicked
-    /*
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-    */
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

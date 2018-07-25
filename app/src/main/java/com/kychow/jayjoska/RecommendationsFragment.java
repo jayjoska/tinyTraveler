@@ -1,7 +1,6 @@
 package com.kychow.jayjoska;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -29,7 +28,7 @@ import cz.msebera.android.httpclient.Header;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link RecommendationsFragment.OnFragmentInteractionListener} interface
+ * {@link RecommendationsFragment.OnPlacesPopulatedListener} interface
  * to handle interaction events.
  * Use the {@link RecommendationsFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -44,7 +43,7 @@ public class RecommendationsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+    private OnPlacesPopulatedListener mListener;
 
 
     // Added by Jose (most of the code in this file is auto-generated
@@ -110,25 +109,15 @@ public class RecommendationsFragment extends Fragment {
         getRecs(mCategories);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
-        /*
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+        try {
+            mListener = (OnPlacesPopulatedListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnPlacesPopulatedListener");
         }
-        */
     }
 
     @Override
@@ -147,9 +136,8 @@ public class RecommendationsFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    public interface OnPlacesPopulatedListener {
+        void sendRecs(ArrayList<Place> places);
     }
 
     /**
@@ -170,9 +158,9 @@ public class RecommendationsFragment extends Fragment {
 
         RequestParams params = new RequestParams();
 
-        params.put("location", "san+francisco");
-        // params.put("latitude", TEMP_LATITUDE);
-        // params.put("longitude", TEMP_LONGITUDE);
+        // params.put("location", "san+francisco");
+        params.put("latitude", TEMP_LATITUDE);
+        params.put("longitude", TEMP_LONGITUDE);
 
         for (iteratorCounter = 0; iteratorCounter < catSize; iteratorCounter++) {
             params.put("categories", categories.get(iteratorCounter));
@@ -185,6 +173,9 @@ public class RecommendationsFragment extends Fragment {
                             Place place = Place.fromJSON(businesses.getJSONObject(i));
                             mRecs.add(place);
                             mAdapter.notifyItemInserted(mRecs.size() - 1);
+                            if (i == RECS_PER_CATEGORY - 1 && iteratorCounter == catSize) {
+                                mListener.sendRecs(mRecs);
+                            }
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -194,7 +185,6 @@ public class RecommendationsFragment extends Fragment {
             });
             params.remove("categories");
         }
-
     }
 
     public void setCategories(ArrayList<String> categories) {

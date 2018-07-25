@@ -8,6 +8,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import com.kychow.jayjoska.models.Place;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -18,7 +20,8 @@ import butterknife.ButterKnife;
  *
  * The contents of this class will probably be migrated at some point to the final activity/fragments
  */
-public class MainActivity extends AppCompatActivity implements CategoriesFragment.OnNextButtonClicked{
+public class MainActivity extends AppCompatActivity
+        implements CategoriesFragment.OnNextButtonClicked, RecommendationsFragment.OnPlacesPopulatedListener{
 
     private static final String TAG = "MainActivity";
     // Hardcoded aliases for the main 22 categories.
@@ -105,5 +108,10 @@ public class MainActivity extends AppCompatActivity implements CategoriesFragmen
                     .addToBackStack(null)
                     .commit();
         }
+    }
+
+    @Override
+    public void sendRecs(ArrayList<Place> places) {
+        mapsRecsFragment.sendRecs(places);
     }
 }

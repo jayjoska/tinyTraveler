@@ -14,8 +14,8 @@ public class Place {
     private String businessURL;
     private long rating;
     private long distance;
-    private long latitude;
-    private long longitude;
+    private double latitude;
+    private double longitude;
     
     /* Takes in a JSONObject and parses for the corresponding data*/
     public static Place fromJSON(JSONObject jsonObject) throws JSONException {
@@ -33,8 +33,8 @@ public class Place {
         place.distance = jsonObject.getLong("distance");
         //access Coordinates and grab latitude and longitude
         JSONObject coord = jsonObject.getJSONObject("coordinates");
-        place.latitude = coord.getLong("latitude");
-        place.longitude = coord.getLong("longitude");
+        place.latitude = coord.getDouble("latitude");
+        place.longitude = coord.getDouble("longitude");
 
         return place;
     }
@@ -63,11 +63,11 @@ public class Place {
         return distance;
     }
 
-    public long getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public long getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 }

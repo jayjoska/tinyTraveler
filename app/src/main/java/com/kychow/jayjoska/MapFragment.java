@@ -17,6 +17,12 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.kychow.jayjoska.models.Place;
+
+import java.util.ArrayList;
 
 
 /**
@@ -42,6 +48,7 @@ public class MapFragment extends Fragment {
     private GoogleMap map;
     Location mCurrentLocation;
     private MapView mapView;
+    private ArrayList<Place> places;
     private final static String KEY_LOCATION = "location";
 
     public MapFragment() {
@@ -197,5 +204,25 @@ public class MapFragment extends Fragment {
         } else {
             Toast.makeText(getActivity(), "Error - Map was null!!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void setPlaces(ArrayList<Place> placeList) {
+        places = placeList;
+    }
+
+    public void addMarkers() {
+        map.clear();
+        Marker marker;
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        for (Place place : places) {
+            marker = map.addMarker(new MarkerOptions()
+                    .position(new LatLng(place.getLatitude(), place.getLongitude()))
+                    .title(place.getName()));
+            builder.include(marker.getPosition());
+        }
+        LatLngBounds bounds = builder.build();
+        int padding = 100; // offset from edges of the map in pixels
+        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+        map.animateCamera(cu);
     }
 }
