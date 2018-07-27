@@ -63,26 +63,31 @@ public class MainActivity extends AppCompatActivity
                         FragmentTransaction fragmentTransaction;
                         switch (item.getItemId()) {
                             case R.id.action_categories:
+                                replaceFragment(categoriesFragment);
+                                /*
                                 fragmentTransaction = fragmentManager.beginTransaction();
-                                // TODO refactor fragment transaction logic for separate map/rec container
-                                //fragmentTransaction.show(categoriesFragment).commit();
                                 fragmentTransaction.replace(R.id.fragmentContainer, categoriesFragment)
                                         .addToBackStack("cats")
                                         .commit();
+                                        */
                                 return true;
                             case R.id.action_map:
+                                replaceFragment(mapsRecsFragment);
+                                /*
                                 fragmentTransaction = fragmentManager.beginTransaction();
-                                //fragmentTransaction.hide(categoriesFragment);
                                 fragmentTransaction.replace(R.id.fragmentContainer, mapsRecsFragment)
                                         .addToBackStack("map")
                                         .commit();
+                                        */
                                 return true;
                             case R.id.action_itinerary:
+                                replaceFragment(itineraryFragment);
+                                /*
                                 fragmentTransaction = fragmentManager.beginTransaction();
-                                //fragmentTransaction.show(itineraryFragment);
                                 fragmentTransaction.replace(R.id.fragmentContainer, itineraryFragment)
                                         .addToBackStack("itinerary")
                                         .commit();
+                                        */
                                 return true;
                             default:
                                 return true;
@@ -104,17 +109,28 @@ public class MainActivity extends AppCompatActivity
     public void sendCategories(ArrayList<String> categories) {
         if (categories != null) {
             mapsRecsFragment.setCategories(categories);
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction
-                    .replace(R.id.fragmentContainer, mapsRecsFragment, "mapsRecsFrag")
-                    .addToBackStack(null)
-                    .commit();
+            replaceFragment(mapsRecsFragment);
         }
     }
 
     @Override
     public void sendRecs(ArrayList<Place> places) {
         mapsRecsFragment.sendRecs(places);
+    }
+
+    // Method copied from https://stackoverflow.com/questions/18305945/how-to-resume-fragment-from-backstack-if-exists
+    private void replaceFragment (android.support.v4.app.Fragment fragment){
+        String backStateName = fragment.getClass().getName();
+        String fragmentTag = backStateName;
+
+        FragmentManager manager = getSupportFragmentManager();
+        boolean fragmentPopped = manager.popBackStackImmediate (backStateName, 0);
+
+        if (!fragmentPopped && manager.findFragmentByTag(fragmentTag) == null){ //fragment not in back stack, create it.
+            FragmentTransaction ft = manager.beginTransaction();
+            ft.replace(R.id.fragmentContainer, fragment);
+            ft.addToBackStack(backStateName);
+            ft.commit();
+        }
     }
 }

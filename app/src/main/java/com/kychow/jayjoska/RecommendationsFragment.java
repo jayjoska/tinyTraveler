@@ -2,8 +2,6 @@ package com.kychow.jayjoska;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -51,9 +49,12 @@ public class RecommendationsFragment extends Fragment {
     private RecommendationsAdapter mAdapter;
     private ArrayList<Place> mRecs;
     private ArrayList<String> mCategories;
+    private ArrayList<String> mOldCategories;
     private AsyncHttpClient client;
+    private Bundle savedState;
 
     // Bad style (I think). We need to figure out how to make this better
+    // This is used to iterate through the categories
     private int iteratorCounter;
 
     public RecommendationsFragment() {
@@ -89,6 +90,7 @@ public class RecommendationsFragment extends Fragment {
         mRecs = new ArrayList<>();
         mAdapter = new RecommendationsAdapter(mRecs);
         client = new AsyncHttpClient();
+        mOldCategories = new ArrayList<>();
         client.addHeader("Authorization", "Bearer " + getString(R.string.yelp_api_key));
     }
 
@@ -97,16 +99,14 @@ public class RecommendationsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_recommendations, container, false);
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         mRecyclerView = view.findViewById(R.id.rvRecs);
-
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
+        if (savedState == null) {
+            savedState = new Bundle();
+        }
         getRecs(mCategories);
+        return view;
     }
 
     @Override
@@ -117,6 +117,14 @@ public class RecommendationsFragment extends Fragment {
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
                     + " must implement OnPlacesPopulatedListener");
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        for (String s : mCategories) {
+            mOldCategories.add(s);
         }
     }
 
@@ -162,17 +170,22 @@ public class RecommendationsFragment extends Fragment {
         params.put("latitude", TEMP_LATITUDE);
         params.put("longitude", TEMP_LONGITUDE);
 
+        removeClearedRecs(categories);
         for (iteratorCounter = 0; iteratorCounter < catSize; iteratorCounter++) {
-            params.put("categories", categories.get(iteratorCounter));
+            final String category = categories.get(iteratorCounter);
+            params.put("categories", category);
             client.get(url, params, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     try {
                         for (int i = 0; i < RECS_PER_CATEGORY; i++) {
-                            JSONArray businesses = response.getJSONArray("businesses");
-                            Place place = Place.fromJSON(businesses.getJSONObject(i));
-                            mRecs.add(place);
-                            mAdapter.notifyItemInserted(mRecs.size() - 1);
+                            if (!mOldCategories.contains(category)) {
+                                JSONArray businesses = response.getJSONArray("businesses");
+                                Place place = Place.fromJSON(businesses.getJSONObject(i));
+                                place.setCategory(category);
+                                mRecs.add(place);
+                                mAdapter.notifyItemInserted(mRecs.size() - 1);
+                            }
                             if (i == RECS_PER_CATEGORY - 1 && iteratorCounter == catSize) {
                                 mListener.sendRecs(mRecs);
                             }
@@ -184,6 +197,29 @@ public class RecommendationsFragment extends Fragment {
                 }
             });
             params.remove("categories");
+        }
+    }
+
+    /**
+     * @brief removeClearedRecs checks which elements of mRecs must be removed and removes them
+     *
+     * @input -
+     * @output void
+     *
+     */
+    private void removeClearedRecs(ArrayList<String> categories) {
+        ArrayList<Place> toRemove = new ArrayList<>();
+        for (String s : mOldCategories) {
+            if (!categories.contains(s)) {
+                for (Place place : mRecs) {
+                    if (place.getCategory().equals(s)) {
+                        toRemove.add(place);
+                    }
+                }
+            }
+        }
+        for (Place place : toRemove) {
+            mRecs.remove(place);
         }
     }
 

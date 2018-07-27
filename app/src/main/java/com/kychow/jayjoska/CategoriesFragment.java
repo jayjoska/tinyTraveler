@@ -118,9 +118,9 @@ public class CategoriesFragment extends Fragment
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
         savedState.putSerializable("mCategories", mCategories);
         savedState.putSerializable("mSelections", mSelections);
+        super.onDestroyView();
     }
 
     /*

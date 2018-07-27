@@ -46,9 +46,10 @@ public class MapFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     private GoogleMap map;
-    Location mCurrentLocation;
+    private Location mCurrentLocation;
     private MapView mapView;
     private ArrayList<Place> places;
+    private Bundle savedState;
     private final static String KEY_LOCATION = "location";
 
     public MapFragment() {
@@ -93,6 +94,7 @@ public class MapFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
         mapView = view.findViewById(R.id.mvMap);
+        savedState = new Bundle();
         mapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
@@ -164,6 +166,11 @@ public class MapFragment extends Fragment {
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         mapView.onDestroy();
@@ -211,18 +218,20 @@ public class MapFragment extends Fragment {
     }
 
     public void addMarkers() {
-        map.clear();
-        Marker marker;
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-        for (Place place : places) {
-            marker = map.addMarker(new MarkerOptions()
-                    .position(new LatLng(place.getLatitude(), place.getLongitude()))
-                    .title(place.getName()));
-            builder.include(marker.getPosition());
+        if (map != null) {
+            map.clear();
+            Marker marker;
+            LatLngBounds.Builder builder = new LatLngBounds.Builder();
+            for (Place place : places) {
+                marker = map.addMarker(new MarkerOptions()
+                        .position(new LatLng(place.getLatitude(), place.getLongitude()))
+                        .title(place.getName()));
+                builder.include(marker.getPosition());
+            }
+            LatLngBounds bounds = builder.build();
+            int padding = 100; // offset from edges of the map in pixels
+            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+            map.animateCamera(cu);
         }
-        LatLngBounds bounds = builder.build();
-        int padding = 100; // offset from edges of the map in pixels
-        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
-        map.animateCamera(cu);
     }
 }

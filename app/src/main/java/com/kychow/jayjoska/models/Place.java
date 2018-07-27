@@ -26,7 +26,7 @@ public class Place {
         //access Category and grab title string
         JSONArray categories = jsonObject.getJSONArray("categories");
         //TODO: figure out how to grab single category (initially returns JSONArray)
-        // place.category = categories.getString("title");
+        place.category = "";
         place.businessURL = jsonObject.getString("url");
         place.imgURL = jsonObject.getString("image_url");
         place.rating = jsonObject.getLong("rating");
@@ -69,6 +69,10 @@ public class Place {
 
     public double getLongitude() {
         return longitude;
+    }
+
+    public void setCategory(String s) {
+        category = s;
     }
 }
 
