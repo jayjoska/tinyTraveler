@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * Use the {@link MapsRecsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MapsRecsFragment extends Fragment implements RecommendationsFragment.OnPlacesPopulatedListener{
+public class MapsRecsFragment extends Fragment implements RecommendationsFragment.OnPlacesPopulatedListener, RecommendationsFragment.OnSelectedListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -33,6 +33,7 @@ public class MapsRecsFragment extends Fragment implements RecommendationsFragmen
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private RecommendationsFragment.OnSelectedListener mOnSelectedListener;
 
     private MapFragment mapFragment;
     private RecommendationsFragment recommendationsFragment;
@@ -80,8 +81,7 @@ public class MapsRecsFragment extends Fragment implements RecommendationsFragmen
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_maps_recs, container, false);
     }
@@ -96,14 +96,12 @@ public class MapsRecsFragment extends Fragment implements RecommendationsFragmen
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        /*
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+        try {
+            mOnSelectedListener = (RecommendationsFragment.OnSelectedListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnRecSelectedListener");
         }
-        */
     }
 
     @Override
@@ -120,6 +118,12 @@ public class MapsRecsFragment extends Fragment implements RecommendationsFragmen
         mapFragment.setPlaces(places);
         mapFragment.addMarkers();
     }
+
+    @Override
+    public void inflateDetails() {
+        mOnSelectedListener.inflateDetails();
+    }
+
 
     /**
      * This interface must be implemented by activities that contain this

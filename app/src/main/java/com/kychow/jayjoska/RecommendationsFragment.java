@@ -2,6 +2,8 @@ package com.kychow.jayjoska;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -42,7 +44,6 @@ public class RecommendationsFragment extends Fragment {
     private String mParam2;
 
     private OnPlacesPopulatedListener mListener;
-
 
     // Added by Jose (most of the code in this file is auto-generated
     private RecyclerView mRecyclerView;
@@ -95,10 +96,15 @@ public class RecommendationsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_recommendations, container, false);
+        final View view = inflater.inflate(R.layout.fragment_recommendations, container, false);
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         mRecyclerView = view.findViewById(R.id.rvRecs);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
@@ -106,7 +112,6 @@ public class RecommendationsFragment extends Fragment {
             savedState = new Bundle();
         }
         getRecs(mCategories);
-        return view;
     }
 
     @Override
@@ -225,5 +230,10 @@ public class RecommendationsFragment extends Fragment {
 
     public void setCategories(ArrayList<String> categories) {
         mCategories = categories;
+    }
+
+    /*@brief custom listener to send data from Recommendations to Details*/
+    public interface OnSelectedListener {
+        void inflateDetails();
     }
 }

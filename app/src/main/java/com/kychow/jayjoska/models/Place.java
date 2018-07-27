@@ -8,27 +8,29 @@ import org.json.JSONObject;
  * @brief Place model utilizes Yelp Fusion API to parse corresponding data for initial recommendations
  * */
 public class Place {
+    private String id;
     private String name;
     private String category;
     private String imgURL;
-    private String businessURL;
+    private int reviewCount;
     private long rating;
-    private long distance;
+    private double distance;
     private double latitude;
     private double longitude;
-    
+
     /* Takes in a JSONObject and parses for the corresponding data*/
     public static Place fromJSON(JSONObject jsonObject) throws JSONException {
         Place place = new Place();
 
         //extracting values from JSON
+        place.id = jsonObject.getString("id");
         place.name = jsonObject.getString("name");
         //access Category and grab title string
         JSONArray categories = jsonObject.getJSONArray("categories");
         //TODO: figure out how to grab single category (initially returns JSONArray)
         place.category = "";
-        place.businessURL = jsonObject.getString("url");
         place.imgURL = jsonObject.getString("image_url");
+        place.reviewCount = jsonObject.getInt("review_count");
         place.rating = jsonObject.getLong("rating");
         place.distance = jsonObject.getLong("distance");
         //access Coordinates and grab latitude and longitude
@@ -37,6 +39,10 @@ public class Place {
         place.longitude = coord.getDouble("longitude");
 
         return place;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {
@@ -51,15 +57,16 @@ public class Place {
         return imgURL;
     }
 
-    public String getBusinessURL() {
-        return businessURL;
+    public int getReviewCount() {
+        return reviewCount;
     }
 
     public long getRating() {
         return rating;
     }
 
-    public long getDistance() {
+    public double getDistance() {
+        distance = distance * 0.00062137;
         return distance;
     }
 

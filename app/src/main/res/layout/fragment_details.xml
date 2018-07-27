@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetailsFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/ivBusinessPhoto"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_margin="5dp"
+                app:srcCompat="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tvBusinessName"
+                android:layout_width="365dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/ivBusinessPhoto"
+                android:layout_toLeftOf="@id/tvPrice"
+                android:layout_below="@+id/ivBusinessPhoto"
+                android:layout_marginRight="5dp"
+                android:text="Business Name"
+                android:textColor="@color/black"
+                android:textSize="25sp" />
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/ivBusinessPhoto"
+                android:layout_below="@+id/tvBusinessName"
+                android:layout_marginTop="5dp"
+                style="?android:attr/ratingBarStyleIndicator"
+                android:numStars="5"
+                android:scaleX="0.7"
+                android:scaleY="0.7"
+                android:stepSize="0.1"
+                android:transformPivotX="0dp"
+                android:transformPivotY="0dp"/>
+
+            <TextView
+                android:id="@+id/tvPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="17dp"
+                android:layout_alignRight="@+id/ivBusinessPhoto"
+                android:layout_below="@+id/ivBusinessPhoto"
+                android:text="Price"
+                android:textColor="@color/black"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/reviews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/ivBusinessPhoto"
+                android:layout_below="@+id/ratingBar"
+                android:text="Reviews"
+                android:textColor="@color/black"
+                android:textSize="18sp"/>
+
+            <ImageView
+                android:id="@+id/ivReview1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignLeft="@+id/ivBusinessPhoto"
+                android:layout_below="@+id/reviews"
+                android:layout_marginRight="5dp"
+                app:srcCompat="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tvName1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/reviews"
+                android:layout_toRightOf="@+id/ivReview1"
+                android:text="name 1"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/tvReview1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/ivReview1"
+                android:layout_alignRight="@+id/ivBusinessPhoto"
+                android:layout_toRightOf="@id/ivReview1"
+                android:text="review 1" />
+
+            <ImageView
+                android:id="@+id/ivReview2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignLeft="@+id/ivBusinessPhoto"
+                android:layout_below="@+id/tvReview1"
+                android:layout_marginTop="5dp"
+                app:srcCompat="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tvName2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/ivReview2"
+                android:layout_toRightOf="@+id/ivReview1"
+                android:layout_below="@id/tvReview1"
+                android:text="name 2"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/tvReview2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/ivReview2"
+                android:layout_alignBottom="@id/ivReview2"
+                android:text="review 2"
+                android:layout_marginLeft="5dp"/>
+
+            <ImageView
+                android:id="@+id/ivReview3"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignLeft="@+id/ivBusinessPhoto"
+                android:layout_below="@+id/tvReview2"
+                android:layout_marginTop="5dp"
+                app:srcCompat="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tvName3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/ivReview3"
+                android:layout_toRightOf="@+id/ivReview1"
+                android:layout_below="@id/tvReview2"
+                android:text="name 3"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/tvReview3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/tvName1"
+                android:layout_alignBottom="@id/ivReview3"
+                android:text="review 3" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</ScrollView>

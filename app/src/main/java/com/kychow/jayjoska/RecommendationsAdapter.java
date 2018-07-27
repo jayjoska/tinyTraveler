@@ -11,6 +11,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.kychow.jayjoska.models.Place;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class RecommendationsAdapter extends RecyclerView.Adapter<Recommendations
 
     private ArrayList<Place> mRecs;
     private Context context;
+    private RecommendationsFragment.OnSelectedListener mListener;
 
     public RecommendationsAdapter(ArrayList<Place> recs) {
         mRecs = recs;
@@ -40,12 +42,15 @@ public class RecommendationsAdapter extends RecyclerView.Adapter<Recommendations
         Place place = mRecs.get(position);
         // Populate views
         holder.mName.setText(place.getName());
-        holder.mDistance.setText(Long.toString(place.getDistance()));
+        holder.mDistance.setText(String.format("%.2f miles", place.getDistance()));
         holder.mCategory.setText(place.getCategory());
         holder.mRating.setRating(place.getRating());
 
+        //allows for the center crop to be applied for image
+        RequestOptions options = new RequestOptions();
         Glide.with(context)
                 .load(place.getImgURL())
+                .apply(options.centerCrop())
                 .into(holder.mImage);
     }
 
@@ -54,7 +59,7 @@ public class RecommendationsAdapter extends RecyclerView.Adapter<Recommendations
         return mRecs.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView mImage;
         private TextView mName;
         private RatingBar mRating;
@@ -69,6 +74,15 @@ public class RecommendationsAdapter extends RecyclerView.Adapter<Recommendations
             mRating = itemView.findViewById(R.id.ratingBar);
             mDistance = itemView.findViewById(R.id.tvDistance);
             mCategory = itemView.findViewById(R.id.tvCategory);
+            mListener = (RecommendationsFragment.OnSelectedListener) itemView.getContext();
+
+            itemView.setOnClickListener(this);
+        }
+
+        //allows for user to click anywhere in view and be brought to details page
+        @Override
+        public void onClick(View v) {
+            mListener.inflateDetails();
         }
     }
 }

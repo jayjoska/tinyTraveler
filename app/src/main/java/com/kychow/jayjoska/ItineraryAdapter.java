@@ -40,7 +40,7 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Place place = mItinerary.get(position);
         holder.mName.setText(place.getName());
-        holder.mDistance.setText(Long.toString(place.getDistance()));
+        holder.mDistance.setText(Double.toString(place.getDistance()));
         holder.mCategory.setText(place.getCategory());
         holder.mRating.setRating(place.getRating());
     }
