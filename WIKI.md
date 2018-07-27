@@ -52,7 +52,7 @@
 
 9. Once your diff has been approved, land it using ```arc diff```. 
 
-10. Check [this](https://willdemaine.ghost.io/a-simpler-phabricator-stacked-diff-workflow/) out if you need to make a diff based on another diff.
+10. Check [this](https://willdemaine.ghost.io/a-simpler-phabricator-stacked-diff-workflow/) out if you need to make a diff based on another diff that has not yet been accepted.
 
 # 6. Arcanist troubleshooting 
 
