@@ -43,7 +43,10 @@ public class RecommendationsAdapter extends RecyclerView.Adapter<Recommendations
         // Populate views
         holder.mName.setText(place.getName());
         holder.mDistance.setText(String.format("%.2f miles", place.getDistance()));
-        holder.mCategory.setText(place.getCategory());
+        String alias = place.getCategory();
+        if (Categories.getAliasAndTitle().containsKey(alias)) {
+            holder.mCategory.setText(Categories.getAliasAndTitle().get(alias));
+        }
         holder.mRating.setRating(place.getRating());
 
         //allows for the center crop to be applied for image
