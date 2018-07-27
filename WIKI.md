@@ -52,6 +52,8 @@
 
 9. Once your diff has been approved, land it using ```arc diff```. 
 
+10. Check [this](https://willdemaine.ghost.io/a-simpler-phabricator-stacked-diff-workflow/) out if you need to make a diff based on another diff.
+
 # 6. Arcanist troubleshooting 
 
 * [Arcanist tutorial](https://secure.phabricator.com/book/phabricator/article/arcanist/) for a list of commonly used arc commands 
