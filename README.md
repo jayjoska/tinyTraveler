@@ -9,21 +9,21 @@ Jayjoska allows users to create a customized travel itinerary based off a presel
 * [X] User can select 5 categories
 * [X] User can press a "Done" button to go to the recommendations
 * [x] The list of places includes a Name, Rating, Distance, and Category
-* [ ] User can tap on one of the suggestions (from the recommendations view) to see a detail view.
+* [X] The Recommendations activity shows a map and a list of all the places
+* [X] Using the bottom navigation bar, the user can access his/her itinerary
 ------------
-* [ ] The Recommendations activity shows a map and a list of all the places
-* [ ] Using the bottom navigation bar, the user can access his/her itinerary
+* [X] The map has pins on all the locations in the suggestions
+* [ ] User can tap on one of the suggestions (from the recommendations view) to see a detail view.
 * [ ] User has a way to include (or not) each element of the list in his/her final itinerary
+* [ ] The detail view includes Image, Name, Rating, Price, Hours, Learn More (a link te Yelp), and Reviews.
+------------
 * [ ] The itinerary includes a list of the places, which can be sorted to make the final itinerary
 * [ ] Each element of the list includes a Picture, Name, and Time to spend in that place (which the user can specify)
-------------
 * [ ] The itinerary includes a map with a drawn out route
-* [ ] The map has pins on all the locations in the suggestions
 * [ ] There is a "Recalculate" button to recalculate the route after the user reorganizes the suggestions
 
 ## Optional User Stories
 * There should be a button to export/share
-* The detail view includes Image, Name, Rating, Price, Hours, Learn More (a link te Yelp), and Reviews.
 ------------
 * Recommendations change based on size of geofence
 * Add subinterests to main categories
