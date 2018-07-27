@@ -1,9 +1,14 @@
 package com.kychow.jayjoska;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -52,6 +57,10 @@ public class RecommendationsFragment extends Fragment {
     private ArrayList<String> mCategories;
     private ArrayList<String> mOldCategories;
     private AsyncHttpClient client;
+    private Location mLocation;
+    private Location mOldLocation;
+    private double lat;
+    private double lng;
     private Bundle savedState;
 
     // Bad style (I think). We need to figure out how to make this better
@@ -111,6 +120,21 @@ public class RecommendationsFragment extends Fragment {
         if (savedState == null) {
             savedState = new Bundle();
         }
+
+        // Syntax taken from https://stackoverflow.com/questions/19722712/get-user-current-location-android
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            Criteria criteria = new Criteria();
+            LocationManager locationManager = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
+            String provider = locationManager.getBestProvider(criteria, false);
+            mLocation = locationManager.getLastKnownLocation(provider);
+            lat =  mLocation.getLatitude();
+            lng = mLocation.getLongitude();
+        } else {
+            lat = 37.484377;
+            lng = -122.148304;
+        }
+
         getRecs(mCategories);
     }
 
@@ -131,6 +155,7 @@ public class RecommendationsFragment extends Fragment {
         for (String s : mCategories) {
             mOldCategories.add(s);
         }
+        mOldLocation = mLocation;
     }
 
     @Override
@@ -162,8 +187,6 @@ public class RecommendationsFragment extends Fragment {
      * TODO: GET LOCATION DYNAMICALLY (I.E. GET THE LATITUDE AND LONGITUDE FROM GPS)
      */
     private void getRecs(ArrayList<String> categories) {
-        final double TEMP_LATITUDE = 37.484377;
-        final double TEMP_LONGITUDE = -122.148304;
         final int catSize = categories.size();
         final int RECS_PER_CATEGORY = 5;
 
@@ -172,10 +195,11 @@ public class RecommendationsFragment extends Fragment {
         RequestParams params = new RequestParams();
 
         // params.put("location", "san+francisco");
-        params.put("latitude", TEMP_LATITUDE);
-        params.put("longitude", TEMP_LONGITUDE);
+        params.put("latitude", lat);
+        params.put("longitude", lng);
 
         removeClearedRecs(categories);
+
         for (iteratorCounter = 0; iteratorCounter < catSize; iteratorCounter++) {
             final String category = categories.get(iteratorCounter);
             params.put("categories", category);
@@ -184,7 +208,7 @@ public class RecommendationsFragment extends Fragment {
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     try {
                         for (int i = 0; i < RECS_PER_CATEGORY; i++) {
-                            if (!mOldCategories.contains(category)) {
+                            if (!mOldCategories.contains(category) && !mLocation.equals(mOldLocation)) {
                                 JSONArray businesses = response.getJSONArray("businesses");
                                 Place place = Place.fromJSON(businesses.getJSONObject(i));
                                 place.setCategory(category);
