@@ -6,8 +6,6 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -62,6 +60,8 @@ public class RecommendationsFragment extends Fragment {
     private double lat;
     private double lng;
     private Bundle savedState;
+
+    private static final int MAX_DISTANCE = 50; // Max distance between two points (in meters) so that you can consider them the same location
 
     // Bad style (I think). We need to figure out how to make this better
     // This is used to iterate through the categories
@@ -208,7 +208,7 @@ public class RecommendationsFragment extends Fragment {
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     try {
                         for (int i = 0; i < RECS_PER_CATEGORY; i++) {
-                            if (!mOldCategories.contains(category) && !mLocation.equals(mOldLocation)) {
+                            if (!mOldCategories.contains(category)) {
                                 JSONArray businesses = response.getJSONArray("businesses");
                                 Place place = Place.fromJSON(businesses.getJSONObject(i));
                                 place.setCategory(category);
@@ -238,6 +238,15 @@ public class RecommendationsFragment extends Fragment {
      */
     private void removeClearedRecs(ArrayList<String> categories) {
         ArrayList<Place> toRemove = new ArrayList<>();
+        if (mOldLocation != null  && mLocation != null) {
+            if (mLocation.distanceTo(mOldLocation ) > MAX_DISTANCE) {
+                for (Place place : mRecs) {
+                    toRemove.add(place);
+                }
+                mAdapter.remove(toRemove);
+                return;
+            }
+        }
         for (String s : mOldCategories) {
             if (!categories.contains(s)) {
                 for (Place place : mRecs) {
@@ -247,9 +256,7 @@ public class RecommendationsFragment extends Fragment {
                 }
             }
         }
-        for (Place place : toRemove) {
-            mRecs.remove(place);
-        }
+        mAdapter.remove(toRemove);
     }
 
     public void setCategories(ArrayList<String> categories) {

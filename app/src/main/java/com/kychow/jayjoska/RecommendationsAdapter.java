@@ -62,6 +62,16 @@ public class RecommendationsAdapter extends RecyclerView.Adapter<Recommendations
         return mRecs.size();
     }
 
+    public void remove(ArrayList<Place> toRemove) {
+        if (toRemove == null || toRemove.size() == 0) {
+            return;
+        }
+        for (Place place : toRemove) {
+            mRecs.remove(place);
+        }
+        notifyDataSetChanged();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView mImage;
         private TextView mName;
