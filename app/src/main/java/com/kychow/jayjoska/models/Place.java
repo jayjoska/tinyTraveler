@@ -32,7 +32,7 @@ public class Place {
         place.imgURL = jsonObject.getString("image_url");
         place.reviewCount = jsonObject.getInt("review_count");
         place.rating = jsonObject.getLong("rating");
-        place.distance = jsonObject.getLong("distance");
+        place.distance = jsonObject.getLong("distance") * 0.00062137;
         //access Coordinates and grab latitude and longitude
         JSONObject coord = jsonObject.getJSONObject("coordinates");
         place.latitude = coord.getDouble("latitude");
@@ -66,7 +66,6 @@ public class Place {
     }
 
     public double getDistance() {
-        distance = distance * 0.00062137;
         return distance;
     }
 
