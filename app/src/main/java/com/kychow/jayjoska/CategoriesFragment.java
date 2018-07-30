@@ -165,7 +165,7 @@ public class CategoriesFragment extends Fragment
                 }
             });
             try {
-                Thread.sleep(200);
+                Thread.sleep(210);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

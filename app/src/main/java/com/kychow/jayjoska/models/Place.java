@@ -1,22 +1,25 @@
 package com.kychow.jayjoska.models;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 /**
  * @brief Place model utilizes Yelp Fusion API to parse corresponding data for initial recommendations
  * */
+@Parcel
 public class Place {
-    private String id;
-    private String name;
-    private String category;
-    private String imgURL;
-    private int reviewCount;
-    private long rating;
-    private double distance;
-    private double latitude;
-    private double longitude;
+    public String id;
+    public String name;
+    public String category;
+    public String imgURL;
+    public String businessURL;
+    public String price;
+    public int reviewCount;
+    public long rating;
+    public double distance;
+    public double latitude;
+    public double longitude;
 
     /* Takes in a JSONObject and parses for the corresponding data*/
     public static Place fromJSON(JSONObject jsonObject) throws JSONException {
@@ -26,10 +29,15 @@ public class Place {
         place.id = jsonObject.getString("id");
         place.name = jsonObject.getString("name");
         //access Category and grab title string
-        JSONArray categories = jsonObject.getJSONArray("categories");
         //TODO: figure out how to grab single category (initially returns JSONArray)
         place.category = "";
         place.imgURL = jsonObject.getString("image_url");
+        place.businessURL = jsonObject.getString("url"); //use with /businesses/{id}
+        if (jsonObject.has("price")) {
+            place.price = jsonObject.getString("price"); //use with /businesses/{id}
+        } else {
+            place.price = "";
+        }
         place.reviewCount = jsonObject.getInt("review_count");
         place.rating = jsonObject.getLong("rating");
         place.distance = jsonObject.getLong("distance") * 0.00062137;
@@ -39,6 +47,10 @@ public class Place {
         place.longitude = coord.getDouble("longitude");
 
         return place;
+    }
+
+    public Place() {
+        //empty constructor needed by the Parceler library
     }
 
     public String getId() {
@@ -57,6 +69,12 @@ public class Place {
         return imgURL;
     }
 
+    public String getBusinessURL() { return businessURL; }
+
+    public String getPrice() {
+        return price;
+    }
+
     public int getReviewCount() {
         return reviewCount;
     }
@@ -65,9 +83,7 @@ public class Place {
         return rating;
     }
 
-    public double getDistance() {
-        return distance;
-    }
+    public double getDistance() { return distance; }
 
     public double getLatitude() {
         return latitude;

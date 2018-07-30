@@ -1,12 +1,28 @@
 package com.kychow.jayjoska;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.TextView;
+
+import com.bumptech.glide.request.RequestOptions;
+import com.kychow.jayjoska.models.Place;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.parceler.Parcels;
+
+import cz.msebera.android.httpclient.Header;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,17 +32,32 @@ import android.view.ViewGroup;
  * Use the {DetailsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+/**
+ * @brief Fragment showing details chosen from Recommendations fragment
+ * */
 public class DetailsFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    Place business;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    ImageView ivBusinessPhoto;
+    TextView tvBusinessName;
+    TextView tvPrice;
+    ImageView ivReview1;
+    ImageView ivReview2;
+    ImageView ivReview3;
+    TextView tvName1;
+    TextView tvName2;
+    TextView tvName3;
+    TextView tvReview1;
+    TextView tvReview2;
+    TextView tvReview3;
+    RatingBar ratingBar;
 
-    private OnFragmentInteractionListener mListener;
+    Context context;
+    AsyncHttpClient client;
+    RequestParams params;
+
+    //needed for Glide center crop
+    RequestOptions options;
 
     public DetailsFragment() {
         // Required empty public constructor
@@ -35,15 +66,33 @@ public class DetailsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
+        options = new RequestOptions();
+        client = new AsyncHttpClient();
+        client.addHeader("Authorization", "Bearer " + getString(R.string.yelp_api_key));
+        params = new RequestParams();
     }
 
+    // called when fragment draws its UI fpr the first time
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_details, container, false);
+        context = container.getContext();
+        business = Parcels.unwrap(getArguments().getParcelable("place"));
+
+        ivBusinessPhoto = view.findViewById(R.id.ivBusinessPhoto);
+        tvBusinessName = view.findViewById(R.id.tvBusinessName);
+        tvPrice = view.findViewById(R.id.tvPrice);
+        ivReview1 = view.findViewById(R.id.ivReview1);
+        ivReview2 = view.findViewById(R.id.ivReview2);
+        ivReview3 = view.findViewById(R.id.ivReview3);
+        tvName1 = view.findViewById(R.id.tvName1);
+        tvName2 = view.findViewById(R.id.tvName2);
+        tvName3 = view.findViewById(R.id.tvName3);
+        tvReview1 = view.findViewById(R.id.tvReview1);
+        tvReview2 = view.findViewById(R.id.tvReview2);
+        tvReview3 = view.findViewById(R.id.tvReview3);
+        ratingBar = view.findViewById(R.id.ratingBar);
 
         return view;
     }
@@ -51,6 +100,18 @@ public class DetailsFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        tvBusinessName.setText(business.getName());
+        tvPrice.setText(business.getPrice());
+        ratingBar.setRating(business.getRating());
+        getReviews();
+
+        GlideApp.with(context)
+                .load(business.getImgURL())
+                .apply(options.centerCrop())
+                .placeholder(R.drawable.default_user)
+                .into(ivBusinessPhoto);
+
     }
 
     @Override
@@ -61,22 +122,61 @@ public class DetailsFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    private void getReviews() {
+        String url = getString(R.string.base_url) + getString(R.string.businesses) + business.getId() + getString(R.string.reviews);
+        client.get(url, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    //grab JSONArray of reviews for business
+                    JSONArray reviews = response.getJSONArray("reviews");
+
+                    //grab individual reviewers from JSONArray (only allowed three reviews)
+                    JSONObject reviewer1 = reviews.getJSONObject(0).getJSONObject("user");
+                    JSONObject reviewer2 = reviews.getJSONObject(1).getJSONObject("user");
+                    JSONObject reviewer3 = reviews.getJSONObject(2).getJSONObject("user");
+
+                    tvName1.setText(reviewer1.getString("name"));
+                    tvReview1.setText(reviews.getJSONObject(0).getString("text"));
+                    Log.d("Review1", reviews.getJSONObject(0).getString("text"));
+                    GlideApp.with(context)
+                            .load(reviewer1.getString("image_url"))
+                            .placeholder(R.drawable.default_user)
+                            .apply(options.centerCrop())
+                            .into(ivReview1);
+
+                    tvName2.setText(reviewer2.getString("name"));
+                    tvReview2.setText(reviews.getJSONObject(1).getString("text"));
+                    GlideApp.with(context)
+                            .load(reviewer2.getString("image_url"))
+                            .placeholder(R.drawable.default_user)
+                            .apply(options.centerCrop())
+                            .into(ivReview2);
+
+                    tvName3.setText(reviewer3.getString("name"));
+                    tvReview3.setText(reviews.getJSONObject(2).getString("text"));
+                    GlideApp.with(context)
+                            .load(reviewer3.getString("image_url"))
+                            .placeholder(R.drawable.default_user)
+                            .apply(options.centerCrop())
+                            .into(ivReview3);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    Log.e("DetailsFragment", errorResponse.getJSONObject("error").getString("code"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
 }

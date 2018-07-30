@@ -100,9 +100,10 @@ public class MainActivity extends AppCompatActivity implements CategoriesFragmen
     }
 
     // TODO: add functionality to send a bundle to DetailsFragment
-    public void inflateDetails() {
+    public void inflateDetails(Bundle bundle) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        detailsFragment.setArguments(bundle);
         fragmentTransaction
                 .replace(R.id.fragmentContainer, detailsFragment)
                 .addToBackStack(null)

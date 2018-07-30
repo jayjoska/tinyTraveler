@@ -1,6 +1,7 @@
 package com.kychow.jayjoska;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,8 +15,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.kychow.jayjoska.models.Place;
 
-import java.util.ArrayList;
+import org.parceler.Parcels;
 
+import java.util.ArrayList;
 
 public class RecommendationsAdapter extends RecyclerView.Adapter<RecommendationsAdapter.ViewHolder> {
 
@@ -95,7 +97,13 @@ public class RecommendationsAdapter extends RecyclerView.Adapter<Recommendations
         //allows for user to click anywhere in view and be brought to details page
         @Override
         public void onClick(View v) {
-            mListener.inflateDetails();
+            int position = getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) {
+                Place place = mRecs.get(position);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("place", Parcels.wrap(place));
+                mListener.inflateDetails(bundle);
+            }
         }
     }
 }

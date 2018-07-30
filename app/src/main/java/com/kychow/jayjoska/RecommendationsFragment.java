@@ -1,5 +1,6 @@
 package com.kychow.jayjoska;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
@@ -265,6 +266,6 @@ public class RecommendationsFragment extends Fragment {
 
     /*@brief custom listener to send data from Recommendations to Details*/
     public interface OnSelectedListener {
-        void inflateDetails();
+        void inflateDetails(Bundle bundle);
     }
 }
