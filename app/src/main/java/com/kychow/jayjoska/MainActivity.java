@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.kychow.jayjoska.models.Place;
 
@@ -56,6 +57,12 @@ public class MainActivity extends AppCompatActivity implements CategoriesFragmen
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragmentContainer, categoriesFragment)
                 .commit();
+
+        if (categoriesFragment.isFirstTime()) {
+            bottomNavigationView.setVisibility(View.GONE);
+        } else {
+            bottomNavigationView.setVisibility(View.VISIBLE);
+        }
 
         // handle navigation selection
         bottomNavigationView.setOnNavigationItemSelectedListener(
@@ -123,6 +130,8 @@ public class MainActivity extends AppCompatActivity implements CategoriesFragmen
             ft.addToBackStack(backStateName);
             ft.commit();
         }
+
+        bottomNavigationView.setVisibility(View.VISIBLE);
     }
 }
 

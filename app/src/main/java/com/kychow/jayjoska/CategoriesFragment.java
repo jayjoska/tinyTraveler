@@ -45,6 +45,7 @@ public class CategoriesFragment extends Fragment
     @BindView(R.id.next_btn) FloatingActionButton nextBtn; // Button that takes you to the next frag
     private ArrayList<String> mSelections; // Contains the categories that the user selects
     private Bundle savedState;
+    private boolean firstTime = true;
 
 
     public CategoriesFragment() {
@@ -119,6 +120,7 @@ public class CategoriesFragment extends Fragment
     public void onDestroyView() {
         savedState.putSerializable("mCategories", mCategories);
         savedState.putSerializable("mSelections", mSelections);
+        firstTime = false;
         super.onDestroyView();
     }
 
@@ -205,6 +207,10 @@ public class CategoriesFragment extends Fragment
      */
     public interface OnNextButtonClicked {
         void sendCategories(ArrayList<String> categories);
+    }
+
+    public boolean isFirstTime() {
+        return firstTime;
     }
 
     // nothing
