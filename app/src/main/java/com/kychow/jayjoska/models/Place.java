@@ -20,6 +20,7 @@ public class Place {
     public double distance;
     public double latitude;
     public double longitude;
+    public int timeSpent;
 
     /* Takes in a JSONObject and parses for the corresponding data*/
     public static Place fromJSON(JSONObject jsonObject) throws JSONException {
@@ -29,7 +30,6 @@ public class Place {
         place.id = jsonObject.getString("id");
         place.name = jsonObject.getString("name");
         //access Category and grab title string
-        //TODO: figure out how to grab single category (initially returns JSONArray)
         place.category = "";
         place.imgURL = jsonObject.getString("image_url");
         place.businessURL = jsonObject.getString("url"); //use with /businesses/{id}
@@ -95,6 +95,14 @@ public class Place {
 
     public void setCategory(String s) {
         category = s;
+    }
+
+    public void setTimeSpent(int i) {
+        timeSpent = i;
+    }
+
+    public int getTimeSpent() {
+        return timeSpent;
     }
 }
 
