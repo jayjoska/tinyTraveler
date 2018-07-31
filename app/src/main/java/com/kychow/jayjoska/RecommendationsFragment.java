@@ -156,6 +156,7 @@ public class RecommendationsFragment extends Fragment {
         for (String s : mCategories) {
             mOldCategories.add(s);
         }
+        // TODO: Consider calling mOldCagtegories = new Location(mLocation) to avoid pointer stuff
         mOldLocation = mLocation;
     }
 
@@ -189,7 +190,6 @@ public class RecommendationsFragment extends Fragment {
      */
     private void getRecs(ArrayList<String> categories) {
         final int catSize = categories.size();
-        final int RECS_PER_CATEGORY = 5;
 
         String url = getString(R.string.base_url) + getString(R.string.search);
 
@@ -208,15 +208,21 @@ public class RecommendationsFragment extends Fragment {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     try {
-                        for (int i = 0; i < RECS_PER_CATEGORY; i++) {
+                        int recsPerCategory = 5;
+                        for (int i = 0; i < recsPerCategory; i++) {
                             if (!mOldCategories.contains(category)) {
                                 JSONArray businesses = response.getJSONArray("businesses");
                                 Place place = Place.fromJSON(businesses.getJSONObject(i));
-                                place.setCategory(category);
-                                mRecs.add(place);
-                                mAdapter.notifyItemInserted(mRecs.size() - 1);
+                                if (mRecs.contains(place)) {
+                                    recsPerCategory++;
+                                    continue;
+                                } else {
+                                    place.setCategory(category);
+                                    mRecs.add(place);
+                                    mAdapter.notifyItemInserted(mRecs.size() - 1);
+                                }
                             }
-                            if (i == RECS_PER_CATEGORY - 1 && iteratorCounter == catSize) {
+                            if (i == recsPerCategory - 1 && iteratorCounter == catSize) {
                                 mListener.sendRecs(mRecs);
                             }
                         }

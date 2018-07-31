@@ -104,5 +104,14 @@ public class Place {
     public int getTimeSpent() {
         return timeSpent;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Place) {
+            return ((Place) obj).getId().equals(getId());
+        } else {
+            return false;
+        }
+    }
 }
 
