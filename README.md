@@ -13,9 +13,9 @@ Jayjoska allows users to create a customized travel itinerary based off a presel
 * [X] Using the bottom navigation bar, the user can access his/her itinerary
 ------------
 * [X] The map has pins on all the locations in the suggestions
-* [ ] User can tap on one of the suggestions (from the recommendations view) to see a detail view.
+* [X] User can tap on one of the suggestions (from the recommendations view) to see a detail view.
 * [ ] User has a way to include (or not) each element of the list in his/her final itinerary
-* [ ] The detail view includes Image, Name, Rating, Price, Hours, Learn More (a link te Yelp), and Reviews.
+* [X] The detail view includes Image, Name, Rating, Price, Hours, Learn More (a link te Yelp), and Reviews.
 ------------
 * [ ] The itinerary includes a list of the places, which can be sorted to make the final itinerary
 * [ ] Each element of the list includes a Picture, Name, and Time to spend in that place (which the user can specify)
