@@ -7,11 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.kychow.jayjoska.models.Place;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -19,6 +21,7 @@ import java.util.ArrayList;
  */
 public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.ViewHolder> {
 
+    public static final DecimalFormat df = new DecimalFormat( "#.00" );
     private ArrayList<Place> mItinerary;
     private Context context;
 
@@ -40,9 +43,17 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Place place = mItinerary.get(position);
         holder.mName.setText(place.getName());
-        holder.mDistance.setText(Double.toString(place.getDistance()));
-        holder.mCategory.setText(place.getCategory());
-        holder.mRating.setRating(place.getRating());
+
+        String roundedDistance = df.format(place.getDistance());
+        holder.mDistance.setText(String.format("%s miles", roundedDistance));
+        holder.mTime.setText(String.format("%s minutes", String.valueOf(place.getTime())));
+        holder.mCost.setText(String.format("$%s", String.valueOf(place.getCost())));
+
+        RequestOptions options = new RequestOptions();
+        Glide.with(context)
+                .load(place.getImgURL())
+                .apply(options.centerCrop())
+                .into(holder.mImage);
     }
 
     @Override
@@ -52,19 +63,19 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView mImage;
-        private TextView mName;
-        private RatingBar mRating;
         private TextView mDistance;
-        private TextView mCategory;
+        private TextView mName;
+        private TextView mTime;
+        private TextView mCost;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            mImage = itemView.findViewById(R.id.ivPicture);
-            mName = itemView.findViewById(R.id.tvTitle);
-            mRating = itemView.findViewById(R.id.ratingBar);
-            mDistance = itemView.findViewById(R.id.tvDistance);
-            mCategory = itemView.findViewById(R.id.tvCategory);
+            mImage = itemView.findViewById(R.id.ivItineraryPicture);
+            mDistance = itemView.findViewById(R.id.tvItineraryDistance);
+            mName = itemView.findViewById(R.id.tvItineraryTitle);
+            mTime = itemView.findViewById(R.id.tvItineraryTime);
+            mCost = itemView.findViewById(R.id.tvItineraryCost);
         }
     }
 }

@@ -22,7 +22,9 @@ import butterknife.ButterKnife;
  *
  * The contents of this class will probably be migrated at some point to the final activity/fragments
  */
-public class MainActivity extends AppCompatActivity implements CategoriesFragment.OnNextButtonClicked, RecommendationsFragment.OnSelectedListener, RecommendationsFragment.OnPlacesPopulatedListener {
+public class MainActivity extends AppCompatActivity implements CategoriesFragment.OnNextButtonClicked,
+        RecsFragment.OnSelectedListener, RecsFragment.OnPlacesPopulatedListener,
+        RecsFragment.OnItemAddedListener {
 
     private static final String TAG = "MainActivity";
     // Hardcoded aliases for the main 22 categories.
@@ -36,11 +38,14 @@ public class MainActivity extends AppCompatActivity implements CategoriesFragmen
 
     @BindView(R.id.bottom_navigation)
     BottomNavigationView bottomNavigationView;
-    // TODO: Should fragments be Final onCreate?
     CategoriesFragment categoriesFragment;
     MapsRecsFragment mapsRecsFragment;
     ItineraryFragment itineraryFragment;
     DetailsFragment detailsFragment;
+    Bundle bundle;
+
+    public MainActivity() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +91,17 @@ public class MainActivity extends AppCompatActivity implements CategoriesFragmen
                 });
     }
 
+    @Override
+    public void addToItinerary(Place itineraryPlace) {
+        itineraryFragment.addToItinerary(itineraryPlace);
+        /*
+        Log.d("MainActivity", "something has been added!! " + itineraryPlace.getName());
+        Bundle newBundle = new Bundle();
+        newBundle.putParcelable("place", Parcels.wrap(itineraryPlace));
+        bundle = newBundle;
+        */
+    }
+
     // TODO migrate category aliases
     public static String[] getCategoryAliases() {
         return CATEGORY_ALIASES;
@@ -118,6 +134,7 @@ public class MainActivity extends AppCompatActivity implements CategoriesFragmen
     }
 
     private void replaceFragment(Fragment fragment) {
+        fragment.setArguments(bundle);
         String backStateName = fragment.getClass().getName();
         String fragmentTag = backStateName;
 

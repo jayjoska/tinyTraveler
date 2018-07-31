@@ -16,6 +16,8 @@ public class Place {
     public String businessURL;
     public String price;
     public int reviewCount;
+    public int time;
+    public int cost;
     public long rating;
     public double distance;
     public double latitude;
@@ -45,12 +47,38 @@ public class Place {
         JSONObject coord = jsonObject.getJSONObject("coordinates");
         place.latitude = coord.getDouble("latitude");
         place.longitude = coord.getDouble("longitude");
+        place.time = 30;
+        /* cost midpoint calculated with below info
+        $= under $10
+        $$= $11-$30
+        $$$= $31-$60
+        $$$$= above $61
+         */
+        int[] prices = {0, 5, 20, 45, 60};
+        String priceRange = jsonObject.getString("price"); //use with /businesses/{id}
+        place.cost = prices[priceRange.length()];
 
         return place;
     }
 
     public Place() {
         //empty constructor needed by the Parceler library
+    }
+
+    public int getTime() {
+        return time;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
+    }
+
+    public int getCost() {
+        return cost;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
     }
 
     public String getId() {
@@ -83,7 +111,8 @@ public class Place {
         return rating;
     }
 
-    public double getDistance() { return distance; }
+    public double getDistance() {
+        return distance; }
 
     public double getLatitude() {
         return latitude;

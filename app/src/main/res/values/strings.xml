@@ -7,6 +7,8 @@
     <string name="reviews">/reviews</string>
     <string name="categories_message">You can only select 5 categories</string>
     <string name="MESSAGE">Cannot select more than 5 categories.</string>
+    <string name="distance"> miles</string>
+    <string name="minutes"> minutes</string>
     <string name="totalTime">Total time:</string>
 
     <!-- TODO: Remove or change this placeholder text -->

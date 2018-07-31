@@ -58,7 +58,7 @@ public class CategoriesFragment extends Fragment
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment RecommendationsFragment.
+     * @return A new instance of fragment RecsFragment.
      */
     // TODO: Rename and change types and number of parameters
     public static CategoriesFragment newInstance(String param1, String param2) {
@@ -159,11 +159,7 @@ public class CategoriesFragment extends Fragment
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                    try {
-                        Log.i("CategoriesFragment", errorResponse.getJSONObject("error").getString("code"));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    Log.i("categoriesFragment", errorResponse.toString());
                 }
             });
             try {

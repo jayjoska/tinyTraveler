@@ -23,7 +23,7 @@ public class RecommendationsAdapter extends RecyclerView.Adapter<Recommendations
 
     private ArrayList<Place> mRecs;
     private Context context;
-    private RecommendationsFragment.OnSelectedListener mListener;
+    private RecsFragment.OnSelectedListener mListener;
 
     public RecommendationsAdapter(ArrayList<Place> recs) {
         mRecs = recs;
@@ -89,7 +89,7 @@ public class RecommendationsAdapter extends RecyclerView.Adapter<Recommendations
             mRating = itemView.findViewById(R.id.ratingBar);
             mDistance = itemView.findViewById(R.id.tvDistance);
             mCategory = itemView.findViewById(R.id.tvCategory);
-            mListener = (RecommendationsFragment.OnSelectedListener) itemView.getContext();
+            mListener = (RecsFragment.OnSelectedListener) itemView.getContext();
 
             itemView.setOnClickListener(this);
         }

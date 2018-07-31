@@ -26,6 +26,9 @@ ext {
 }
 
 dependencies {
+    // parceler dependencies
+    implementation 'org.parceler:parceler-api:1.1.11'
+    annotationProcessor 'org.parceler:parceler:1.1.11'
     // maps dependencies
     implementation 'com.google.maps.android:android-maps-utils:0.5'
     implementation "com.android.support:support-v13:$supportLibVersion"

@@ -11,9 +11,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.kychow.jayjoska.models.Place;
 import com.loopj.android.http.AsyncHttpClient;
@@ -32,12 +35,12 @@ import cz.msebera.android.httpclient.Header;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link RecommendationsFragment.OnPlacesPopulatedListener} interface
+ * {@link RecsFragment.OnPlacesPopulatedListener} interface
  * to handle interaction events.
- * Use the {@link RecommendationsFragment#newInstance} factory method to
+ * Use the {@link RecsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RecommendationsFragment extends Fragment {
+public class RecsFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -48,6 +51,7 @@ public class RecommendationsFragment extends Fragment {
     private String mParam2;
 
     private OnPlacesPopulatedListener mListener;
+    private OnItemAddedListener mAddedListener;
 
     // Added by Jose (most of the code in this file is auto-generated
     private RecyclerView mRecyclerView;
@@ -55,6 +59,7 @@ public class RecommendationsFragment extends Fragment {
     private ArrayList<Place> mRecs;
     private ArrayList<String> mCategories;
     private ArrayList<String> mOldCategories;
+    private ArrayList<Place> mItinerary;
     private AsyncHttpClient client;
     private Location mLocation;
     private Location mOldLocation;
@@ -68,8 +73,7 @@ public class RecommendationsFragment extends Fragment {
     // This is used to iterate through the categories
     private int iteratorCounter;
 
-    public RecommendationsFragment() {
-        // Required empty public constructor
+    public RecsFragment() {
     }
 
     /**
@@ -78,11 +82,11 @@ public class RecommendationsFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment RecommendationsFragment.
+     * @return A new instance of fragment RecsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static RecommendationsFragment newInstance(String param1, String param2) {
-        RecommendationsFragment fragment = new RecommendationsFragment();
+    public static RecsFragment newInstance(String param1, String param2) {
+        RecsFragment fragment = new RecsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -98,6 +102,7 @@ public class RecommendationsFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+        mItinerary = new ArrayList<>();
         mRecs = new ArrayList<>();
         mAdapter = new RecommendationsAdapter(mRecs);
         client = new AsyncHttpClient();
@@ -109,7 +114,6 @@ public class RecommendationsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_recommendations, container, false);
-
         return view;
     }
 
@@ -137,6 +141,45 @@ public class RecommendationsFragment extends Fragment {
         }
 
         getRecs(mCategories);
+
+        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
+                final int position = viewHolder.getAdapterPosition(); //swiped position
+                if(direction == ItemTouchHelper.RIGHT) {
+                    // send item to itinerary fragment
+                    /*
+                    Bundle itineraryBundle = new Bundle();
+                    Place item = mRecs.get(position);
+                    itineraryBundle.putParcelable("Place", Parcels.wrap(item));
+                    mAddedListener.addToItinerary(itineraryBundle);
+                    */
+                    Place place = mRecs.get(position);
+                    Log.d("RecsFragment", "Place: " + place.getName()
+                            + "Price: " + place.getPrice()
+                            + "Distance: " + place.getDistance());
+                    mAddedListener.addToItinerary(mRecs.get(position));
+
+                    Log.d("RecFragment", "something has been swiped");
+                    mRecs.remove(position);
+                    mAdapter.notifyItemRemoved(position);
+                    Toast.makeText(getContext(),"Place was added to itinerary!",Toast.LENGTH_SHORT).show();
+                } else if (direction == ItemTouchHelper.LEFT) {
+                    mRecs.remove(position);
+                    mAdapter.notifyItemRemoved(position);
+                    Toast.makeText(getContext(), "Place was removed from recommendations.", Toast.LENGTH_LONG).show();
+                    // todo repopulate recyclerview
+                }
+
+            }
+        };
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(mRecyclerView);
     }
 
     @Override
@@ -148,14 +191,19 @@ public class RecommendationsFragment extends Fragment {
             throw new ClassCastException(context.toString()
                     + " must implement OnPlacesPopulatedListener");
         }
+        try {
+            mAddedListener = (OnItemAddedListener) context;
+            Log.d("RecsFragment", "mAddedListener has been assigned");
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnItemAddedListener");
+        }
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        for (String s : mCategories) {
-            mOldCategories.add(s);
-        }
+        mOldCategories.addAll(mCategories);
         // TODO: Consider calling mOldCagtegories = new Location(mLocation) to avoid pointer stuff
         mOldLocation = mLocation;
     }
@@ -247,9 +295,7 @@ public class RecommendationsFragment extends Fragment {
         ArrayList<Place> toRemove = new ArrayList<>();
         if (mOldLocation != null  && mLocation != null) {
             if (mLocation.distanceTo(mOldLocation ) > MAX_DISTANCE) {
-                for (Place place : mRecs) {
-                    toRemove.add(place);
-                }
+                toRemove.addAll(mRecs);
                 mAdapter.remove(toRemove);
                 return;
             }
@@ -273,5 +319,9 @@ public class RecommendationsFragment extends Fragment {
     /*@brief custom listener to send data from Recommendations to Details*/
     public interface OnSelectedListener {
         void inflateDetails(Bundle bundle);
+    }
+
+    public interface OnItemAddedListener {
+        void addToItinerary(Place itineraryPlaces);
     }
 }

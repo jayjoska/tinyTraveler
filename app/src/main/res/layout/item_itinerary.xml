@@ -7,16 +7,18 @@
         android:id="@+id/ivItineraryPicture"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_alignParentTop="true"/>
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="5dp" />
 
     <TextView
         android:id="@+id/tvItineraryTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="177dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_marginBottom="5dp"
         android:layout_toRightOf="@+id/ivItineraryPicture"
-        android:textSize="15dp"
-        android:text="Name"/>
+        android:text="Name"
+        android:textSize="15dp" />
 
     <TextView
         android:id="@+id/tvItineraryDistance"
@@ -24,6 +26,25 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvItineraryTitle"
         android:layout_toRightOf="@+id/ivItineraryPicture"
-        android:text="Distance" />
+        android:text="x miles" />
+
+    <EditText
+        android:id="@+id/tvItineraryTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="x minutes" />
+
+    <TextView
+        android:id="@+id/tvItineraryCost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/ivItineraryPicture"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:text="$xx" />
+
 
 </RelativeLayout>
