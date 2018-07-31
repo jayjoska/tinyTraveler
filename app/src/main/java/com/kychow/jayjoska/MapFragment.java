@@ -5,10 +5,10 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -44,6 +44,7 @@ public class MapFragment extends Fragment {
     private ArrayList<Place> places;
     private Bundle savedState;
     private final static String KEY_LOCATION = "location";
+    private final static String TAG = "MapFragemnt";
 
     public MapFragment() { }
 
@@ -118,12 +119,12 @@ public class MapFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if (mCurrentLocation != null) {
-            Toast.makeText(getActivity(), "GPS location was found!", Toast.LENGTH_SHORT).show();
+            Log.i(TAG, "GPS location was found");
             LatLng latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
             map.animateCamera(cameraUpdate);
         } else {
-            Toast.makeText(getActivity(), "Current location was null, enable GPS on emulator!", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "Current location was null, enable GPS on emulator");
         }
     }
 
@@ -166,9 +167,9 @@ public class MapFragment extends Fragment {
         map = googleMap;
         if (map != null) {
             // Map is ready
-            Toast.makeText(getActivity(), "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
+            Log.i(TAG, "Map was loaded properly");
         } else {
-            Toast.makeText(getActivity(), "Error - Map was null!!", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "Error - Map was null!");
         }
     }
 
