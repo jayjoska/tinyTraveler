@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -94,12 +95,10 @@ public class MainActivity extends AppCompatActivity implements CategoriesFragmen
     @Override
     public void addToItinerary(Place itineraryPlace) {
         itineraryFragment.addToItinerary(itineraryPlace);
-        /*
         Log.d("MainActivity", "something has been added!! " + itineraryPlace.getName());
-        Bundle newBundle = new Bundle();
-        newBundle.putParcelable("place", Parcels.wrap(itineraryPlace));
-        bundle = newBundle;
-        */
+       // Bundle newBundle = new Bundle();
+        //newBundle.putParcelable("place", Parcels.wrap(itineraryPlace));
+        //bundle = newBundle;
     }
 
     // TODO migrate category aliases
@@ -134,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements CategoriesFragmen
     }
 
     private void replaceFragment(Fragment fragment) {
-        fragment.setArguments(bundle);
+        //fragment.setArguments(bundle);
         String backStateName = fragment.getClass().getName();
         String fragmentTag = backStateName;
 

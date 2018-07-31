@@ -55,8 +55,8 @@ public class Place {
         $$$$= above $61
          */
         int[] prices = {0, 5, 20, 45, 60};
-        String priceRange = jsonObject.getString("price"); //use with /businesses/{id}
-        place.cost = prices[priceRange.length()];
+        // String priceRange = jsonObject.getString("price"); //use with /businesses/{id}
+        place.cost = prices[place.price.length()];
 
         return place;
     }
