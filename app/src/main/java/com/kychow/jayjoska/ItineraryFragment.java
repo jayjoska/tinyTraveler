@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.kychow.jayjoska.models.Place;
 import com.loopj.android.http.AsyncHttpClient;
@@ -23,7 +24,7 @@ import java.util.ArrayList;
  * Use the {@link ItineraryFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ItineraryFragment extends Fragment {
+public class ItineraryFragment extends Fragment implements ItineraryAdapter.OnUpdateTimeListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -39,6 +40,7 @@ public class ItineraryFragment extends Fragment {
     private ItineraryAdapter mAdapter;
     private ArrayList<Place> mItinerary;
     private AsyncHttpClient client;
+    private TextView mTextView;
 
     public ItineraryFragment() {
         // Required empty public constructor
@@ -105,6 +107,8 @@ public class ItineraryFragment extends Fragment {
         mRecyclerView = view.findViewById(R.id.rvItinerary);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
+        mTextView = view.findViewById(R.id.tvTotalTime);
+        mTextView.setText("Total time: " + String.valueOf(mAdapter.grabTime()));
     }
 
     public void addToItinerary(Place itineraryPlace) {
@@ -133,5 +137,10 @@ public class ItineraryFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    @Override
+    public void updateTime(int i) {
+        mTextView.setText("Total time: " + i);
     }
 }

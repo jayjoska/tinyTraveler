@@ -37,11 +37,20 @@
         android:id="@+id/tvItineraryTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/tvMinutes"
+        android:inputType="number"
+        android:text="30"
+        android:textSize="15dp" />
+
+
+    <TextView
+        android:id="@+id/tvMinutes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="5dp"
-        android:text="x minutes"
+        android:layout_centerVertical="true"
+        android:text="@string/minutes"
         android:textColor="@color/black"
         android:textSize="15dp" />
 
@@ -49,9 +58,8 @@
         android:id="@+id/tvItineraryCost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/tvItineraryTime"
-        android:layout_below="@+id/tvItineraryTime"
-        android:layout_marginLeft="5dp"
+        android:layout_alignRight="@+id/tvMinutes"
+        android:layout_below="@+id/tvItineraryDistance"
         android:layout_marginTop="5dp"
         android:text="$xx"
         android:textColor="@color/black" />

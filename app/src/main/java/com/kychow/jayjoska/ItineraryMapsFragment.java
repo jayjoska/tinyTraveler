@@ -20,7 +20,8 @@ import com.kychow.jayjoska.models.Place;
  * Use the {@link ItineraryMapsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ItineraryMapsFragment extends Fragment implements RecsFragment.OnItemAddedListener{
+public class ItineraryMapsFragment extends Fragment implements RecsFragment.OnItemAddedListener,
+        ItineraryAdapter.OnUpdateTimeListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -99,6 +100,11 @@ public class ItineraryMapsFragment extends Fragment implements RecsFragment.OnIt
             itineraryFragment = new ItineraryFragment();
         }
         itineraryFragment.addToItinerary(itineraryPlaces);
+    }
+
+    @Override
+    public void updateTime(int i) {
+        itineraryFragment.updateTime(i);
     }
 
     /**

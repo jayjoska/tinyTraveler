@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
  */
 public class MainActivity extends AppCompatActivity implements CategoriesFragment.OnNextButtonClicked,
         RecsFragment.OnSelectedListener, RecsFragment.OnPlacesPopulatedListener,
-        RecsFragment.OnItemAddedListener {
+        RecsFragment.OnItemAddedListener, ItineraryAdapter.OnUpdateTimeListener {
 
     private static final String TAG = "MainActivity";
     // Hardcoded aliases for the main 22 categories.
@@ -150,6 +150,11 @@ public class MainActivity extends AppCompatActivity implements CategoriesFragmen
         }
 
         bottomNavigationView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void updateTime(int i) {
+        itineraryMapsFragment.updateTime(i);
     }
 }
 
