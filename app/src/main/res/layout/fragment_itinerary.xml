@@ -10,7 +10,7 @@
         android:id="@+id/tvTotalTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/totalTime"/>
+        android:text="total time"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvItinerary"

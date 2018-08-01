@@ -209,7 +209,4 @@ public class CategoriesFragment extends Fragment
         return firstTime;
     }
 
-    // nothing
-    // more nothing
-    // Testing again
 }

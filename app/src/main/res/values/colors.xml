@@ -6,7 +6,7 @@
     <color name="myGreen">#00FF00</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
-    <color name="soft_green">#53ff1a</color>
+    <color name="soft_green">#00cc00</color>
     <color name="light_grey">#f2f2f2</color>
     <color name="v_soft_green">#ecffb3</color>
 </resources>

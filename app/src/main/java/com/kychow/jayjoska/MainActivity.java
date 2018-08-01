@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements CategoriesFragmen
     BottomNavigationView bottomNavigationView;
     CategoriesFragment categoriesFragment;
     MapsRecsFragment mapsRecsFragment;
-    ItineraryFragment itineraryFragment;
+    ItineraryMapsFragment itineraryMapsFragment;
     DetailsFragment detailsFragment;
     Bundle bundle;
 
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements CategoriesFragmen
 
         categoriesFragment = new CategoriesFragment();
         mapsRecsFragment = new MapsRecsFragment();
-        itineraryFragment = new ItineraryFragment();
+        itineraryMapsFragment = new ItineraryMapsFragment();
         detailsFragment = new DetailsFragment();
 
         final FragmentManager fragmentManager = getSupportFragmentManager();
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements CategoriesFragmen
                                 replaceFragment(mapsRecsFragment);
                                 return true;
                             case R.id.action_itinerary:
-                                replaceFragment(itineraryFragment);
+                                replaceFragment(itineraryMapsFragment);
                                 return true;
                             default:
                                 return true;

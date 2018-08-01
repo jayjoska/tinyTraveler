@@ -3,17 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MapsRecsFragment">
+    tools:context=".ItineraryMapsFragment">
 
     <FrameLayout
-        android:id="@+id/flMap"
+        android:id="@+id/flMapi"
         android:layout_width="match_parent"
         android:layout_height="250dp" />
 
     <FrameLayout
-        android:id="@+id/flRecs"
+        android:id="@+id/flItinerary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/flMap"/>
+        android:layout_below="@id/flMapi"/>
 
 </RelativeLayout>

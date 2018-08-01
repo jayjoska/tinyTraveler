@@ -103,6 +103,7 @@ public class DetailsFragment extends Fragment {
 
         tvBusinessName.setText(business.getName());
         tvPrice.setText(business.getPrice());
+        Log.d("DetailsFragment", business.getPrice());
         ratingBar.setRating(business.getRating());
         getReviews();
 
@@ -140,7 +141,6 @@ public class DetailsFragment extends Fragment {
 
                     tvName1.setText(reviewer1.getString("name"));
                     tvReview1.setText(reviews.getJSONObject(0).getString("text"));
-                    Log.d("Review1", reviews.getJSONObject(0).getString("text"));
                     GlideApp.with(context)
                             .load(reviewer1.getString("image_url"))
                             .placeholder(R.drawable.default_user)

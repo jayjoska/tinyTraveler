@@ -56,10 +56,6 @@ public class MapsRecsFragment extends Fragment implements RecsFragment.OnPlacesP
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
         if (mapFragment == null) {
             mapFragment = new MapFragment();
         }
