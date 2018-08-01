@@ -64,7 +64,7 @@ public class ItineraryMapsFragment extends Fragment {
         }
 
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.add(R.id.flMapi, mapItFragment).add(R.id.flItinerary, itineraryFragment).commit();
+        transaction.add(R.id.flMapContainer, mapItFragment).add(R.id.flItineraryContainer, itineraryFragment).commit();
     }
 
     @Override

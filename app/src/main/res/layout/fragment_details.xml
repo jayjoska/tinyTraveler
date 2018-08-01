@@ -64,7 +64,7 @@
                 android:layout_below="@+id/ratingBar"
                 android:layout_marginBottom="5dp"
                 android:textColor="@color/black"
-                android:text="Reviews"
+                android:text="@string/review"
                 android:textSize="18sp"/>
 
             <ImageView

@@ -87,7 +87,7 @@ public class MapItFragment extends Fragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map_it, container, false);
-        mapView = view.findViewById(R.id.mvMapIt);
+        mapView = view.findViewById(R.id.mvMapContainer);
         savedState = new Bundle();
         mapView.getMapAsync(new OnMapReadyCallback() {
             @Override
@@ -99,13 +99,6 @@ public class MapItFragment extends Fragment {
         mapView.onCreate(savedInstanceState);
 
         return view;
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
 
     @Override

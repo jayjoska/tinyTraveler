@@ -6,14 +6,14 @@
     tools:context=".ItineraryMapsFragment">
 
     <FrameLayout
-        android:id="@+id/flMapi"
+        android:id="@+id/flMapContainer"
         android:layout_width="match_parent"
         android:layout_height="250dp" />
 
     <FrameLayout
-        android:id="@+id/flItinerary"
+        android:id="@+id/flItineraryContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/flMapi"/>
+        android:layout_below="@id/flMapContainer"/>
 
 </RelativeLayout>
