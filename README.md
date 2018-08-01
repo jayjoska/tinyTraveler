@@ -23,6 +23,8 @@ Jayjoska allows users to create a customized travel itinerary based off a presel
 * [ ] There is a "Recalculate" button to recalculate the route after the user reorganizes the suggestions
 
 ## Optional User Stories
+* Location manual input in maps recs fragment 
+* onboarding screen for location / destination the traveler wants to go to 
 * There should be a button to export/share
 ------------
 * Recommendations change based on size of geofence
