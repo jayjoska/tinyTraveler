@@ -19,13 +19,13 @@ import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
-public class RecommendationsAdapter extends RecyclerView.Adapter<RecommendationsAdapter.ViewHolder> {
+public class RecsAdapter extends RecyclerView.Adapter<RecsAdapter.ViewHolder> {
 
     private ArrayList<Place> mRecs;
     private Context context;
     private RecsFragment.OnSelectedListener mListener;
 
-    public RecommendationsAdapter(ArrayList<Place> recs) {
+    public RecsAdapter(ArrayList<Place> recs) {
         mRecs = recs;
     }
 
