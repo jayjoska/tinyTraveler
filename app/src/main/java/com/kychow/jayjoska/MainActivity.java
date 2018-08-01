@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements CategoriesFragmen
 
     @Override
     public void addToItinerary(Place itineraryPlace) {
-        itineraryFragment.addToItinerary(itineraryPlace);
+        itineraryMapsFragment.addToItinerary(itineraryPlace);
         Log.d("MainActivity", "something has been added!! " + itineraryPlace.getName());
        // Bundle newBundle = new Bundle();
         //newBundle.putParcelable("place", Parcels.wrap(itineraryPlace));

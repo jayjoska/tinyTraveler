@@ -73,7 +73,9 @@ public class ItineraryFragment extends Fragment {
         if (mItinerary == null) {
             mItinerary = new ArrayList<>();
         }
-        mAdapter = new ItineraryAdapter(mItinerary);
+        if (mAdapter == null) {
+            mAdapter = new ItineraryAdapter(mItinerary);
+        }
         client = new AsyncHttpClient();
         client.addHeader("Authorization", "Bearer + " + getString(R.string.yelp_api_key));
     }
