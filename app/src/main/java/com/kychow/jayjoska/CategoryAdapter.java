@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,6 +60,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             holder.mName.setText(alias.get(category));
         }
 
+        RequestOptions options = new RequestOptions();
         Glide.with(context)
              .load(drawables.get(category))
              .into(holder.mIcon);

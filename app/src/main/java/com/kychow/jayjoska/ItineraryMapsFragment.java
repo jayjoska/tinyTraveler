@@ -28,7 +28,7 @@ public class ItineraryMapsFragment extends Fragment implements RecsFragment.OnIt
 
     private RecsFragment.OnItemAddedListener mListener;
 
-    private MapItFragment mapItFragment;
+    private MapFragment mapFragment;
     private ItineraryFragment itineraryFragment;
 
     public ItineraryMapsFragment() {
@@ -57,8 +57,8 @@ public class ItineraryMapsFragment extends Fragment implements RecsFragment.OnIt
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (mapItFragment == null) {
-            mapItFragment = new MapItFragment();
+        if (mapFragment == null) {
+            mapFragment = new MapFragment();
         }
 
         if (itineraryFragment == null) {
@@ -66,7 +66,7 @@ public class ItineraryMapsFragment extends Fragment implements RecsFragment.OnIt
         }
 
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.add(R.id.flMapContainer, mapItFragment).add(R.id.flItineraryContainer, itineraryFragment).commit();
+        transaction.add(R.id.flMapContainer, mapFragment).add(R.id.flItineraryContainer, itineraryFragment).commit();
     }
 
     @Override

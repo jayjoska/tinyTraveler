@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="5dp">
 
     <ImageView
         android:id="@+id/ivItineraryPicture"
@@ -12,13 +13,15 @@
 
     <TextView
         android:id="@+id/tvItineraryTitle"
-        android:layout_width="177dp"
+        android:layout_width="174dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginBottom="5dp"
+        android:layout_margin="5dp"
         android:layout_toRightOf="@+id/ivItineraryPicture"
+        android:layout_toLeftOf="@id/tvItineraryTime"
         android:text="Name"
-        android:textSize="15dp" />
+        android:textSize="15dp"
+        android:textColor="@color/black"/>
 
     <TextView
         android:id="@+id/tvItineraryDistance"
@@ -26,7 +29,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvItineraryTitle"
         android:layout_toRightOf="@+id/ivItineraryPicture"
-        android:text="x miles" />
+        android:layout_margin="5dp"
+        android:text="x miles"
+        android:textColor="@color/black"/>
 
     <EditText
         android:id="@+id/tvItineraryTime"
@@ -35,16 +40,21 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:text="x minutes" />
+        android:layout_marginLeft="5dp"
+        android:text="x minutes"
+        android:textColor="@color/black"
+        android:textSize="15dp" />
 
     <TextView
         android:id="@+id/tvItineraryCost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/ivItineraryPicture"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:text="$xx" />
+        android:layout_alignRight="@+id/tvItineraryTime"
+        android:layout_below="@+id/tvItineraryTime"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:text="$xx"
+        android:textColor="@color/black" />
 
 
 </RelativeLayout>

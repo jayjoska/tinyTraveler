@@ -52,7 +52,7 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.View
         RequestOptions options = new RequestOptions();
         Glide.with(context)
                 .load(place.getImgURL())
-                .apply(options.centerCrop())
+                .apply(options.circleCrop())
                 .into(holder.mImage);
     }
 

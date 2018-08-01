@@ -151,6 +151,7 @@ public class RecsFragment extends Fragment {
             @Override
             public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
                 final int position = viewHolder.getAdapterPosition(); //swiped position
+                Place place = mRecs.get(position);
                 if(direction == ItemTouchHelper.RIGHT) {
                     // send item to itinerary fragment
                     /*
@@ -159,7 +160,6 @@ public class RecsFragment extends Fragment {
                     itineraryBundle.putParcelable("Place", Parcels.wrap(item));
                     mAddedListener.addToItinerary(itineraryBundle);
                     */
-                    Place place = mRecs.get(position);
                     Log.d("RecsFragment", "Place: " + place.getName()
                             + "Price: " + place.getPrice()
                             + "Distance: " + place.getDistance());
@@ -168,11 +168,11 @@ public class RecsFragment extends Fragment {
                     Log.d("RecFragment", "something has been swiped");
                     mRecs.remove(position);
                     mAdapter.notifyItemRemoved(position);
-                    Toast.makeText(getContext(),"Place was added to itinerary!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),place.getName() + " was added to itinerary!",Toast.LENGTH_SHORT).show();
                 } else if (direction == ItemTouchHelper.LEFT) {
                     mRecs.remove(position);
                     mAdapter.notifyItemRemoved(position);
-                    Toast.makeText(getContext(), "Place was removed from recommendations.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), place.getName() +  " was removed from recommendations.", Toast.LENGTH_LONG).show();
                     // todo repopulate recyclerview
                 }
 

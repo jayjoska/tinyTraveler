@@ -55,7 +55,7 @@ public class RecsAdapter extends RecyclerView.Adapter<RecsAdapter.ViewHolder> {
         RequestOptions options = new RequestOptions();
         Glide.with(context)
                 .load(place.getImgURL())
-                .apply(options.centerCrop())
+                .apply(options.circleCrop())
                 .into(holder.mImage);
     }
 

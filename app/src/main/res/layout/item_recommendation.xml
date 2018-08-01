@@ -20,7 +20,8 @@
         android:layout_toRightOf="@+id/ivPicture"
         android:textSize="15dp"
         android:layout_marginBottom="5dp"
-        android:text="Name"/>
+        android:text="Name"
+        android:textColor="@color/black"/>
 
     <RatingBar
         android:id="@+id/ratingBar"
@@ -38,7 +39,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/ratingBar"
         android:layout_toRightOf="@+id/ivPicture"
-        android:text="Distance" />
+        android:text="Distance"
+        android:textColor="@color/black"/>
 
     <TextView
         android:id="@+id/tvCategory"
@@ -46,6 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvDistance"
         android:layout_toRightOf="@+id/ivPicture"
-        android:text="Category" />
+        android:text="Category"
+        android:textColor="@color/black"/>
 
 </RelativeLayout>

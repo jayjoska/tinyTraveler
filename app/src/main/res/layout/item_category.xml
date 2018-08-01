@@ -15,7 +15,6 @@
         android:layout_height="100dp"
         android:layout_alignParentTop="true"
         android:padding="10dp"
-        android:src="@drawable/round_icon"
         android:backgroundTint="@color/black"/>
 
     <TextView

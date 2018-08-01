@@ -176,10 +176,5 @@ public class MapItFragment extends Fragment {
 
     protected void loadMap(GoogleMap googleMap) {
         this.map = googleMap;
-        if (this.map != null) {
-            Toast.makeText(getActivity(), "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(getActivity(), "Error - Map was null!!", Toast.LENGTH_SHORT).show();
-        }
     }
 }
