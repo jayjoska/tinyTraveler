@@ -186,18 +186,20 @@ public class MapFragment extends Fragment {
     public void addMarkers() {
         if (map != null) {
             map.clear();
-            Marker marker;
-            LatLngBounds.Builder builder = new LatLngBounds.Builder();
-            for (Place place : places) {
-                marker = map.addMarker(new MarkerOptions()
-                        .position(new LatLng(place.getLatitude(), place.getLongitude()))
-                        .title(place.getName()));
-                builder.include(marker.getPosition());
+            if (!places.isEmpty()) {
+                LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                Marker marker;
+                for (Place place : places) {
+                    marker = map.addMarker(new MarkerOptions()
+                            .position(new LatLng(place.getLatitude(), place.getLongitude()))
+                            .title(place.getName()));
+                    builder.include(marker.getPosition());
+                }
+                LatLngBounds bounds = builder.build();
+                int padding = 100; // offset from edges of the map in pixels
+                CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+                map.animateCamera(cu);
             }
-            LatLngBounds bounds = builder.build();
-            int padding = 100; // offset from edges of the map in pixels
-            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
-            map.animateCamera(cu);
         }
     }
 

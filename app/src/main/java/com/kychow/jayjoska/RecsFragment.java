@@ -170,9 +170,9 @@ public class RecsFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        mOldCategories.clear();
         mOldCategories.addAll(mCategories);
-        // TODO: Consider calling mOldCagtegories = new Location(mLocation) to avoid pointer stuff
-        mOldLocation = mLocation;
+        mOldLocation = new Location(mLocation);
     }
 
     @Override
