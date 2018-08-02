@@ -59,6 +59,7 @@ public class RecsFragment extends Fragment {
     private double lng;
     private Bundle savedState;
     private String mAddress;
+    private boolean allowBack;
 
     // Max distance between two points (in meters) so that you can consider them the same location
     private static final int MAX_DISTANCE = 50;
@@ -206,6 +207,7 @@ public class RecsFragment extends Fragment {
         for (iteratorCounter = 0; iteratorCounter < catSize; iteratorCounter++) {
             final String category = categories.get(iteratorCounter);
             params.put("categories", category);
+            allowBack = false;
             client.get(url, params, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -227,6 +229,7 @@ public class RecsFragment extends Fragment {
                             if (i == recsPerCategory - 1 && iteratorCounter == catSize) {
                                 mListener.sendRecs(mRecs);
                             }
+                            allowBack = true;
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -284,5 +287,9 @@ public class RecsFragment extends Fragment {
         }
         mAdapter.remove(recsCopy);
         getRecs(mCategories);
+    }
+
+    public boolean shouldAllowBack() {
+        return allowBack;
     }
 }

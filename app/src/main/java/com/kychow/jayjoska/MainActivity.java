@@ -161,6 +161,13 @@ public class MainActivity extends AppCompatActivity implements CategoriesFragmen
     public void requestRecs(String s) {
         mapsRecsFragment.requestRecs(s);
     }
+
+    @Override
+    public void onBackPressed() {
+        if (mapsRecsFragment.shouldAllowBack()) {
+            super.onBackPressed();
+        }
+    }
 }
 
 

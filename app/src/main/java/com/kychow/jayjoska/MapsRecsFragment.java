@@ -106,4 +106,8 @@ public class MapsRecsFragment extends Fragment implements RecsFragment.OnPlacesP
         recsFragment.setAddress(s);
         recsFragment.getRecsFromOutside();
     }
+
+    public boolean shouldAllowBack() {
+        return recsFragment.shouldAllowBack();
+    }
 }
