@@ -17,11 +17,13 @@ import com.kychow.jayjoska.models.Place;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by Karena Chow on 7/20/18.
  */
-public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.ViewHolder> {
+public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.ViewHolder>
+        implements ItemTouchHelperAdapter {
 
     public static final DecimalFormat df = new DecimalFormat( "#.00" );
     private ArrayList<Place> mItinerary;
@@ -70,6 +72,27 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.View
             time += place.getTime();
         }
         return time;
+    }
+
+    @Override
+    public boolean onItemMove(int fromPosition, int toPosition) {
+        if (fromPosition < toPosition) {
+            for (int i = fromPosition; i < toPosition; i++) {
+                Collections.swap(mItinerary, i, i + 1);
+            }
+        } else {
+            for (int i = fromPosition; i > toPosition; i--) {
+                Collections.swap(mItinerary, i, i - 1);
+            }
+        }
+        notifyItemMoved(fromPosition, toPosition);
+        return true;
+    }
+
+    @Override
+    public void onItemDismiss(int position) {
+        mItinerary.remove(position);
+        notifyItemRemoved(position);
     }
 
     public interface OnUpdateTimeListener {

@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -92,23 +93,16 @@ public class ItineraryFragment extends Fragment implements ItineraryAdapter.OnUp
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        //TODO move logic from depending on view created into different method
-      /*  if (mItinerary == null) {
-            mItinerary = new ArrayList<>();
-            mAdapter = new ItineraryAdapter(mItinerary);
-        }
-        Place place = Parcels.unwrap(getArguments().getParcelable("place"));
-        Log.d("ItineraryFragment", "something was received from parcels!");
-        Log.d("ItineraryFragment", "Place: " + place.getName()
-                + "Price: " + place.getPrice()
-                + "Distance: " + place.getDistance());
-        mItinerary.add(place);
-        mAdapter.notifyItemInserted(mItinerary.size() - 1);*/
         mRecyclerView = view.findViewById(R.id.rvItinerary);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
         mTextView = view.findViewById(R.id.tvTotalTime);
         mTextView.setText("Total time: " + String.valueOf(mAdapter.grabTime()));
+
+        ItemTouchHelper.Callback callback =
+                new SimpleItemTouchHelperCallback(mAdapter);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(mRecyclerView);
     }
 
     public void addToItinerary(Place itineraryPlace) {
