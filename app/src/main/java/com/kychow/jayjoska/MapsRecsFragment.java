@@ -24,6 +24,7 @@ public class MapsRecsFragment extends Fragment implements RecsFragment.OnPlacesP
 
     private RecsFragment.OnSelectedListener mOnSelectedListener;
     private RecsFragment.OnItemAddedListener mOnItemAddedListener;
+    private OnAddressChangedListener mOnAddressChangedListener;
 
     private MapFragment mapFragment;
     private RecsFragment recsFragment;
@@ -73,11 +74,20 @@ public class MapsRecsFragment extends Fragment implements RecsFragment.OnPlacesP
             throw new ClassCastException(context.toString()
                     + " must implement OnItemAddedListener");
         }
+        try {
+            mOnAddressChangedListener = (OnAddressChangedListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnAddressChangedListener");
+        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+        mOnSelectedListener = null;
+        mOnItemAddedListener = null;
+        mOnAddressChangedListener = null;
     }
 
     @Override
@@ -105,9 +115,14 @@ public class MapsRecsFragment extends Fragment implements RecsFragment.OnPlacesP
     public void requestRecs(String s) {
         recsFragment.setAddress(s);
         recsFragment.getRecsFromOutside();
+        mOnAddressChangedListener.clearItinerary();
     }
 
     public boolean shouldAllowBack() {
         return recsFragment.shouldAllowBack();
+    }
+
+    public interface OnAddressChangedListener {
+        void clearItinerary();
     }
 }

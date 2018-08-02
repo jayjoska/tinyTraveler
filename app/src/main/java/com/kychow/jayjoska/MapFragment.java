@@ -93,6 +93,12 @@ public class MapFragment extends Fragment {
                         mOnNewAddressListener.requestRecs(formatedAddress);
                     }
                 });
+                builder.setButton(DialogInterface.BUTTON_NEGATIVE, "CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
                 builder.show();
             }
         });
@@ -196,6 +202,7 @@ public class MapFragment extends Fragment {
                     builder.include(marker.getPosition());
                 }
                 LatLngBounds bounds = builder.build();
+                // TODO: change padding to be 100 at the top, and a lot less on the sides
                 int padding = 100; // offset from edges of the map in pixels
                 CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
                 map.animateCamera(cu);

@@ -89,4 +89,8 @@ public class ItineraryMapsFragment extends Fragment implements RecsFragment.OnIt
     public void updateTime(int i) {
         itineraryFragment.updateTime(i);
     }
+
+    public void clearItinerary() {
+        itineraryFragment.clearItinerary();
+    }
 }

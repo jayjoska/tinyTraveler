@@ -137,4 +137,8 @@ public class ItineraryFragment extends Fragment implements ItineraryAdapter.OnUp
     public void updateTime(int i) {
         mTextView.setText("Total time: " + i + " minutes");
     }
+
+    public void clearItinerary() {
+        mAdapter.clear();
+    }
 }

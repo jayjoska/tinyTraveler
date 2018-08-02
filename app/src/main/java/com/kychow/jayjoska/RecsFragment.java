@@ -115,8 +115,11 @@ public class RecsFragment extends Fragment {
             lat =  mLocation.getLatitude();
             lng = mLocation.getLongitude();
         } else {
+            mLocation = new Location("");
             lat = 37.484377;
             lng = -122.148304;
+            mLocation.setLatitude(lat);
+            mLocation.setLongitude(lng);
         }
 
         getRecs(mCategories);
@@ -278,6 +281,9 @@ public class RecsFragment extends Fragment {
 
     public void setAddress(String s) {
         mAddress = s;
+        // TODO: Next diff, implement a way to get a location from the address
+        // Location loc = new Location("");
+        // AsyncHttpClient client = new AsyncHttpClient();
     }
 
     public void getRecsFromOutside() {
@@ -286,6 +292,7 @@ public class RecsFragment extends Fragment {
             recsCopy.add(p);
         }
         mAdapter.remove(recsCopy);
+        mOldCategories.clear();
         getRecs(mCategories);
     }
 

@@ -99,6 +99,11 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.View
         public void updateTime(int i);
     }
 
+    public void clear() {
+        mItinerary.clear();
+        notifyDataSetChanged();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView mImage;
         private TextView mDistance;
