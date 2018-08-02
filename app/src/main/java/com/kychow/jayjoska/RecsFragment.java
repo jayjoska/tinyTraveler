@@ -58,6 +58,7 @@ public class RecsFragment extends Fragment {
     private double lat;
     private double lng;
     private Bundle savedState;
+    private String mAddress;
 
     // Max distance between two points (in meters) so that you can consider them the same location
     private static final int MAX_DISTANCE = 50;
@@ -184,7 +185,7 @@ public class RecsFragment extends Fragment {
         void sendRecs(ArrayList<Place> places);
     }
 
-     // fetches a list of businesses for a particular category
+    // fetches a list of businesses for a particular category
     private void getRecs(ArrayList<String> categories) {
         final int catSize = categories.size();
 
@@ -193,8 +194,12 @@ public class RecsFragment extends Fragment {
         RequestParams params = new RequestParams();
 
         // params.put("location", "san+francisco");
-        params.put("latitude", lat);
-        params.put("longitude", lng);
+        if (mAddress == null || mAddress.length() == 0) {
+            params.put("latitude", lat);
+            params.put("longitude", lng);
+        } else {
+            params.put("location", mAddress);
+        }
 
         removeClearedRecs(categories);
 
@@ -266,5 +271,18 @@ public class RecsFragment extends Fragment {
 
     public interface OnItemAddedListener {
         void addToItinerary(Place itineraryPlaces);
+    }
+
+    public void setAddress(String s) {
+        mAddress = s;
+    }
+
+    public void getRecsFromOutside() {
+        ArrayList<Place> recsCopy = new ArrayList<>();
+        for (Place p : mRecs) {
+            recsCopy.add(p);
+        }
+        mAdapter.remove(recsCopy);
+        getRecs(mCategories);
     }
 }

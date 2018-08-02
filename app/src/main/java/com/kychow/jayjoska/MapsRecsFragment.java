@@ -20,7 +20,7 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class MapsRecsFragment extends Fragment implements RecsFragment.OnPlacesPopulatedListener,
-        RecsFragment.OnSelectedListener {
+        RecsFragment.OnSelectedListener, MapFragment.OnNewAddressListener {
 
     private RecsFragment.OnSelectedListener mOnSelectedListener;
     private RecsFragment.OnItemAddedListener mOnItemAddedListener;
@@ -99,5 +99,11 @@ public class MapsRecsFragment extends Fragment implements RecsFragment.OnPlacesP
             recsFragment = new RecsFragment();
         }
         recsFragment.setCategories(categories);
+    }
+
+    @Override
+    public void requestRecs(String s) {
+        recsFragment.setAddress(s);
+        recsFragment.getRecsFromOutside();
     }
 }

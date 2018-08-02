@@ -1,6 +1,8 @@
 package com.kychow.jayjoska;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -35,9 +39,11 @@ public class MapFragment extends Fragment {
     private MapView mapView;
     private ArrayList<Place> places;
     private Bundle savedState;
+    private TextView mSetLocation;
     private final static String KEY_LOCATION = "location";
     private final static String TAG = "MapFragemnt";
-
+    private String mAddress;
+    private OnNewAddressListener mOnNewAddressListener;
     public MapFragment() { }
 
     public static MapFragment newInstance() {
@@ -59,6 +65,7 @@ public class MapFragment extends Fragment {
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_map, container, false);
         mapView = view.findViewById(R.id.mvMap);
         savedState = new Bundle();
@@ -70,13 +77,37 @@ public class MapFragment extends Fragment {
             }
         });
         mapView.onCreate(savedInstanceState);
-        // Inflate the layout for this fragment
+        mSetLocation = view.findViewById(R.id.tvSetLocation);
+        mSetLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog builder = new AlertDialog.Builder(getContext()).create();
+                final EditText input = new EditText(getContext());
+                builder.setTitle("Set location");
+                builder.setView(input);
+                builder.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mAddress = input.getText().toString();
+                        String formatedAddress = mAddress.replace(" ", "+");
+                        mOnNewAddressListener.requestRecs(formatedAddress);
+                    }
+                });
+                builder.show();
+            }
+        });
         return view;
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        try {
+            mOnNewAddressListener = (OnNewAddressListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnNewAddressListener");
+        }
     }
 
     @Override
@@ -168,5 +199,9 @@ public class MapFragment extends Fragment {
             CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
             map.animateCamera(cu);
         }
+    }
+
+    public interface OnNewAddressListener {
+        void requestRecs(String s);
     }
 }

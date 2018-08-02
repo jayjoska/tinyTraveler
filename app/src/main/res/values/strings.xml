@@ -11,4 +11,5 @@
     <string name="minutes"> minutes</string>
     <string name="totalTime">Total time:</string>
     <string name="review">Reviews</string>
+    <string name="location">Set location</string>
 </resources>

@@ -97,7 +97,7 @@ public class ItineraryFragment extends Fragment implements ItineraryAdapter.OnUp
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
         mTextView = view.findViewById(R.id.tvTotalTime);
-        mTextView.setText("Total time: " + String.valueOf(mAdapter.grabTime()));
+        mTextView.setText("Total time: " + String.valueOf(mAdapter.grabTime()) + " minutes");
 
         ItemTouchHelper.Callback callback =
                 new SimpleItemTouchHelperCallback(mAdapter);
@@ -135,6 +135,6 @@ public class ItineraryFragment extends Fragment implements ItineraryAdapter.OnUp
 
     @Override
     public void updateTime(int i) {
-        mTextView.setText("Total time: " + i);
+        mTextView.setText("Total time: " + i + " minutes");
     }
 }
