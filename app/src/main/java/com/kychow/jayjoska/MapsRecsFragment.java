@@ -49,7 +49,7 @@ public class MapsRecsFragment extends Fragment implements RecsFragment.OnPlacesP
             recsFragment = new RecsFragment();
         }
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.add(R.id.flMap, mapFragment).add(R.id.flRecs, recsFragment).commit();
+        transaction.add(R.id.flMap, mapFragment, "RecsMap").add(R.id.flRecs, recsFragment, "Recs").commit();
     }
 
     @Override
@@ -95,8 +95,7 @@ public class MapsRecsFragment extends Fragment implements RecsFragment.OnPlacesP
         if (mapFragment == null) {
             mapFragment = new MapFragment();
         }
-        mapFragment.setPlaces(places);
-        mapFragment.addMarkers();
+        mapFragment.addMarkers(places);
     }
 
     @Override

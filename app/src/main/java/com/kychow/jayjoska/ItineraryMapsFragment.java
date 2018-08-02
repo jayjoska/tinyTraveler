@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +20,14 @@ import com.kychow.jayjoska.models.Place;
  * Use the {@link ItineraryMapsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ItineraryMapsFragment extends Fragment implements RecsFragment.OnItemAddedListener,
-        ItineraryAdapter.OnUpdateTimeListener{
+public class ItineraryMapsFragment extends Fragment implements RecsFragment.OnItemAddedListener, ItineraryAdapter.OnUpdateTimeListener, MapFragment.OnMapListener{
 
     private RecsFragment.OnItemAddedListener mListener;
+    private MapFragment.OnMapListener mapListener;
 
     private MapFragment mapFragment;
     private ItineraryFragment itineraryFragment;
+
 
     public ItineraryMapsFragment() {
     }
@@ -51,12 +53,10 @@ public class ItineraryMapsFragment extends Fragment implements RecsFragment.OnIt
         }
 
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.add(R.id.flMapContainer, mapFragment).add(R.id.flItineraryContainer, itineraryFragment).commit();
+        transaction.add(R.id.flMapContainer, mapFragment, "ItineraryMap").add(R.id.flItineraryContainer, itineraryFragment, "Itinerary").commit();
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_itinerary_maps, container, false);
     }
 
@@ -68,6 +68,13 @@ public class ItineraryMapsFragment extends Fragment implements RecsFragment.OnIt
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
+        }
+        try {
+            mapListener = (MapFragment.OnMapListener) context;
+            Log.d("MapFragment", "mapListener has been assigned");
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnItemAddedListener");
         }
     }
 
@@ -88,6 +95,12 @@ public class ItineraryMapsFragment extends Fragment implements RecsFragment.OnIt
     @Override
     public void updateTime(int i) {
         itineraryFragment.updateTime(i);
+    }
+
+    @Override
+    public void sendItinerary() {
+        Log.d("ItineraryMapsFragment", "itinerary sent successfully");
+        mapFragment.addMarkers(itineraryFragment.getmItinerary());
     }
 
     public void clearItinerary() {

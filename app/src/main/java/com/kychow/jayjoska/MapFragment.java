@@ -34,24 +34,19 @@ import java.util.ArrayList;
  */
 public class MapFragment extends Fragment {
 
+    private OnMapListener mapListener;
+
     private GoogleMap map;
     private Location mCurrentLocation;
     private MapView mapView;
-    private ArrayList<Place> places;
     private Bundle savedState;
     private TextView mSetLocation;
     private final static String KEY_LOCATION = "location";
     private final static String TAG = "MapFragemnt";
     private String mAddress;
     private OnNewAddressListener mOnNewAddressListener;
-    public MapFragment() { }
 
-    public static MapFragment newInstance() {
-        MapFragment fragment = new MapFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
+    public MapFragment() { }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,6 +69,9 @@ public class MapFragment extends Fragment {
             public void onMapReady(GoogleMap googleMap) {
                 loadMap(googleMap);
                 map.setInfoWindowAdapter(new MapsInfoWindowAdapter(inflater));
+                if (getTag().equalsIgnoreCase("itinerarymap")) {
+                    mapListener.sendItinerary();
+                }
             }
         });
         mapView.onCreate(savedInstanceState);
@@ -108,6 +106,13 @@ public class MapFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        try {
+            mapListener = (OnMapListener) context;
+            Log.d("MapFragment", "mapListener has been assigned");
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnMapListener");
+        }
         try {
             mOnNewAddressListener = (OnNewAddressListener) context;
         } catch (ClassCastException e) {
@@ -185,11 +190,7 @@ public class MapFragment extends Fragment {
         }
     }
 
-    public void setPlaces(ArrayList<Place> placeList) {
-        places = placeList;
-    }
-
-    public void addMarkers() {
+    public void addMarkers(ArrayList<Place> places) {
         if (map != null) {
             map.clear();
             if (!places.isEmpty()) {
@@ -208,6 +209,10 @@ public class MapFragment extends Fragment {
                 map.animateCamera(cu);
             }
         }
+    }
+
+    public interface OnMapListener {
+        void sendItinerary();
     }
 
     public interface OnNewAddressListener {

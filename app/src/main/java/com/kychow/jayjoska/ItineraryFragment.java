@@ -25,7 +25,7 @@ import java.util.ArrayList;
  * Use the {@link ItineraryFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ItineraryFragment extends Fragment implements ItineraryAdapter.OnUpdateTimeListener{
+public class ItineraryFragment extends Fragment implements ItineraryAdapter.OnUpdateTimeListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -120,10 +120,10 @@ public class ItineraryFragment extends Fragment implements ItineraryAdapter.OnUp
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof RecsFragment.OnItemAddedListener) {
+        try {
             mItemAddedListener = (RecsFragment.OnItemAddedListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
                     + " must implement OnItemAddedListener");
         }
     }
@@ -140,5 +140,9 @@ public class ItineraryFragment extends Fragment implements ItineraryAdapter.OnUp
 
     public void clearItinerary() {
         mAdapter.clear();
+    }
+
+    public ArrayList<Place> getmItinerary() {
+        return mItinerary;
     }
 }
