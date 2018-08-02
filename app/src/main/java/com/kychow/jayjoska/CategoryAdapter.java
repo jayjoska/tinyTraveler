@@ -25,7 +25,6 @@ import java.util.HashMap;
  *
  * Even if the RecyclerView is eventually moved to another activity/fragment, this class should not
  * need major modification.
- *
  */
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 

@@ -41,14 +41,6 @@ import cz.msebera.android.httpclient.Header;
  * create an instance of this fragment.
  */
 public class RecsFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private OnPlacesPopulatedListener mListener;
     private OnItemAddedListener mAddedListener;
@@ -67,7 +59,8 @@ public class RecsFragment extends Fragment {
     private double lng;
     private Bundle savedState;
 
-    private static final int MAX_DISTANCE = 50; // Max distance between two points (in meters) so that you can consider them the same location
+    // Max distance between two points (in meters) so that you can consider them the same location
+    private static final int MAX_DISTANCE = 50;
 
     // Bad style (I think). We need to figure out how to make this better
     // This is used to iterate through the categories
@@ -76,20 +69,9 @@ public class RecsFragment extends Fragment {
     public RecsFragment() {
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RecsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static RecsFragment newInstance(String param1, String param2) {
+    public static RecsFragment newInstance() {
         RecsFragment fragment = new RecsFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -97,10 +79,6 @@ public class RecsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
 
         mItinerary = new ArrayList<>();
         mRecs = new ArrayList<>();
@@ -112,7 +90,6 @@ public class RecsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_recommendations, container, false);
         return view;
     }
@@ -153,16 +130,6 @@ public class RecsFragment extends Fragment {
                 final int position = viewHolder.getAdapterPosition(); //swiped position
                 Place place = mRecs.get(position);
                 if(direction == ItemTouchHelper.RIGHT) {
-                    // send item to itinerary fragment
-                    /*
-                    Bundle itineraryBundle = new Bundle();
-                    Place item = mRecs.get(position);
-                    itineraryBundle.putParcelable("Place", Parcels.wrap(item));
-                    mAddedListener.addToItinerary(itineraryBundle);
-                    */
-                    Log.d("RecsFragment", "Place: " + place.getName()
-                            + "Price: " + place.getPrice()
-                            + "Distance: " + place.getDistance());
                     mAddedListener.addToItinerary(mRecs.get(position));
 
                     Log.d("RecFragment", "something has been swiped");
@@ -173,7 +140,6 @@ public class RecsFragment extends Fragment {
                     mRecs.remove(position);
                     mAdapter.notifyItemRemoved(position);
                     Toast.makeText(getContext(), place.getName() +  " was removed from recommendations.", Toast.LENGTH_LONG).show();
-                    // todo repopulate recyclerview
                 }
 
             }
@@ -214,28 +180,11 @@ public class RecsFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnPlacesPopulatedListener {
         void sendRecs(ArrayList<Place> places);
     }
 
-    /**
-     * @brief getRecs fetches a list of businesses for a particular category
-     *
-     * @input -
-     * @output void
-     *
-     * TODO: GET LOCATION DYNAMICALLY (I.E. GET THE LATITUDE AND LONGITUDE FROM GPS)
-     */
+     // fetches a list of businesses for a particular category
     private void getRecs(ArrayList<String> categories) {
         final int catSize = categories.size();
 
@@ -284,13 +233,7 @@ public class RecsFragment extends Fragment {
         }
     }
 
-    /**
-     * @brief removeClearedRecs checks which elements of mRecs must be removed and removes them
-     *
-     * @input -
-     * @output void
-     *
-     */
+     // checks which elements of mRecs must be removed and removes them
     private void removeClearedRecs(ArrayList<String> categories) {
         ArrayList<Place> toRemove = new ArrayList<>();
         if (mOldLocation != null  && mLocation != null) {
