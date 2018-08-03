@@ -299,4 +299,16 @@ public class RecsFragment extends Fragment {
     public boolean shouldAllowBack() {
         return allowBack;
     }
+
+    public void scrollToItem(String s) {
+        int position = RecyclerView.NO_POSITION;
+        for (int i = 0; i < mRecs.size(); i++) {
+            if (mRecs.get(i).getName().equals(s)) {
+                position = i;
+            }
+        }
+        if (position != RecyclerView.NO_POSITION) {
+            mRecyclerView.scrollToPosition(position);
+        }
+    }
 }

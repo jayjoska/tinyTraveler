@@ -133,7 +133,9 @@ public class CategoriesFragment extends Fragment {
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                    Log.i("categoriesFragment", errorResponse.toString());
+                    if (errorResponse != null) {
+                        Log.i("categoriesFragment", errorResponse.toString());
+                    }
                 }
             });
             try {

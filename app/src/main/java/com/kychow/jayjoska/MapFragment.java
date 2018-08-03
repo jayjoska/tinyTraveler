@@ -45,6 +45,7 @@ public class MapFragment extends Fragment {
     private final static String TAG = "MapFragemnt";
     private String mAddress;
     private OnNewAddressListener mOnNewAddressListener;
+    private OnMarkerClickedListener mOnMarkerClickedListener;
 
     public MapFragment() { }
 
@@ -118,6 +119,13 @@ public class MapFragment extends Fragment {
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
                     + " must implement OnNewAddressListener");
+        }
+
+        try {
+            mOnMarkerClickedListener = (OnMarkerClickedListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnMarkerClickedListener");
         }
     }
 
@@ -207,6 +215,14 @@ public class MapFragment extends Fragment {
                 int padding = 100; // offset from edges of the map in pixels
                 CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
                 map.animateCamera(cu);
+                map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                    @Override
+                    public boolean onMarkerClick(Marker marker) {
+                        mOnMarkerClickedListener.scrollToItem(marker.getTitle());
+                        marker.showInfoWindow();
+                        return true;
+                    }
+                });
             }
         }
     }
@@ -217,5 +233,9 @@ public class MapFragment extends Fragment {
 
     public interface OnNewAddressListener {
         void requestRecs(String s);
+    }
+
+    public interface OnMarkerClickedListener {
+        void scrollToItem(String s);
     }
 }

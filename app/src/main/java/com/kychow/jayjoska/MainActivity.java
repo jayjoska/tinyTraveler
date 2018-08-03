@@ -26,7 +26,8 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity implements CategoriesFragment.OnNextButtonClicked,
         RecsFragment.OnSelectedListener, RecsFragment.OnPlacesPopulatedListener,
         RecsFragment.OnItemAddedListener, ItineraryAdapter.OnUpdateTimeListener, MapFragment.OnNewAddressListener,
-        MapsRecsFragment.OnAddressChangedListener, MapFragment.OnMapListener {
+        MapsRecsFragment.OnAddressChangedListener, MapFragment.OnMapListener, MapFragment.OnMarkerClickedListener {
+
 
     private static final String TAG = "MainActivity";
     // Hardcoded aliases for the main 22 categories.
@@ -178,6 +179,11 @@ public class MainActivity extends AppCompatActivity implements CategoriesFragmen
     @Override
     public void clearItinerary() {
         itineraryMapsFragment.clearItinerary();
+    }
+
+    @Override
+    public void scrollToItem(String s) {
+        mapsRecsFragment.scrollToItem(s);
     }
 }
 
