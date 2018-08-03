@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -26,6 +27,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -69,7 +72,8 @@ public class MapFragment extends Fragment {
     private double lat;
     private double lng;
 
-    public MapFragment() { }
+    public MapFragment() {
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -92,6 +96,7 @@ public class MapFragment extends Fragment {
             public void onMapReady(GoogleMap googleMap) {
                 loadMap(googleMap);
                 map.setInfoWindowAdapter(new MapsInfoWindowAdapter(inflater));
+
                 if (getTag().equalsIgnoreCase("itinerarymap")) {
                     mapListener.sendItinerary();
                     addPolyline(getResults(mapListener.getItinerary()), map);
@@ -111,8 +116,8 @@ public class MapFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         mAddress = input.getText().toString();
-                        String formatedAddress = mAddress.replace(" ", "+");
-                        mOnNewAddressListener.requestRecs(formatedAddress);
+                        String formattedAddress = mAddress.replace(" ", "+");
+                        mOnNewAddressListener.requestRecs(formattedAddress);
                     }
                 });
                 builder.setButton(DialogInterface.BUTTON_NEGATIVE, "CANCEL", new DialogInterface.OnClickListener() {
@@ -150,10 +155,10 @@ public class MapFragment extends Fragment {
         if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 || ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             Criteria criteria = new Criteria();
-            LocationManager locationManager = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
+            LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
             String provider = locationManager.getBestProvider(criteria, false);
             mLocation = locationManager.getLastKnownLocation(provider);
-            lat =  mLocation.getLatitude();
+            lat = mLocation.getLatitude();
             lng = mLocation.getLongitude();
         } else {
             mLocation = new Location("");
@@ -211,6 +216,7 @@ public class MapFragment extends Fragment {
         } else {
             Log.d(TAG, "Current location was null, enable GPS on emulator");
         }
+
     }
 
     @Override
@@ -262,8 +268,10 @@ public class MapFragment extends Fragment {
         if (map != null) {
             map.clear();
             if (!places.isEmpty()) {
-                LatLngBounds.Builder builder = new LatLngBounds.Builder();
                 Marker marker;
+                LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                map.addMarker(new MarkerOptions()
+                .position(new LatLng(lat, lng)).title("Current Location").icon(getMarkerIcon(R.color.soft_green))).setZIndex(places.size());
                 for (Place place : places) {
                     marker = map.addMarker(new MarkerOptions()
                             .position(new LatLng(place.getLatitude(), place.getLongitude()))
@@ -285,6 +293,12 @@ public class MapFragment extends Fragment {
                 });
             }
         }
+    }
+
+    public BitmapDescriptor getMarkerIcon(int color) {
+        float[] hsv = new float[3];
+        Color.colorToHSV(color, hsv);
+        return BitmapDescriptorFactory.defaultMarker(hsv[0]);
     }
 
     public interface OnMapListener {
