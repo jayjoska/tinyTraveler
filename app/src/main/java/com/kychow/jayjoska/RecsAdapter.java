@@ -60,6 +60,7 @@ public class RecsAdapter extends RecyclerView.Adapter<RecsAdapter.ViewHolder> {
         GlideApp.with(context)
                 .load(place.getImgURL())
                 .transform(new MultiTransformation<Bitmap>(new CenterCrop(), new RoundedCornersTransformation(25,0)))
+                .placeholder(R.drawable.default_company)
                 .into(holder.mImage);
     }
 

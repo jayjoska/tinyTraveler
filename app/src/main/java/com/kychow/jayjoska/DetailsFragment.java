@@ -114,7 +114,7 @@ public class DetailsFragment extends Fragment {
         GlideApp.with(context)
                 .load(business.getImgURL())
                 .transform(new MultiTransformation<Bitmap>(new CenterCrop(), new RoundedCornersTransformation(20,0)))
-                .placeholder(R.drawable.default_user)
+                .placeholder(R.drawable.default_company)
                 .into(ivBusinessPhoto);
 
     }
