@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -61,6 +62,7 @@ public class MapFragment extends Fragment {
     private String mAddress;
     private OnNewAddressListener mOnNewAddressListener;
     private OnMarkerClickedListener mOnMarkerClickedListener;
+    private Button mRecalculate;
 
     //hacking location
     private Location mLocation;
@@ -122,6 +124,23 @@ public class MapFragment extends Fragment {
                 builder.show();
             }
         });
+        if (getTag().equals("ItineraryMap")) {
+            mRecalculate = view.findViewById(R.id.btnRecalculate);
+            mRecalculate.setVisibility(View.VISIBLE);
+            mRecalculate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mRecalculate.setClickable(false);
+                    ArrayList<Place> itinerary = new ArrayList<>();
+                    if (mapListener != null) {
+                        itinerary = mapListener.getItinerary();
+                        addMarkers(itinerary);
+                        addPolyline(getResults(itinerary), map);
+                        mRecalculate.setClickable(true);
+                    }
+                }
+            });
+        }
         return view;
     }
 
