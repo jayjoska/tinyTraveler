@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 
 import com.kychow.jayjoska.models.Place;
 
+import java.util.ArrayList;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -101,6 +103,11 @@ public class ItineraryMapsFragment extends Fragment implements RecsFragment.OnIt
     public void sendItinerary() {
         Log.d("ItineraryMapsFragment", "itinerary sent successfully");
         mapFragment.addMarkers(itineraryFragment.getmItinerary());
+    }
+
+    @Override
+    public ArrayList<Place> getItinerary() {
+        return itineraryFragment.getmItinerary();
     }
 
     public void clearItinerary() {

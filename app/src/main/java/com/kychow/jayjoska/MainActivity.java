@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements CategoriesFragmen
     CategoriesFragment categoriesFragment;
     MapsRecsFragment mapsRecsFragment;
     ItineraryMapsFragment itineraryMapsFragment;
-    ItineraryFragment itineraryFragment;
     DetailsFragment detailsFragment;
     Bundle bundle;
 
@@ -61,7 +60,6 @@ public class MainActivity extends AppCompatActivity implements CategoriesFragmen
         mapsRecsFragment = new MapsRecsFragment();
         itineraryMapsFragment = new ItineraryMapsFragment();
         detailsFragment = new DetailsFragment();
-        itineraryFragment = new ItineraryFragment();
 
         final FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -163,6 +161,11 @@ public class MainActivity extends AppCompatActivity implements CategoriesFragmen
     public void sendItinerary() {
         Log.d("MainActivity", "itinerary sent successfully");
         itineraryMapsFragment.sendItinerary();
+    }
+
+    @Override
+    public ArrayList<Place> getItinerary() {
+        return itineraryMapsFragment.getItinerary();
     }
 
     public void requestRecs(String s) {

@@ -1,11 +1,17 @@
 package com.kychow.jayjoska;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
+import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,9 +29,18 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.maps.DirectionsApi;
+import com.google.maps.GeoApiContext;
+import com.google.maps.android.PolyUtil;
+import com.google.maps.errors.ApiException;
+import com.google.maps.model.DirectionsResult;
+import com.google.maps.model.TravelMode;
 import com.kychow.jayjoska.models.Place;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -46,6 +61,11 @@ public class MapFragment extends Fragment {
     private String mAddress;
     private OnNewAddressListener mOnNewAddressListener;
     private OnMarkerClickedListener mOnMarkerClickedListener;
+
+    //hacking location
+    private Location mLocation;
+    private double lat;
+    private double lng;
 
     public MapFragment() { }
 
@@ -72,6 +92,7 @@ public class MapFragment extends Fragment {
                 map.setInfoWindowAdapter(new MapsInfoWindowAdapter(inflater));
                 if (getTag().equalsIgnoreCase("itinerarymap")) {
                     mapListener.sendItinerary();
+                    addPolyline(getResults(mapListener.getItinerary()), map);
                 }
             }
         });
@@ -102,6 +123,26 @@ public class MapFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            Criteria criteria = new Criteria();
+            LocationManager locationManager = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
+            String provider = locationManager.getBestProvider(criteria, false);
+            mLocation = locationManager.getLastKnownLocation(provider);
+            lat =  mLocation.getLatitude();
+            lng = mLocation.getLongitude();
+        } else {
+            mLocation = new Location("");
+            lat = 37.484377;
+            lng = -122.148304;
+            mLocation.setLatitude(lat);
+            mLocation.setLongitude(lng);
+        }
     }
 
     @Override
@@ -229,10 +270,57 @@ public class MapFragment extends Fragment {
 
     public interface OnMapListener {
         void sendItinerary();
+        ArrayList<Place> getItinerary();
     }
 
     public interface OnNewAddressListener {
         void requestRecs(String s);
+    }
+
+    private GeoApiContext getGeoContext() {
+        GeoApiContext geoApiContext = new GeoApiContext.Builder()
+                .apiKey(getString(R.string.maps_api_key))
+                .build();
+        return geoApiContext;
+    }
+
+    private ArrayList<DirectionsResult> getResults(ArrayList<Place> itinerary) {
+        ArrayList<com.google.maps.model.LatLng> destinationCoordinates = new ArrayList<>();
+        ArrayList<DirectionsResult> directionsResults = new ArrayList<>();
+        DirectionsResult result;
+
+        destinationCoordinates.add(new com.google.maps.model.LatLng(lat,lng));
+
+        for (Place place : itinerary) {
+            destinationCoordinates.add(new com.google.maps.model.LatLng(place.getLatitude(), place.getLongitude()));
+        }
+
+        for (int i = 0, j=1; j < destinationCoordinates.size(); i++, j++) {
+            try {
+                result = DirectionsApi.newRequest(getGeoContext())
+                        .mode(TravelMode.DRIVING).origin(destinationCoordinates.get(i))
+                        .destination(destinationCoordinates.get(j))
+                        .await();
+                directionsResults.add(result);
+            } catch (ApiException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return directionsResults;
+    }
+
+    private void addPolyline(ArrayList<DirectionsResult> directionsResults, GoogleMap mMap) {
+        List<LatLng> decodedPath;
+        for (int i = 0; i < directionsResults.size(); i++) {
+            for (int j = 0; j < directionsResults.get(i).routes.length; j++) {
+                decodedPath = PolyUtil.decode(directionsResults.get(i).routes[j].overviewPolyline.getEncodedPath());
+                mMap.addPolyline(new PolylineOptions().addAll(decodedPath));
+            }
+        }
     }
 
     public interface OnMarkerClickedListener {

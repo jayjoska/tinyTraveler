@@ -25,6 +25,10 @@ ext {
     googlePlayVersion = "15.0.1"
 }
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     // parceler dependencies
     implementation 'org.parceler:parceler-api:1.1.11'
@@ -32,6 +36,9 @@ dependencies {
     // maps dependencies
     implementation 'com.google.maps.android:android-maps-utils:0.5'
     implementation "com.android.support:support-v13:$supportLibVersion"
+    //google maps api dependencies
+    implementation 'com.google.maps:google-maps-services:0.2.9'
+    implementation 'org.slf4j:slf4j-nop:1.7.25'
     // to remove lint error, found in .idea/libraries
     implementation "com.google.android.gms:play-services-maps:$googlePlayVersion"
     implementation "com.google.android.gms:play-services-location:$googlePlayVersion"
