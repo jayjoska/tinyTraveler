@@ -1,6 +1,7 @@
 package com.kychow.jayjoska;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -11,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.load.MultiTransformation;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.kychow.jayjoska.models.Place;
 import com.loopj.android.http.AsyncHttpClient;
@@ -23,6 +26,7 @@ import org.json.JSONObject;
 import org.parceler.Parcels;
 
 import cz.msebera.android.httpclient.Header;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -109,7 +113,7 @@ public class DetailsFragment extends Fragment {
 
         GlideApp.with(context)
                 .load(business.getImgURL())
-                .apply(options.centerCrop())
+                .transform(new MultiTransformation<Bitmap>(new CenterCrop(), new RoundedCornersTransformation(20,0)))
                 .placeholder(R.drawable.default_user)
                 .into(ivBusinessPhoto);
 
@@ -144,7 +148,7 @@ public class DetailsFragment extends Fragment {
                     GlideApp.with(context)
                             .load(reviewer1.getString("image_url"))
                             .placeholder(R.drawable.default_user)
-                            .apply(options.centerCrop())
+                            .transform(new MultiTransformation<Bitmap>(new CenterCrop(), new RoundedCornersTransformation(20,0)))
                             .into(ivReview1);
 
                     tvName2.setText(reviewer2.getString("name"));
@@ -152,7 +156,7 @@ public class DetailsFragment extends Fragment {
                     GlideApp.with(context)
                             .load(reviewer2.getString("image_url"))
                             .placeholder(R.drawable.default_user)
-                            .apply(options.centerCrop())
+                            .transform(new MultiTransformation<Bitmap>(new CenterCrop(), new RoundedCornersTransformation(20,0)))
                             .into(ivReview2);
 
                     tvName3.setText(reviewer3.getString("name"));
@@ -160,7 +164,7 @@ public class DetailsFragment extends Fragment {
                     GlideApp.with(context)
                             .load(reviewer3.getString("image_url"))
                             .placeholder(R.drawable.default_user)
-                            .apply(options.centerCrop())
+                            .transform(new MultiTransformation<Bitmap>(new CenterCrop(), new RoundedCornersTransformation(20,0)))
                             .into(ivReview3);
 
                 } catch (JSONException e) {

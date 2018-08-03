@@ -1,6 +1,7 @@
 package com.kychow.jayjoska;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -11,13 +12,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.MultiTransformation;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.kychow.jayjoska.models.Place;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 /**
  * Created by Karena Chow on 7/20/18.
@@ -55,9 +59,9 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.View
         holder.mCost.setText(String.format("$%s", String.valueOf(place.getCost())));
 
         RequestOptions options = new RequestOptions();
-        Glide.with(context)
+        GlideApp.with(context)
                 .load(place.getImgURL())
-                .apply(options.circleCrop())
+                .transform(new MultiTransformation<Bitmap>(new CenterCrop(), new RoundedCornersTransformation(25,0)))
                 .into(holder.mImage);
     }
 

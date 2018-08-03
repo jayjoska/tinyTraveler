@@ -1,6 +1,7 @@
 package com.kychow.jayjoska;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -11,13 +12,16 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.MultiTransformation;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.kychow.jayjoska.models.Place;
 
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
+
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class RecsAdapter extends RecyclerView.Adapter<RecsAdapter.ViewHolder> {
 
@@ -53,9 +57,9 @@ public class RecsAdapter extends RecyclerView.Adapter<RecsAdapter.ViewHolder> {
 
         //allows for the center crop to be applied for image
         RequestOptions options = new RequestOptions();
-        Glide.with(context)
+        GlideApp.with(context)
                 .load(place.getImgURL())
-                .apply(options.circleCrop())
+                .transform(new MultiTransformation<Bitmap>(new CenterCrop(), new RoundedCornersTransformation(25,0)))
                 .into(holder.mImage);
     }
 
