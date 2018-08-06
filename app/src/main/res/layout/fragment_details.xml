@@ -146,6 +146,14 @@
                 android:layout_toRightOf="@+id/ivReview3"
                 android:layout_below="@+id/tvName3"
                 android:layout_marginBottom="5dp"/>
+
+            <TextView
+                android:id="@+id/tvLearnMore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_below="@+id/tvReview3"
+                android:text="@string/learn_more" />
         </RelativeLayout>
 
     </LinearLayout>

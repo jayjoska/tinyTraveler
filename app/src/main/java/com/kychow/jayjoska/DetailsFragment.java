@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,6 +56,7 @@ public class DetailsFragment extends Fragment {
     TextView tvReview1;
     TextView tvReview2;
     TextView tvReview3;
+    TextView tvLearnMore;
     RatingBar ratingBar;
 
     Context context;
@@ -96,6 +99,7 @@ public class DetailsFragment extends Fragment {
         tvReview1 = view.findViewById(R.id.tvReview1);
         tvReview2 = view.findViewById(R.id.tvReview2);
         tvReview3 = view.findViewById(R.id.tvReview3);
+        tvLearnMore = view.findViewById(R.id.tvLearnMore);
         ratingBar = view.findViewById(R.id.ratingBar);
 
         return view;
@@ -109,6 +113,16 @@ public class DetailsFragment extends Fragment {
         tvPrice.setText(business.getPrice());
         Log.d("DetailsFragment", business.getPrice());
         ratingBar.setRating(business.getRating());
+        tvLearnMore.setText(Html.fromHtml("<a href='" + business.getBusinessURL() + "'> Learn more </a>"));
+        tvLearnMore.setMovementMethod(LinkMovementMethod.getInstance());
+        tvLearnMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: NOT WORKING!!!
+                tvLearnMore.setLinkTextColor(getResources().getColor(R.color.colorPrimaryDark));
+            }
+        });
+
         getReviews();
 
         GlideApp.with(context)
