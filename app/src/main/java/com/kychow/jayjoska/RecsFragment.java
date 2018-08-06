@@ -210,15 +210,19 @@ public class RecsFragment extends Fragment {
         for (iteratorCounter = 0; iteratorCounter < catSize; iteratorCounter++) {
             final String category = categories.get(iteratorCounter);
             params.put("categories", category);
+            params.put("limit", 20);
             allowBack = false;
             client.get(url, params, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     try {
-                        int recsPerCategory = 5;
+                        int recsPerCategory = 10;
                         for (int i = 0; i < recsPerCategory; i++) {
                             if (!mOldCategories.contains(category)) {
                                 JSONArray businesses = response.getJSONArray("businesses");
+                                if (businesses.length() <= i) {
+                                    break;
+                                }
                                 Place place = Place.fromJSON(businesses.getJSONObject(i));
                                 if (mRecs.contains(place)) {
                                     recsPerCategory++;
