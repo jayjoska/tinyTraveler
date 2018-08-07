@@ -1,6 +1,7 @@
 package com.kychow.jayjoska;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ShareActionProvider;
 import android.widget.TextView;
 
 import com.kychow.jayjoska.models.Place;
@@ -44,6 +46,8 @@ public class ItineraryFragment extends Fragment implements ItineraryAdapter.OnUp
     private AsyncHttpClient client;
     private TextView mTextView;
     private ImageView ivShare;
+
+    private ShareActionProvider mShareActionProvider;
 
     public ItineraryFragment() {
         // Required empty public constructor
@@ -111,6 +115,11 @@ public class ItineraryFragment extends Fragment implements ItineraryAdapter.OnUp
             @Override
             public void onClick(View v) {
                 ivShare.setImageDrawable(getResources().getDrawable(R.drawable.share_click));
+
+                Intent myIntent = new Intent(Intent.ACTION_SEND);
+                //specifies what's being shared, but since it's a dummy it doesn't matter too much what's put inside setType.
+                myIntent.setType("Text/plain");
+                startActivity(Intent.createChooser(myIntent, "Share Itinerary"));
             }
         });
     }
