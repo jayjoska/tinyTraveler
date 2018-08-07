@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -27,7 +26,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -271,11 +269,15 @@ public class MapFragment extends Fragment {
                 Marker marker;
                 LatLngBounds.Builder builder = new LatLngBounds.Builder();
                 map.addMarker(new MarkerOptions()
-                .position(new LatLng(lat, lng)).title("Current Location").icon(getMarkerIcon(R.color.soft_green))).setZIndex(places.size());
+                .position(new LatLng(lat, lng)).title("Current Location")
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)))
+                        .setZIndex(places.size());
                 for (Place place : places) {
                     marker = map.addMarker(new MarkerOptions()
                             .position(new LatLng(place.getLatitude(), place.getLongitude()))
-                            .title(place.getName()));
+                            .title(place.getName())
+                            .snippet("Distance: " + place.getDistance())
+                            .snippet(place.getPrice()));
                     builder.include(marker.getPosition());
                 }
                 LatLngBounds bounds = builder.build();
@@ -293,12 +295,6 @@ public class MapFragment extends Fragment {
                 });
             }
         }
-    }
-
-    public BitmapDescriptor getMarkerIcon(int color) {
-        float[] hsv = new float[3];
-        Color.colorToHSV(color, hsv);
-        return BitmapDescriptorFactory.defaultMarker(hsv[0]);
     }
 
     public interface OnMapListener {

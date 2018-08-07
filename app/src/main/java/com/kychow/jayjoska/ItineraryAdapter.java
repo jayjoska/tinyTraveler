@@ -2,6 +2,7 @@ package com.kychow.jayjoska;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -14,8 +15,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.request.RequestOptions;
 import com.kychow.jayjoska.models.Place;
+
+import org.parceler.Parcels;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -26,12 +28,13 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 /**
  * Created by Karena Chow on 7/20/18.
  */
-public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.ViewHolder>
-        implements ItemTouchHelperAdapter {
+public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.ViewHolder> implements ItemTouchHelperAdapter {
 
     public static final DecimalFormat df = new DecimalFormat( "#.00" );
     private ArrayList<Place> mItinerary;
     private Context context;
+
+    private ItineraryFragment.OnItemViewClickedListener onItemViewClickedListener;
 
     public ItineraryAdapter(ArrayList<Place> itinerary) {
         mItinerary = itinerary;
@@ -58,7 +61,6 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.View
         holder.mTime.setText(String.valueOf(place.getTime()));
         holder.mCost.setText(String.format("$%s", String.valueOf(place.getCost())));
 
-        RequestOptions options = new RequestOptions();
         GlideApp.with(context)
                 .load(place.getImgURL())
                 .transform(new MultiTransformation<Bitmap>(new CenterCrop(), new RoundedCornersTransformation(25,0)))
@@ -108,7 +110,7 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.View
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView mImage;
         private TextView mDistance;
         private TextView mName;
@@ -125,8 +127,21 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.View
             mTime = itemView.findViewById(R.id.tvItineraryTime);
             mCost = itemView.findViewById(R.id.tvItineraryCost);
             mCustomEditTextListener = customEditTextListener;
+            onItemViewClickedListener = (ItineraryFragment.OnItemViewClickedListener) itemView.getContext();
 
             mTime.addTextChangedListener(mCustomEditTextListener);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) {
+                Place place = mItinerary.get(position);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("place", Parcels.wrap(place));
+                onItemViewClickedListener.inflateDetails(bundle);
+            }
         }
     }
 

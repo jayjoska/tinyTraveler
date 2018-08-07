@@ -15,11 +15,22 @@
         android:textColor="@color/black"
         android:text="total time"/>
 
+    <ImageView
+        android:id="@+id/ivShare"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/share"
+        android:layout_margin="5dp" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvItinerary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvTotalTime">
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/ivShare">
+
     </android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>

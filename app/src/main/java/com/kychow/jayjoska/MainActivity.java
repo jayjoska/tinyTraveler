@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity implements CategoriesFragment.OnNextButtonClicked,
         RecsFragment.OnSelectedListener, RecsFragment.OnPlacesPopulatedListener,
         RecsFragment.OnItemAddedListener, ItineraryAdapter.OnUpdateTimeListener, MapFragment.OnNewAddressListener,
-        MapsRecsFragment.OnAddressChangedListener, MapFragment.OnMapListener, MapFragment.OnMarkerClickedListener {
+        MapsRecsFragment.OnAddressChangedListener, MapFragment.OnMapListener, MapFragment.OnMarkerClickedListener, ItineraryFragment.OnItemViewClickedListener {
 
 
     private static final String TAG = "MainActivity";
@@ -123,7 +123,6 @@ public class MainActivity extends AppCompatActivity implements CategoriesFragmen
         mapsRecsFragment.sendRecs(places);
     }
 
-    // TODO: add functionality to send a bundle to DetailsFragment
     public void inflateDetails(Bundle bundle) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

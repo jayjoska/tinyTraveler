@@ -22,10 +22,12 @@ import java.util.ArrayList;
  * Use the {@link ItineraryMapsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ItineraryMapsFragment extends Fragment implements RecsFragment.OnItemAddedListener, ItineraryAdapter.OnUpdateTimeListener, MapFragment.OnMapListener{
+public class ItineraryMapsFragment extends Fragment implements RecsFragment.OnItemAddedListener,
+        ItineraryAdapter.OnUpdateTimeListener, MapFragment.OnMapListener, ItineraryFragment.OnItemViewClickedListener{
 
     private RecsFragment.OnItemAddedListener mListener;
     private MapFragment.OnMapListener mapListener;
+    private ItineraryFragment.OnItemViewClickedListener itemViewClickedListener;
 
     private MapFragment mapFragment;
     private ItineraryFragment itineraryFragment;
@@ -73,10 +75,15 @@ public class ItineraryMapsFragment extends Fragment implements RecsFragment.OnIt
         }
         try {
             mapListener = (MapFragment.OnMapListener) context;
-            Log.d("MapFragment", "mapListener has been assigned");
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
-                    + " must implement OnItemAddedListener");
+                    + " must implement OnMapdListener");
+        }
+        try {
+             itemViewClickedListener = (ItineraryFragment.OnItemViewClickedListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnItemViewClickedListener");
         }
     }
 
@@ -84,6 +91,7 @@ public class ItineraryMapsFragment extends Fragment implements RecsFragment.OnIt
     public void onDetach() {
         super.onDetach();
         mListener = null;
+        itemViewClickedListener = null;
     }
 
     @Override
@@ -112,5 +120,10 @@ public class ItineraryMapsFragment extends Fragment implements RecsFragment.OnIt
 
     public void clearItinerary() {
         itineraryFragment.clearItinerary();
+    }
+
+    @Override
+    public void inflateDetails(Bundle bundle) {
+        itemViewClickedListener.inflateDetails(bundle);
     }
 }

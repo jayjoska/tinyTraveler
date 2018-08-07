@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kychow.jayjoska.models.Place;
@@ -42,6 +43,7 @@ public class ItineraryFragment extends Fragment implements ItineraryAdapter.OnUp
     private ArrayList<Place> mItinerary;
     private AsyncHttpClient client;
     private TextView mTextView;
+    private ImageView ivShare;
 
     public ItineraryFragment() {
         // Required empty public constructor
@@ -98,11 +100,19 @@ public class ItineraryFragment extends Fragment implements ItineraryAdapter.OnUp
         mRecyclerView.setAdapter(mAdapter);
         mTextView = view.findViewById(R.id.tvTotalTime);
         mTextView.setText("Total time: " + String.valueOf(mAdapter.grabTime()) + " minutes");
+        ivShare = view.findViewById(R.id.ivShare);
 
         ItemTouchHelper.Callback callback =
                 new SimpleItemTouchHelperCallback(mAdapter);
         ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
         touchHelper.attachToRecyclerView(mRecyclerView);
+
+        ivShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ivShare.setImageDrawable(getResources().getDrawable(R.drawable.share_click));
+            }
+        });
     }
 
     public void addToItinerary(Place itineraryPlace) {
@@ -144,5 +154,9 @@ public class ItineraryFragment extends Fragment implements ItineraryAdapter.OnUp
 
     public ArrayList<Place> getmItinerary() {
         return mItinerary;
+    }
+
+    public interface OnItemViewClickedListener {
+        void inflateDetails(Bundle bundle);
     }
 }
