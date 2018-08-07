@@ -14,7 +14,8 @@
         android:id="@+id/tvSetLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/location"/>
+        android:text="@string/location"
+        android:visibility="invisible"/>
 
     <Button
         android:id="@+id/btnRecalculate"

@@ -103,31 +103,35 @@ public class MapFragment extends Fragment {
         });
         mapView.onCreate(savedInstanceState);
         mSetLocation = view.findViewById(R.id.tvSetLocation);
-        mSetLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog builder = new AlertDialog.Builder(getContext()).create();
-                final EditText input = new EditText(getContext());
-                builder.setTitle("Set location");
-                builder.setView(input);
-                builder.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        mAddress = input.getText().toString();
-                        String formattedAddress = mAddress.replace(" ", "+");
-                        mOnNewAddressListener.requestRecs(formattedAddress);
-                    }
-                });
-                builder.setButton(DialogInterface.BUTTON_NEGATIVE, "CANCEL", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-                builder.show();
-            }
-        });
+        if (getTag().equals("RecsMap")) {
+            mSetLocation.setVisibility(View.VISIBLE);
+            mSetLocation.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog builder = new AlertDialog.Builder(getContext()).create();
+                    final EditText input = new EditText(getContext());
+                    builder.setTitle("Set location");
+                    builder.setView(input);
+                    builder.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            mAddress = input.getText().toString();
+                            String formattedAddress = mAddress.replace(" ", "+");
+                            mOnNewAddressListener.requestRecs(formattedAddress);
+                        }
+                    });
+                    builder.setButton(DialogInterface.BUTTON_NEGATIVE, "CANCEL", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    builder.show();
+                }
+            });
+        }
         if (getTag().equals("ItineraryMap")) {
+            mSetLocation.setVisibility(View.INVISIBLE);
             mRecalculate = view.findViewById(R.id.btnRecalculate);
             mRecalculate.setVisibility(View.VISIBLE);
             mRecalculate.setOnClickListener(new View.OnClickListener() {

@@ -33,11 +33,18 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.View
     public static final DecimalFormat df = new DecimalFormat( "#.00" );
     private ArrayList<Place> mItinerary;
     private Context context;
+    private OnUpdateTimeListener mListener;
 
     private ItineraryFragment.OnItemViewClickedListener onItemViewClickedListener;
 
     public ItineraryAdapter(ArrayList<Place> itinerary) {
         mItinerary = itinerary;
+        try {
+            mListener = (OnUpdateTimeListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnUpdateTimeListener");
+        }
     }
 
     @NonNull
@@ -99,11 +106,13 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.View
     public void onItemDismiss(int position) {
         mItinerary.remove(position);
         notifyItemRemoved(position);
+        mListener.updateTime(grabTime());
     }
 
     public interface OnUpdateTimeListener {
-        public void updateTime(int i);
+        void updateTime(int i);
     }
+
 
     public void clear() {
         mItinerary.clear();
@@ -148,8 +157,6 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.View
     // Taken from https://stackoverflow.com/questions/31844373/saving-edittext-content-in-recyclerview
     public class CustomEditTextListener implements TextWatcher {
         private int position;
-        private OnUpdateTimeListener mListener;
-
 
         public void updatePosition(int position) {
             this.position = position;
@@ -167,11 +174,14 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.View
             } else {
                 mItinerary.get(position).setTime(0);
             }
-            try {
-                mListener = (OnUpdateTimeListener) context;
-            } catch (ClassCastException e) {
-                throw new ClassCastException(context.toString()
-                        + " must implement OnUpdateTimeListener");
+
+            if (mListener == null) {
+                try {
+                    mListener = (OnUpdateTimeListener) context;
+                } catch (ClassCastException e) {
+                    throw new ClassCastException(context.toString()
+                            + " must implement OnUpdateTimeListener");
+                }
             }
             mListener.updateTime(grabTime());
         }
