@@ -14,27 +14,24 @@ Jayjoska allows users to create a customized travel itinerary based off a presel
 ------------
 * [X] The map has pins on all the locations in the suggestions
 * [X] User can tap on one of the suggestions (from the recommendations view) to see a detail view.
-* [ ] User has a way to include (or not) each element of the list in his/her final itinerary
+* [X] User has a way to include (or not) each element of the list in his/her final itinerary
 * [X] The detail view includes Image, Name, Rating, Price, Hours, Learn More (a link te Yelp), and Reviews.
 ------------
-* [ ] The itinerary includes a list of the places, which can be sorted to make the final itinerary
-* [ ] Each element of the list includes a Picture, Name, and Time to spend in that place (which the user can specify)
-* [ ] The itinerary includes a map with a drawn out route
-* [ ] There is a "Recalculate" button to recalculate the route after the user reorganizes the suggestions
+* [X] The itinerary includes a list of the places, which can be sorted to make the final itinerary
+* [X] Each element of the list includes a Picture, Name, and Time to spend in that place (which the user can specify)
+* [X] The itinerary includes a map with a drawn out route
+* [X] There is a "Recalculate" button to recalculate the route after the user reorganizes the suggestions
 
-## Optional User Stories
-* Location manual input in maps recs fragment 
-* onboarding screen for location / destination the traveler wants to go to 
-* There should be a button to export/share
+## Polish User Stories
+* [X] Location manual input in maps recs fragment 
+* [ ] onboarding screen for location / destination the traveler wants to go to 
+* [ ] There should be a button to export/share
+* [ ] Add subinterests to main categories
 ------------
-* Recommendations change based on size of geofence
-* Add subinterests to main categories
-------------
-* Look at FB profile for interests
-* Sharing locations/post features 
-* Recommend cities/areas that contain multiple matches to user's interests
-* Login screen (maybe)
-* One-day itinerary by minimizing distance
+* [ ] Recommendations change based on size of geofence
+* [ ] Sharing locations/post features 
+* [ ] Recommend cities/areas that contain multiple matches to user's interests
+* [ ] Login screen (maybe)
 
 ## Models 
 * place model - name, rating, location, category imageUrl
