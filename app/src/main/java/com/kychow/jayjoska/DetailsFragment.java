@@ -109,6 +109,10 @@ public class DetailsFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        if (business.getPrice().equalsIgnoreCase("no price range")) {
+            business.setPrice("");
+        }
+
         tvBusinessName.setText(business.getName());
         tvPrice.setText(business.getPrice());
         Log.d("DetailsFragment", business.getPrice());

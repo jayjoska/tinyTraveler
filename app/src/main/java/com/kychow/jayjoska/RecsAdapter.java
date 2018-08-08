@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.request.RequestOptions;
 import com.kychow.jayjoska.models.Place;
 
 import org.parceler.Parcels;
@@ -55,8 +54,6 @@ public class RecsAdapter extends RecyclerView.Adapter<RecsAdapter.ViewHolder> {
         }
         holder.mRating.setRating(place.getRating());
 
-        //allows for the center crop to be applied for image
-        RequestOptions options = new RequestOptions();
         GlideApp.with(context)
                 .load(place.getImgURL())
                 .transform(new MultiTransformation<Bitmap>(new CenterCrop(), new RoundedCornersTransformation(25,0)))

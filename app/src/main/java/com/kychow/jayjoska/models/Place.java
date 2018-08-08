@@ -126,6 +126,8 @@ public class Place {
         category = s;
     }
 
+    public void setPrice(String s) { price = s; }
+
     public void setTimeSpent(int i) {
         timeSpent = i;
     }

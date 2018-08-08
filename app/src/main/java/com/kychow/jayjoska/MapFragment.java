@@ -67,6 +67,7 @@ public class MapFragment extends Fragment {
     private OnMarkerClickedListener mOnMarkerClickedListener;
     private OnLocationUpdateListener mOnLocationUpdated;
     private Button mRecalculate;
+    private RecsFragment.OnSelectedListener mOnSelected;
 
     //hacking location
     private Location mLocation;
@@ -98,8 +99,6 @@ public class MapFragment extends Fragment {
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 loadMap(googleMap);
-                map.setInfoWindowAdapter(new MapsInfoWindowAdapter(inflater));
-
                 if (getTag().equalsIgnoreCase("itinerarymap")) {
                     mapListener.sendItinerary();
                     addPolyline(getResults(mapListener.getItinerary()), map);
@@ -216,6 +215,13 @@ public class MapFragment extends Fragment {
             throw new ClassCastException(context.toString()
                     + " must implement OnLocationUpdatedListener");
         }
+
+        try {
+            mOnSelected = (RecsFragment.OnSelectedListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnSelectedListener");
+        }
     }
 
     @Override
@@ -289,10 +295,11 @@ public class MapFragment extends Fragment {
     }
 
     public void addMarkers(ArrayList<Place> places) {
+        map.setInfoWindowAdapter(new MapsInfoWindowAdapter(getLayoutInflater()));
+        Marker marker;
         if (map != null) {
             map.clear();
             if (!places.isEmpty()) {
-                Marker marker;
                 LatLngBounds.Builder builder = new LatLngBounds.Builder();
                 marker = map.addMarker(new MarkerOptions()
                 .position(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()))
@@ -301,11 +308,14 @@ public class MapFragment extends Fragment {
                 marker.setZIndex(places.size());
                 builder.include(marker.getPosition());
                 for (Place place : places) {
+                    if (place.getPrice().equals("")) {
+                        place.setPrice("No Price Range");
+                    }
                     marker = map.addMarker(new MarkerOptions()
                             .position(new LatLng(place.getLatitude(), place.getLongitude()))
                             .title(place.getName())
-                            .snippet("Distance: " + place.getDistance())
-                            .snippet("\n" + place.getPrice()));
+                            .snippet(String.format("Distance: %.2f miles \nPrice: %s", place.getDistance(), place.getPrice()))
+                    );
                     builder.include(marker.getPosition());
                 }
                 LatLngBounds bounds = builder.build();
