@@ -1,7 +1,9 @@
-package com.kychow.jayjoska;
+package com.kychow.jayjoska.helpers;
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+
+import com.kychow.jayjoska.helpers.ItemTouchHelperAdapter;
 
 /**
  * Created by Karena Chow on 8/1/18.

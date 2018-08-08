@@ -1,4 +1,4 @@
-package com.kychow.jayjoska;
+package com.kychow.jayjoska.helpers;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -6,12 +6,14 @@ import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
+import com.kychow.jayjoska.MapActivity;
+import com.kychow.jayjoska.R;
 
 /**
  * @brief MapsInfoWindowAdapter displays a window with custom text set by the user above a pin in maps.
  * @uses MapActivity for basic maps functionality
  */
-class MapsInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
+public class MapsInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
     LayoutInflater mInflater;
 
     public MapsInfoWindowAdapter(LayoutInflater i){

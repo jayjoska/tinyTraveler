@@ -41,6 +41,7 @@ import com.google.maps.errors.ApiException;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.TravelMode;
+import com.kychow.jayjoska.helpers.MapsInfoWindowAdapter;
 import com.kychow.jayjoska.models.Place;
 
 import java.io.IOException;

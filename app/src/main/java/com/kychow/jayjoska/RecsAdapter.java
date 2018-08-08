@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.kychow.jayjoska.helpers.GlideApp;
 import com.kychow.jayjoska.models.Place;
 
 import org.parceler.Parcels;

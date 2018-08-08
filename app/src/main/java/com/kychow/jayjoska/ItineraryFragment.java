@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.ShareActionProvider;
 import android.widget.TextView;
 
+import com.kychow.jayjoska.helpers.SimpleItemTouchHelperCallback;
 import com.kychow.jayjoska.models.Place;
 import com.loopj.android.http.AsyncHttpClient;
 

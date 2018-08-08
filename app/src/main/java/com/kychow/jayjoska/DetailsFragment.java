@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.request.RequestOptions;
+import com.kychow.jayjoska.helpers.GlideApp;
 import com.kychow.jayjoska.models.Place;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;

@@ -1,4 +1,4 @@
-package com.kychow.jayjoska;
+package com.kychow.jayjoska.helpers;
 
 /**
  * Created by Karena Chow on 8/1/18.
