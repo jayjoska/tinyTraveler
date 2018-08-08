@@ -79,6 +79,7 @@ public class MapFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
         if (savedInstanceState != null && savedInstanceState.keySet().contains(KEY_LOCATION)) {
             // Since KEY_LOCATION was found in the Bundle, we can be sure that mCurrentLocation
             // is not null.
@@ -92,6 +93,7 @@ public class MapFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
         mapView = view.findViewById(R.id.mvMap);
         savedState = new Bundle();
+        mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
@@ -104,7 +106,6 @@ public class MapFragment extends Fragment {
                 }
             }
         });
-        mapView.onCreate(savedInstanceState);
         mSetLocation = view.findViewById(R.id.tvSetLocation);
         if (getTag().equals("RecsMap")) {
             mSetLocation.setVisibility(View.VISIBLE);
@@ -168,7 +169,6 @@ public class MapFragment extends Fragment {
         if (mLocation == null) {
             if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                     || ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                Log.d("MapFrag", mLocation.toString());
                 Criteria criteria = new Criteria();
                 LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
                 String provider = locationManager.getBestProvider(criteria, false);
@@ -312,7 +312,7 @@ public class MapFragment extends Fragment {
                 // TODO: change padding to be 100 at the top, and a lot less on the sides
                 int padding = 100; // offset from edges of the map in pixels
                 CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
-                map.animateCamera(cu);
+                map.moveCamera(cu);
                 map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override
                     public boolean onMarkerClick(Marker marker) {
