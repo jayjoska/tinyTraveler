@@ -34,9 +34,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.DirectionsApi;
 import com.google.maps.GeoApiContext;
+import com.google.maps.GeocodingApi;
 import com.google.maps.android.PolyUtil;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.DirectionsResult;
+import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.TravelMode;
 import com.kychow.jayjoska.models.Place;
 
@@ -63,6 +65,7 @@ public class MapFragment extends Fragment {
     private String mAddress;
     private OnNewAddressListener mOnNewAddressListener;
     private OnMarkerClickedListener mOnMarkerClickedListener;
+    private OnLocationUpdateListener mOnLocationUpdated;
     private Button mRecalculate;
 
     //hacking location
@@ -117,7 +120,15 @@ public class MapFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int which) {
                             mAddress = input.getText().toString();
                             String formattedAddress = mAddress.replace(" ", "+");
-                            mOnNewAddressListener.requestRecs(formattedAddress);
+                            try {
+                                mOnNewAddressListener.requestRecs(formattedAddress);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            } catch (ApiException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
                     });
                     builder.setButton(DialogInterface.BUTTON_NEGATIVE, "CANCEL", new DialogInterface.OnClickListener() {
@@ -138,7 +149,7 @@ public class MapFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     mRecalculate.setClickable(false);
-                    ArrayList<Place> itinerary = new ArrayList<>();
+                    ArrayList<Place> itinerary;
                     if (mapListener != null) {
                         itinerary = mapListener.getItinerary();
                         addMarkers(itinerary);
@@ -154,20 +165,24 @@ public class MapFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            Criteria criteria = new Criteria();
-            LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-            String provider = locationManager.getBestProvider(criteria, false);
-            mLocation = locationManager.getLastKnownLocation(provider);
-            lat = mLocation.getLatitude();
-            lng = mLocation.getLongitude();
-        } else {
-            mLocation = new Location("");
-            lat = 37.484377;
-            lng = -122.148304;
-            mLocation.setLatitude(lat);
-            mLocation.setLongitude(lng);
+        if (mLocation == null) {
+            if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                    || ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                Log.d("MapFrag", mLocation.toString());
+                Criteria criteria = new Criteria();
+                LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+                String provider = locationManager.getBestProvider(criteria, false);
+                mLocation = locationManager.getLastKnownLocation(provider);
+                lat = mLocation.getLatitude();
+                lng = mLocation.getLongitude();
+            }
+            else {
+                mLocation = new Location("");
+                lat = 37.484377;
+                lng = -122.148304;
+                mLocation.setLatitude(lat);
+                mLocation.setLongitude(lng);
+            }
         }
     }
 
@@ -193,6 +208,13 @@ public class MapFragment extends Fragment {
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
                     + " must implement OnMarkerClickedListener");
+        }
+
+        try {
+            mOnLocationUpdated = (OnLocationUpdateListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnLocationUpdatedListener");
         }
     }
 
@@ -272,16 +294,18 @@ public class MapFragment extends Fragment {
             if (!places.isEmpty()) {
                 Marker marker;
                 LatLngBounds.Builder builder = new LatLngBounds.Builder();
-                map.addMarker(new MarkerOptions()
-                .position(new LatLng(lat, lng)).title("Current Location")
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)))
-                        .setZIndex(places.size());
+                marker = map.addMarker(new MarkerOptions()
+                .position(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()))
+                        .title("Current Location")
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                marker.setZIndex(places.size());
+                builder.include(marker.getPosition());
                 for (Place place : places) {
                     marker = map.addMarker(new MarkerOptions()
                             .position(new LatLng(place.getLatitude(), place.getLongitude()))
                             .title(place.getName())
                             .snippet("Distance: " + place.getDistance())
-                            .snippet(place.getPrice()));
+                            .snippet("\n" + place.getPrice()));
                     builder.include(marker.getPosition());
                 }
                 LatLngBounds bounds = builder.build();
@@ -307,7 +331,11 @@ public class MapFragment extends Fragment {
     }
 
     public interface OnNewAddressListener {
-        void requestRecs(String s);
+        void requestRecs(String s) throws InterruptedException, ApiException, IOException;
+    }
+
+    public interface OnMarkerClickedListener {
+        void scrollToItem(String s);
     }
 
     private GeoApiContext getGeoContext() {
@@ -322,7 +350,7 @@ public class MapFragment extends Fragment {
         ArrayList<DirectionsResult> directionsResults = new ArrayList<>();
         DirectionsResult result;
 
-        destinationCoordinates.add(new com.google.maps.model.LatLng(lat,lng));
+        destinationCoordinates.add(new com.google.maps.model.LatLng(mLocation.getLatitude(), mLocation.getLongitude()));
 
         for (Place place : itinerary) {
             destinationCoordinates.add(new com.google.maps.model.LatLng(place.getLatitude(), place.getLongitude()));
@@ -356,7 +384,23 @@ public class MapFragment extends Fragment {
         }
     }
 
-    public interface OnMarkerClickedListener {
-        void scrollToItem(String s);
+    public void updateLocation(String s) throws InterruptedException, ApiException, IOException {
+        GeoApiContext context = new GeoApiContext.Builder()
+                .apiKey(getResources().getString(R.string.maps_api_key))
+                .build();
+        GeocodingResult[] results =  GeocodingApi.geocode(context, s).await();
+        lat = results[0].geometry.location.lat;
+        lng = results[0].geometry.location.lng;
+        mLocation.setLatitude(lat);
+        mLocation.setLongitude(lng);
+        mOnLocationUpdated.setLocation(mLocation);
+    }
+
+    public interface OnLocationUpdateListener {
+        void setLocation(Location location);
+    }
+
+    public void setLocation(Location loc) {
+        mLocation = loc;
     }
 }

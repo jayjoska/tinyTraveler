@@ -1,6 +1,7 @@
 package com.kychow.jayjoska;
 
 import android.content.Context;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -23,7 +24,7 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class ItineraryMapsFragment extends Fragment implements RecsFragment.OnItemAddedListener,
-        ItineraryAdapter.OnUpdateTimeListener, MapFragment.OnMapListener, ItineraryFragment.OnItemViewClickedListener{
+        ItineraryAdapter.OnUpdateTimeListener, MapFragment.OnMapListener, ItineraryFragment.OnItemViewClickedListener, MapFragment.OnLocationUpdateListener{
 
     private RecsFragment.OnItemAddedListener mListener;
     private MapFragment.OnMapListener mapListener;
@@ -119,11 +120,21 @@ public class ItineraryMapsFragment extends Fragment implements RecsFragment.OnIt
     }
 
     public void clearItinerary() {
-        itineraryFragment.clearItinerary();
+        if (itineraryFragment != null) {
+            itineraryFragment.clearItinerary();
+        }
     }
 
     @Override
     public void inflateDetails(Bundle bundle) {
         itemViewClickedListener.inflateDetails(bundle);
+    }
+
+    @Override
+    public void setLocation(Location location) {
+        if (mapFragment == null) {
+            mapFragment = new MapFragment();
+        }
+        mapFragment.setLocation(location);
     }
 }

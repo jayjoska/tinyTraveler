@@ -1,5 +1,6 @@
 package com.kychow.jayjoska;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -26,7 +27,8 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity implements CategoriesFragment.OnNextButtonClicked,
         RecsFragment.OnSelectedListener, RecsFragment.OnPlacesPopulatedListener,
         RecsFragment.OnItemAddedListener, ItineraryAdapter.OnUpdateTimeListener, MapFragment.OnNewAddressListener,
-        MapsRecsFragment.OnAddressChangedListener, MapFragment.OnMapListener, MapFragment.OnMarkerClickedListener, ItineraryFragment.OnItemViewClickedListener {
+        MapsRecsFragment.OnAddressChangedListener, MapFragment.OnMapListener, MapFragment.OnMarkerClickedListener, ItineraryFragment.OnItemViewClickedListener,
+        MapFragment.OnLocationUpdateListener{
 
 
     private static final String TAG = "MainActivity";
@@ -180,12 +182,19 @@ public class MainActivity extends AppCompatActivity implements CategoriesFragmen
 
     @Override
     public void clearItinerary() {
-        itineraryMapsFragment.clearItinerary();
+        if (itineraryMapsFragment != null) {
+            itineraryMapsFragment.clearItinerary();
+        }
     }
 
     @Override
     public void scrollToItem(String s) {
         mapsRecsFragment.scrollToItem(s);
+    }
+
+    @Override
+    public void setLocation(Location location) {
+        itineraryMapsFragment.setLocation(location);
     }
 }
 

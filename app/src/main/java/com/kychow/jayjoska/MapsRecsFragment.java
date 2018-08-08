@@ -8,8 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.maps.errors.ApiException;
 import com.kychow.jayjoska.models.Place;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -113,6 +115,16 @@ public class MapsRecsFragment extends Fragment implements RecsFragment.OnPlacesP
         recsFragment.setAddress(s);
         recsFragment.getRecsFromOutside();
         mOnAddressChangedListener.clearItinerary();
+
+        try {
+            mapFragment.updateLocation(s);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ApiException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean shouldAllowBack() {
