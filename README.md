@@ -25,7 +25,7 @@ Jayjoska allows users to create a customized travel itinerary based off a presel
 ## Polish User Stories
 * [X] Location manual input in maps recs fragment 
 * [ ] onboarding screen for location / destination the traveler wants to go to 
-* [ ] There should be a button to export/share
+* [X] There should be a button to export/share
 * [ ] Add subinterests to main categories
 ------------
 * [ ] Recommendations change based on size of geofence
