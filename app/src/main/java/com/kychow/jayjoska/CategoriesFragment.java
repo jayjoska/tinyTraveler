@@ -6,22 +6,16 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by Karena Chow on 7/18/18.
@@ -107,6 +101,13 @@ public class CategoriesFragment extends Fragment {
      * passed as an argument.
      */
     public void getCategories() {
+        String[] cats = MainActivity.getCategoryAliases();
+        for (int i = 0; i < cats.length; i++) {
+            mCategories.add(cats[i]);
+            mAdapter.notifyItemInserted(i);
+        }
+
+        /*
         String url;
 
         // todo migrate category aliases to categories fragment
@@ -145,7 +146,7 @@ public class CategoriesFragment extends Fragment {
             }
 
         }
-
+        */
     }
 
     @Override

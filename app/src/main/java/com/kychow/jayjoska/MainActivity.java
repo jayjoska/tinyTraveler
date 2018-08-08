@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements CategoriesFragmen
     private static final String TAG = "MainActivity";
     // Hardcoded aliases for the main 22 categories.
     private static final String[] CATEGORY_ALIASES =
-            {"active", "arts", "auto", "beautysvc", "bicycles", "education", "eventservices", "financialservices",
+            {"active", "arts", "auto", "beautysvc", "education", "eventservices", "financialservices",
                     "food", "health", "homeservices", "hotelstravel", "localflavor",
                     "localservices", "massmedia", "nightlife", "pets", "professional",
                     "publicservicesgovt", "religiousorgs", "restaurants",

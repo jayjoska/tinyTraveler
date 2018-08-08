@@ -14,7 +14,7 @@ public class Categories {
         put("beautysvc","Beauty & Spas");
         put("education","Education");
         put("eventservices","Event Services");
-        put("financialservies","Financial Services");
+        put("financialservices","Financial Services");
         put("food","Food");
         put("health","Health & Medical");
         put("homeservices","Home Services");
