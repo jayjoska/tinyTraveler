@@ -150,6 +150,7 @@ public class MainActivity extends AppCompatActivity implements CategoriesFragmen
             ft.commit();
         }
 
+        //TODO: Add a listener from mapsFrag and recsFrag, that loads this once once the rest is loaded
         bottomNavigationView.setVisibility(View.VISIBLE);
     }
 

@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -60,6 +61,7 @@ public class MapFragment extends Fragment {
     private MapView mapView;
     private Bundle savedState;
     private TextView mSetLocation;
+    private ProgressBar mLoading;
     private final static String KEY_LOCATION = "location";
     private final static String TAG = "MapFragemnt";
     private String mAddress;
@@ -93,6 +95,8 @@ public class MapFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_map, container, false);
         mapView = view.findViewById(R.id.mvMap);
+        mLoading = view.findViewById(R.id.pbLoadingMap);
+        mLoading.setVisibility(View.VISIBLE);
         savedState = new Bundle();
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(new OnMapReadyCallback() {
@@ -103,6 +107,7 @@ public class MapFragment extends Fragment {
                     mapListener.sendItinerary();
                     addPolyline(getResults(mapListener.getItinerary()), map);
                 }
+                mLoading.setVisibility(View.GONE);
             }
         });
         mSetLocation = view.findViewById(R.id.tvSetLocation);

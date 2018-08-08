@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RecommendationsFragment"
+    tools:context=".RecsFragment"
     android:id="@+id/fragRecs"
     android:tag="recsFrag">
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/rvRecs"/>
+        android:id="@+id/rvRecs"
+        android:layout_below="@+id/pbLoadingRecs"/>
 
-</FrameLayout>
+    <ProgressBar
+        android:id="@+id/pbLoadingRecs"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:progressDrawable="@drawable/custom_progressbar"/>
+
+</RelativeLayout>

@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.kychow.jayjoska.models.Place;
@@ -47,6 +48,7 @@ public class RecsFragment extends Fragment {
 
     // Added by Jose (most of the code in this file is auto-generated
     private RecyclerView mRecyclerView;
+    private ProgressBar mLoading;
     private RecsAdapter mAdapter;
     private ArrayList<Place> mRecs;
     private ArrayList<String> mCategories;
@@ -105,6 +107,13 @@ public class RecsFragment extends Fragment {
             savedState = new Bundle();
         }
 
+        mLoading = view.findViewById(R.id.pbLoadingRecs);
+        for (String s : mCategories) {
+            if (!mOldCategories.contains(s)) {
+                mLoading.setVisibility(View.VISIBLE);
+                break;
+            }
+        }
         // Syntax taken from https://stackoverflow.com/questions/19722712/get-user-current-location-android
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 || ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -235,6 +244,7 @@ public class RecsFragment extends Fragment {
                             }
                             if (i == recsPerCategory - 1 && iteratorCounter == catSize) {
                                 mListener.sendRecs(mRecs);
+                                mLoading.setVisibility(View.GONE);
                             }
                             allowBack = true;
                         }
