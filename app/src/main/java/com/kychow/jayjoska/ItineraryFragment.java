@@ -46,7 +46,8 @@ public class ItineraryFragment extends Fragment implements ItineraryAdapter.Itin
     private ItineraryAdapter mAdapter;
     private ArrayList<Place> mItinerary;
     private AsyncHttpClient client;
-    private TextView mTextView;
+    private TextView mTotalTime;
+    private TextView mTravel;
     private ImageView ivShare;
     private int mTime;
     private int mTravelTime = 0;
@@ -106,9 +107,11 @@ public class ItineraryFragment extends Fragment implements ItineraryAdapter.Itin
         mRecyclerView = view.findViewById(R.id.rvItinerary);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
-        mTextView = view.findViewById(R.id.tvTotalTime);
+        mTotalTime = view.findViewById(R.id.tvTotalTime);
+        mTravel = view.findViewById(R.id.tvTravelTime);
         mTime = mAdapter.grabTime();
-        setTimeText(mTime + mTravelTime);
+        setTimeText(mTime + mTravelTime, mTotalTime);
+        setTimeText(mTravelTime, mTravel);
         ivShare = view.findViewById(R.id.ivShare);
 
         ItemTouchHelper.Callback callback =
@@ -160,7 +163,7 @@ public class ItineraryFragment extends Fragment implements ItineraryAdapter.Itin
     @Override
     public void updateTime(int i) {
         mTime = i;
-        setTimeText(mTime + mTravelTime);
+        setTimeText(mTime + mTravelTime, mTotalTime);
     }
 
     @Override
@@ -183,13 +186,20 @@ public class ItineraryFragment extends Fragment implements ItineraryAdapter.Itin
 
     public void updateTravelTime(int i) {
         mTravelTime = i;
-        setTimeText(mTime + mTravelTime);
+        setTimeText(mTravelTime, mTravel);
+        setTimeText(mTime + mTravelTime, mTotalTime);
     }
 
-    public void setTimeText(int time) {
+    public void setTimeText(int time, TextView tv) {
         int hours = time / 60;
         int minutes = time % 60;
-        String s = "Total time out: ";
+        String s = "";
+        if (tv.equals(mTotalTime)) {
+            s = "Total time out: ";
+        } else if (tv.equals(mTravel)) {
+            s = "Travel time: ";
+        }
+
         if (hours != 0) {
             if (hours == 1) {
                 s += String.valueOf(hours) + " hour ";
@@ -204,7 +214,7 @@ public class ItineraryFragment extends Fragment implements ItineraryAdapter.Itin
                 s += String.valueOf(minutes) + " minutes";
             }
         }
-        mTextView.setText(s);
+        tv.setText(s);
     }
 
     public void scrollToItem(String s) {
