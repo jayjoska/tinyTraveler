@@ -199,4 +199,17 @@ public class ItineraryFragment extends Fragment implements ItineraryAdapter.OnUp
         }
         mTextView.setText(s);
     }
+
+    public void scrollToItem(String s) {
+        int position = RecyclerView.NO_POSITION;
+        for (int i = 0; i < mItinerary.size(); i++) {
+            if (mItinerary.get(i).getName().equals(s)) {
+                position = i;
+                break;
+            }
+        }
+        if (position != RecyclerView.NO_POSITION) {
+            mRecyclerView.scrollToPosition(position);
+        }
+    }
 }

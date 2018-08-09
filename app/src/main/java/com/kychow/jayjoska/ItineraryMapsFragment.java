@@ -25,7 +25,7 @@ import java.util.ArrayList;
  */
 public class ItineraryMapsFragment extends Fragment implements RecsFragment.OnItemAddedListener,
         ItineraryAdapter.OnUpdateTimeListener, MapFragment.OnMapListener, ItineraryFragment.OnItemViewClickedListener, MapFragment.OnLocationUpdateListener,
-        MapFragment.OnTravelTimeUpdatedListener {
+        MapFragment.OnTravelTimeUpdatedListener, MapFragment.OnItineraryMarkerClicked {
 
     private RecsFragment.OnItemAddedListener mListener;
     private MapFragment.OnMapListener mapListener;
@@ -142,5 +142,10 @@ public class ItineraryMapsFragment extends Fragment implements RecsFragment.OnIt
     @Override
     public void updateTravelTime(int i) {
         itineraryFragment.updateTravelTime(i);
+    }
+
+    @Override
+    public void scrollItinerary(String s) {
+        itineraryFragment.scrollToItem(s);
     }
 }

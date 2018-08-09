@@ -319,6 +319,7 @@ public class RecsFragment extends Fragment {
         for (int i = 0; i < mRecs.size(); i++) {
             if (mRecs.get(i).getName().equals(s)) {
                 position = i;
+                break;
             }
         }
         if (position != RecyclerView.NO_POSITION) {

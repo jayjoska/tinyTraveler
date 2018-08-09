@@ -71,6 +71,8 @@ public class MapFragment extends Fragment {
     private OnMarkerClickedListener mOnMarkerClickedListener;
     private OnLocationUpdateListener mOnLocationUpdated;
     private OnTravelTimeUpdatedListener mOnTravelTimeUpdatedListener;
+    private OnItineraryMarkerClicked mOnItineraryMarkerClicked;
+
     private Button mRecalculate;
     private RecsFragment.OnSelectedListener mOnSelected;
 
@@ -241,6 +243,13 @@ public class MapFragment extends Fragment {
             throw new ClassCastException(context.toString()
                     + " must implement OnTravelTimeUpdatedListener");
         }
+
+        try {
+            mOnItineraryMarkerClicked = (OnItineraryMarkerClicked) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnItineraryMarkerClicked");
+        }
     }
 
     @Override
@@ -351,7 +360,11 @@ public class MapFragment extends Fragment {
                 map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override
                     public boolean onMarkerClick(Marker marker) {
-                        mOnMarkerClickedListener.scrollToItem(marker.getTitle());
+                        if (getTag().equals("RecsMap")) {
+                            mOnMarkerClickedListener.scrollToItem(marker.getTitle());
+                        } else if (getTag().equals("ItineraryMap")) {
+                            mOnItineraryMarkerClicked.scrollItinerary(marker.getTitle());
+                        }
                         marker.showInfoWindow();
                         return true;
                     }
@@ -449,6 +462,10 @@ public class MapFragment extends Fragment {
 
     public interface OnTravelTimeUpdatedListener {
         void updateTravelTime(int i);
+    }
+
+    public interface OnItineraryMarkerClicked {
+        void scrollItinerary(String s);
     }
 
     public void setLocation(Location loc) {
