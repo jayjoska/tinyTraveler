@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -48,6 +49,8 @@ import com.kychow.jayjoska.models.Place;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 
 
 /**
@@ -91,7 +94,7 @@ public class MapFragment extends Fragment {
         if (savedInstanceState != null && savedInstanceState.keySet().contains(KEY_LOCATION)) {
             // Since KEY_LOCATION was found in the Bundle, we can be sure that mCurrentLocation
             // is not null.
-            mCurrentLocation = savedInstanceState.getParcelable(KEY_LOCATION);
+            //mCurrentLocation = savedInstanceState.getParcelable(KEY_LOCATION);
         }
     }
 
@@ -338,7 +341,8 @@ public class MapFragment extends Fragment {
                 marker = map.addMarker(new MarkerOptions()
                 .position(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()))
                         .title("Current Location")
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.pegman))
+                );
                 marker.setZIndex(places.size());
                 builder.include(marker.getPosition());
                 for (Place place : places) {
@@ -439,7 +443,7 @@ public class MapFragment extends Fragment {
         for (int i = 0; i < directionsResults.size(); i++) {
             for (int j = 0; j < directionsResults.get(i).routes.length; j++) {
                 decodedPath = PolyUtil.decode(directionsResults.get(i).routes[j].overviewPolyline.getEncodedPath());
-                mMap.addPolyline(new PolylineOptions().addAll(decodedPath));
+                mMap.addPolyline(new PolylineOptions().color(randomColorGenerator()).addAll(decodedPath));
             }
         }
     }
@@ -470,5 +474,14 @@ public class MapFragment extends Fragment {
 
     public void setLocation(Location loc) {
         mLocation = loc;
+    }
+
+    public int randomColorGenerator() {
+        Random rand = new Random();
+        int red = rand.nextInt(256);
+        int green = rand.nextInt(256);
+        int blue = rand.nextInt(256);
+
+        return Color.rgb(red, green, blue);
     }
 }

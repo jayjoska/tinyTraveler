@@ -40,6 +40,7 @@
         android:layout_below="@+id/ratingBar"
         android:layout_toRightOf="@+id/ivPicture"
         android:text="Distance"
+        android:layout_marginBottom="5dp"
         android:textColor="@color/black"/>
 
     <TextView
