@@ -47,6 +47,8 @@ public class ItineraryFragment extends Fragment implements ItineraryAdapter.OnUp
     private AsyncHttpClient client;
     private TextView mTextView;
     private ImageView ivShare;
+    private int mTime;
+    private int mTravelTime = 0;
 
     private ShareActionProvider mShareActionProvider;
 
@@ -104,7 +106,8 @@ public class ItineraryFragment extends Fragment implements ItineraryAdapter.OnUp
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
         mTextView = view.findViewById(R.id.tvTotalTime);
-        mTextView.setText("Total time: " + String.valueOf(mAdapter.grabTime()) + " minutes");
+        mTime = mAdapter.grabTime();
+        setTimeText(mTime + mTravelTime);
         ivShare = view.findViewById(R.id.ivShare);
 
         ItemTouchHelper.Callback callback =
@@ -155,7 +158,8 @@ public class ItineraryFragment extends Fragment implements ItineraryAdapter.OnUp
 
     @Override
     public void updateTime(int i) {
-        mTextView.setText("Total time: " + i + " minutes");
+        mTime = i;
+        setTimeText(mTime + mTravelTime);
     }
 
     public void clearItinerary() {
@@ -168,5 +172,31 @@ public class ItineraryFragment extends Fragment implements ItineraryAdapter.OnUp
 
     public interface OnItemViewClickedListener {
         void inflateDetails(Bundle bundle);
+    }
+
+    public void updateTravelTime(int i) {
+        mTravelTime = i;
+        setTimeText(mTime + mTravelTime);
+    }
+
+    public void setTimeText(int time) {
+        int hours = time / 60;
+        int minutes = time % 60;
+        String s = "Total time out: ";
+        if (hours != 0) {
+            if (hours == 1) {
+                s += String.valueOf(hours) + " hour ";
+            } else {
+                s += String.valueOf(hours) + " hours ";
+            }
+        }
+        if (minutes != 0) {
+            if (minutes == 1) {
+                s += String.valueOf(minutes) + " minute";
+            } else {
+                s += String.valueOf(minutes) + " minutes";
+            }
+        }
+        mTextView.setText(s);
     }
 }

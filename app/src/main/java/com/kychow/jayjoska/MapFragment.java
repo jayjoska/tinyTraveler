@@ -38,6 +38,7 @@ import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.android.PolyUtil;
 import com.google.maps.errors.ApiException;
+import com.google.maps.model.DirectionsLeg;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.TravelMode;
@@ -69,6 +70,7 @@ public class MapFragment extends Fragment {
     private OnNewAddressListener mOnNewAddressListener;
     private OnMarkerClickedListener mOnMarkerClickedListener;
     private OnLocationUpdateListener mOnLocationUpdated;
+    private OnTravelTimeUpdatedListener mOnTravelTimeUpdatedListener;
     private Button mRecalculate;
     private RecsFragment.OnSelectedListener mOnSelected;
 
@@ -106,7 +108,9 @@ public class MapFragment extends Fragment {
                 loadMap(googleMap);
                 if (getTag().equalsIgnoreCase("itinerarymap")) {
                     mapListener.sendItinerary();
-                    addPolyline(getResults(mapListener.getItinerary()), map);
+                    ArrayList<DirectionsResult> dr = getResults(mapListener.getItinerary());
+                    addPolyline(dr, map);
+                    mOnTravelTimeUpdatedListener.updateTravelTime(getTravelTime(dr));
                 }
                 mLoading.setVisibility(View.GONE);
             }
@@ -159,7 +163,9 @@ public class MapFragment extends Fragment {
                     if (mapListener != null) {
                         itinerary = mapListener.getItinerary();
                         addMarkers(itinerary);
-                        addPolyline(getResults(itinerary), map);
+                        ArrayList<DirectionsResult> dr = getResults(itinerary);
+                        addPolyline(dr, map);
+                        mOnTravelTimeUpdatedListener.updateTravelTime(getTravelTime(dr));
                         mRecalculate.setClickable(true);
                     }
                 }
@@ -228,11 +234,24 @@ public class MapFragment extends Fragment {
             throw new ClassCastException(context.toString()
                     + " must implement OnSelectedListener");
         }
+
+        try {
+            mOnTravelTimeUpdatedListener = (OnTravelTimeUpdatedListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnTravelTimeUpdatedListener");
+        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+        mapListener = null;
+        mOnNewAddressListener = null;
+        mOnMarkerClickedListener = null;
+        mOnLocationUpdated = null;
+        mOnSelected = null;
+        mOnTravelTimeUpdatedListener = null;
     }
 
     @Override
@@ -390,6 +409,18 @@ public class MapFragment extends Fragment {
         return directionsResults;
     }
 
+    private int getTravelTime(ArrayList<DirectionsResult> directionsResults) {
+        int travelTime = 0;
+        for (int i = 0; i < directionsResults.size(); i++) {
+            DirectionsLeg[] legs = directionsResults.get(i).routes[0].legs;
+            for (int j = 0; j < legs.length; j++) {
+                travelTime += legs[j].duration.inSeconds;
+            }
+        }
+        travelTime = Math.round(travelTime / 60);
+        return travelTime;
+    }
+
     private void addPolyline(ArrayList<DirectionsResult> directionsResults, GoogleMap mMap) {
         List<LatLng> decodedPath;
         for (int i = 0; i < directionsResults.size(); i++) {
@@ -414,6 +445,10 @@ public class MapFragment extends Fragment {
 
     public interface OnLocationUpdateListener {
         void setLocation(Location location);
+    }
+
+    public interface OnTravelTimeUpdatedListener {
+        void updateTravelTime(int i);
     }
 
     public void setLocation(Location loc) {
