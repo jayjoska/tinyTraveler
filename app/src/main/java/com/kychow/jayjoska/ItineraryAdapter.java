@@ -35,17 +35,17 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.View
     public static final DecimalFormat df = new DecimalFormat( "#.00" );
     private ArrayList<Place> mItinerary;
     private Context context;
-    private OnUpdateTimeListener mListener;
+    private ItineraryAdapterCommunication mListener;
 
     private ItineraryFragment.OnItemViewClickedListener onItemViewClickedListener;
 
     public ItineraryAdapter(ArrayList<Place> itinerary) {
         mItinerary = itinerary;
         try {
-            mListener = (OnUpdateTimeListener) context;
+            mListener = (ItineraryAdapterCommunication) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
-                    + " must implement OnUpdateTimeListener");
+                    + " must implement ItineraryAdapterCommunication");
         }
     }
 
@@ -109,10 +109,13 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.View
         mItinerary.remove(position);
         notifyItemRemoved(position);
         mListener.updateTime(grabTime());
+        mListener.snackbarRemovedItem();
     }
 
-    public interface OnUpdateTimeListener {
+    public interface ItineraryAdapterCommunication
+    {
         void updateTime(int i);
+        void snackbarRemovedItem();
     }
 
 
@@ -179,10 +182,10 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.View
 
             if (mListener == null) {
                 try {
-                    mListener = (OnUpdateTimeListener) context;
+                    mListener = (ItineraryAdapterCommunication) context;
                 } catch (ClassCastException e) {
                     throw new ClassCastException(context.toString()
-                            + " must implement OnUpdateTimeListener");
+                            + " must implement ItineraryAdapterCommunication");
                 }
             }
             mListener.updateTime(grabTime());

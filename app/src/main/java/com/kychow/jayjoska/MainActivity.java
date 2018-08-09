@@ -26,10 +26,9 @@ import butterknife.ButterKnife;
  */
 public class MainActivity extends AppCompatActivity implements CategoriesFragment.OnNextButtonClicked,
         RecsFragment.OnSelectedListener, RecsFragment.OnPlacesPopulatedListener,
-        RecsFragment.OnItemAddedListener, ItineraryAdapter.OnUpdateTimeListener, MapFragment.OnNewAddressListener,
+        RecsFragment.OnItemAddedListener, ItineraryAdapter.ItineraryAdapterCommunication, MapFragment.OnNewAddressListener,
         MapsRecsFragment.OnAddressChangedListener, MapFragment.OnMapListener, MapFragment.OnMarkerClickedListener, ItineraryFragment.OnItemViewClickedListener,
         MapFragment.OnLocationUpdateListener, MapFragment.OnTravelTimeUpdatedListener, MapFragment.OnItineraryMarkerClicked {
-
 
 
     private static final String TAG = "MainActivity";
@@ -158,6 +157,11 @@ public class MainActivity extends AppCompatActivity implements CategoriesFragmen
     @Override
     public void updateTime(int i) {
         itineraryMapsFragment.updateTime(i);
+    }
+
+    @Override
+    public void snackbarRemovedItem() {
+        itineraryMapsFragment.snackbarRemovedItem();
     }
 
     @Override

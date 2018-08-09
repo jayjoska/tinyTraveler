@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,7 +30,7 @@ import java.util.ArrayList;
  * Use the {@link ItineraryFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ItineraryFragment extends Fragment implements ItineraryAdapter.OnUpdateTimeListener {
+public class ItineraryFragment extends Fragment implements ItineraryAdapter.ItineraryAdapterCommunication {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -160,6 +161,12 @@ public class ItineraryFragment extends Fragment implements ItineraryAdapter.OnUp
     public void updateTime(int i) {
         mTime = i;
         setTimeText(mTime + mTravelTime);
+    }
+
+    @Override
+    public void snackbarRemovedItem() {
+        Snackbar.make(getActivity().findViewById(R.id.fragmentContainer),
+                getString(R.string.snackbar_remove), Snackbar.LENGTH_SHORT).show();
     }
 
     public void clearItinerary() {
