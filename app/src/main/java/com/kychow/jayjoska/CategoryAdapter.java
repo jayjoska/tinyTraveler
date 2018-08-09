@@ -65,7 +65,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
              .into(holder.mIcon);
 
         if (holder.isSelected(position)) {
-            holder.itemView.setBackgroundResource(R.color.v_soft_green);
+            holder.itemView.setBackgroundResource(R.color.lavender);
         } else {
             holder.itemView.setBackgroundColor(Color.TRANSPARENT);
         }
@@ -139,7 +139,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                 } else {
                     if (selection.size() < NUM_OF_CATEGORIES) {
                         selection.add(category);
-                        itemView.setBackgroundColor(ContextCompat.getColor(v.getContext(), R.color.v_soft_green));
+                        itemView.setBackgroundColor(ContextCompat.getColor(v.getContext(), R.color.lavender));
                     } else {
                         Toast.makeText(context, context.getString(R.string.categories_message), Toast.LENGTH_SHORT).show();
                     }

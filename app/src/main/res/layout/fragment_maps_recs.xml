@@ -8,12 +8,12 @@
     <FrameLayout
         android:id="@+id/flMap"
         android:layout_width="match_parent"
-        android:layout_height="250dp" />
+        android:layout_height="290dp" />
 
     <FrameLayout
         android:id="@+id/flRecs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/flMap"/>
+        android:layout_below="@id/flMap" />
 
 </RelativeLayout>

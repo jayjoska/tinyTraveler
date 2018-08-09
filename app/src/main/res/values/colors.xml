@@ -9,4 +9,15 @@
     <color name="soft_green">#00cc00</color>
     <color name="light_grey">#f2f2f2</color>
     <color name="v_soft_green">#ecffb3</color>
+
+    <!-- COLOR PALETTE -->
+    <color name="currentMarker">#1679C9</color>
+    <color name="textSecondary">#56728f</color>
+    <color name="swipeBar">#0093b7</color>
+    <color name="skyBlue">#A0C9F4</color>
+    <color name="lavender">#CDE2F9</color>
+    <color name="darkCyan">#045CAC</color>
+    <color name="teal">#0446A0</color>
+    <color name="cornflowerBlue">#6CAEEB</color>
+
 </resources>

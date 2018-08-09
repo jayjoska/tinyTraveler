@@ -30,7 +30,7 @@
                 android:layout_below="@+id/ivBusinessPhoto"
                 android:layout_marginRight="5dp"
                 android:textColor="@color/black"
-                android:textSize="25sp" />
+                android:textSize="25dp" />
 
             <RatingBar
                 android:id="@+id/ratingBar"
@@ -50,11 +50,12 @@
             <TextView
                 android:id="@+id/tvPrice"
                 android:layout_width="wrap_content"
-                android:layout_height="17dp"
+                android:layout_height="35dp"
                 android:layout_alignRight="@+id/ivBusinessPhoto"
                 android:layout_below="@+id/ivBusinessPhoto"
                 android:textColor="@color/black"
-                android:textSize="15sp"/>
+                android:layout_marginTop="5dp"
+                android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/reviews"
@@ -65,7 +66,7 @@
                 android:layout_marginBottom="5dp"
                 android:textColor="@color/black"
                 android:text="@string/review"
-                android:textSize="18sp"/>
+                android:textSize="20dp"/>
 
             <ImageView
                 android:id="@+id/ivReview1"
@@ -83,7 +84,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/reviews"
                 android:layout_toRightOf="@+id/ivReview1"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="15dp"/>
 
             <TextView
                 android:id="@+id/tvReview1"
@@ -91,7 +93,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvName1"
                 android:layout_toRightOf="@+id/ivReview1"
-                android:layout_marginBottom="5dp"/>
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/textSecondary"/>
 
             <ImageView
                 android:id="@+id/ivReview2"
@@ -110,7 +113,8 @@
                 android:layout_alignTop="@+id/ivReview2"
                 android:layout_toRightOf="@+id/ivReview1"
                 android:layout_below="@id/tvReview1"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="15dp"/>
 
             <TextView
                 android:id="@+id/tvReview2"
@@ -118,7 +122,8 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/ivReview2"
                 android:layout_below="@+id/tvName2"
-                android:layout_marginBottom="5dp"/>
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/textSecondary"/>
 
             <ImageView
                 android:id="@+id/ivReview3"
@@ -137,7 +142,8 @@
                 android:layout_alignTop="@+id/ivReview3"
                 android:layout_toRightOf="@+id/ivReview1"
                 android:layout_below="@id/tvReview2"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="15dp"/>
 
             <TextView
                 android:id="@+id/tvReview3"
@@ -145,7 +151,8 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/ivReview3"
                 android:layout_below="@+id/tvName3"
-                android:layout_marginBottom="5dp"/>
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/textSecondary"/>
 
             <TextView
                 android:id="@+id/tvLearnMore"

@@ -20,20 +20,21 @@
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/ivItineraryPicture"
         android:layout_marginBottom="5dp"
-        android:layout_toLeftOf="@id/tvItineraryTime"
         android:layout_marginRight="5dp"
         android:text="Name"
         android:textColor="@color/black"
-        android:textSize="15dp" />
+        android:textSize="18dp" />
 
     <TextView
         android:id="@+id/tvItineraryDistance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvItineraryTitle"
         android:layout_toRightOf="@+id/ivItineraryPicture"
+        android:layout_below="@id/tvItineraryTitle"
+        android:layout_marginTop="10dp"
         android:text="x miles"
-        android:textColor="@color/black" />
+        android:textSize="12dp"
+        android:textColor="@color/textSecondary" />
 
     <EditText
         android:id="@+id/tvItineraryTime"
@@ -41,10 +42,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/tvMinutes"
+        android:layout_below="@id/tvItineraryTitle"
         android:layout_marginRight="5dp"
+        android:layout_marginTop="25dp"
         android:inputType="number"
         android:text="30"
-        android:textSize="15dp" />
+        android:textSize="15dp"
+        android:textColor="@color/textSecondary"/>
 
 
     <TextView
@@ -53,29 +57,29 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="35dp"
+        android:layout_toRightOf="@id/tvMinutes"
         android:text="@string/minutes"
-        android:textColor="@color/black"
+        android:textColor="@color/textSecondary"
         android:textSize="15dp" />
 
     <TextView
         android:id="@+id/tvItineraryCost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/tvMinutes"
-        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/ivItineraryPicture"
+        android:layout_below="@id/tvItineraryDistance"
         android:text="$xx"
-        android:textColor="@color/black" />
+        android:textColor="@color/textSecondary"
+        android:textSize="12dp" />
 
     <ImageView
         android:id="@+id/ivMenu"
         android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_height="105dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginRight="5dp"
-        android:src="@drawable/hamburger"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"/>
+        android:src="@drawable/hamburger" />
 
 </RelativeLayout>

@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="5dp">
+    android:layout_margin="2dp">
 
     <ImageView
         android:id="@+id/ivPicture"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_alignParentTop="true"
-        android:layout_marginRight="5dp"/>
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="3dp"
+        android:layout_marginTop="3dp"/>
 
     <TextView
         android:id="@+id/tvTitle"
@@ -18,10 +21,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/ivPicture"
+        android:layout_toLeftOf="@id/ivChevron"
         android:textSize="15dp"
         android:layout_marginBottom="5dp"
         android:text="Name"
-        android:textColor="@color/black"/>
+        android:textColor="@color/black" />
 
     <RatingBar
         android:id="@+id/ratingBar"
@@ -29,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvTitle"
         android:layout_toRightOf="@+id/ivPicture"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="2dp"
         style="?android:attr/ratingBarStyleSmall"
         android:stepSize="0.1"/>
 
@@ -40,8 +44,9 @@
         android:layout_below="@+id/ratingBar"
         android:layout_toRightOf="@+id/ivPicture"
         android:text="Distance"
-        android:layout_marginBottom="5dp"
-        android:textColor="@color/black"/>
+        android:layout_marginBottom="2dp"
+        android:textColor="@color/textSecondary"
+        android:textSize="12dp"/>
 
     <TextView
         android:id="@+id/tvCategory"
@@ -50,6 +55,17 @@
         android:layout_below="@+id/tvDistance"
         android:layout_toRightOf="@+id/ivPicture"
         android:text="Category"
-        android:textColor="@color/black"/>
+        android:textColor="@color/textSecondary"
+        android:textSize="12dp"/>
+
+    <ImageView
+        android:id="@+id/ivChevron"
+        android:layout_width="30dp"
+        android:layout_height="105dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="3dp"
+        android:background="@color/cornflowerBlue"
+        app:srcCompat="@drawable/chevron_right" />
 
 </RelativeLayout>

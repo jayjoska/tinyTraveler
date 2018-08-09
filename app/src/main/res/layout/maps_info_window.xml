@@ -15,8 +15,9 @@
         android:layout_margin="5dp"
         android:singleLine="true"
         android:text="NAME"
-        android:textColor="#ff669900"
-        android:textStyle="bold" />
+        android:textColor="@color/teal"
+        android:textStyle="bold"
+        android:textSize="15dp"/>
 
     <TextView
         android:id="@+id/tv_info_window_description"
@@ -24,8 +25,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/tv_info_window_title"
-        android:layout_margin="5dp"
+        android:layout_margin="2dp"
         android:text="Description"
-        android:textColor="#ff0099cc" />
+        android:textSize="12dp"
+        android:textColor="@color/textSecondary" />
 
 </RelativeLayout>
