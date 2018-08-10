@@ -20,9 +20,11 @@
 
     <Button
         android:id="@+id/btnRecalculate"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/recalculate"
+        android:textColor="@color/white"
+        android:background="@color/cornflowerBlue"
         android:layout_alignRight="@+id/mvMap"
         android:layout_alignBottom="@+id/mvMap"
         android:visibility="invisible"/>

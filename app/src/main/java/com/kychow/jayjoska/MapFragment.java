@@ -58,7 +58,7 @@ import java.util.Random;
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
  */
-public class MapFragment extends Fragment {
+public class MapFragment extends Fragment implements ItineraryAdapter.OnItineraryReorderedListener{
 
     private GoogleMap map;
     private Location mCurrentLocation;
@@ -99,7 +99,6 @@ public class MapFragment extends Fragment {
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_map, container, false);
 
         mapView = view.findViewById(R.id.mvMap);
@@ -162,7 +161,7 @@ public class MapFragment extends Fragment {
         if (getTag().equals("ItineraryMap")) {
             mSetLocation.setVisibility(View.INVISIBLE);
             mRecalculate = view.findViewById(R.id.btnRecalculate);
-            mRecalculate.setVisibility(View.VISIBLE);
+            hideRecalculateButton();
             mRecalculate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -176,6 +175,7 @@ public class MapFragment extends Fragment {
                         mOnTravelTimeUpdatedListener.updateTravelTime(getTravelTime(dr));
                         mRecalculate.setClickable(true);
                     }
+                    hideRecalculateButton();
                 }
             });
         }
@@ -283,6 +283,7 @@ public class MapFragment extends Fragment {
         mOnMarkerClickedListener = null;
         mOnLocationUpdated = null;
         mOnTravelTimeUpdatedListener = null;
+        mRecalculate = null;
     }
 
     @Override
@@ -509,5 +510,13 @@ public class MapFragment extends Fragment {
         float[] hsv = new float[3];
         Color.colorToHSV(color, hsv);
         return BitmapDescriptorFactory.defaultMarker(hsv[0]);
+    }
+
+    public void showRecalculateButton() {
+        mRecalculate.setVisibility(View.VISIBLE);
+    }
+
+    public void hideRecalculateButton() {
+       mRecalculate.setVisibility(View.INVISIBLE);
     }
 }

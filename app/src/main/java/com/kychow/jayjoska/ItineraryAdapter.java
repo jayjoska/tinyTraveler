@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +32,8 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 /**
  * Created by Karena Chow on 7/20/18.
  */
-public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.ViewHolder> implements ItemTouchHelperAdapter {
+public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.ViewHolder>
+        implements ItemTouchHelperAdapter{
 
     public static final DecimalFormat df = new DecimalFormat( "#.00" );
     private ArrayList<Place> mItinerary;
@@ -39,6 +41,7 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.View
     private ItineraryAdapterCommunication mListener;
 
     private ItineraryFragment.OnItemViewClickedListener onItemViewClickedListener;
+    private OnItineraryReorderedListener onItineraryReorderedListener;
 
     public ItineraryAdapter(ArrayList<Place> itinerary) {
         mItinerary = itinerary;
@@ -103,6 +106,8 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.View
             }
         }
         notifyItemMoved(fromPosition, toPosition);
+        Log.d("ItineraryAdapter", "we should show recalculate button here");
+        onItineraryReorderedListener.showRecalculateButton();
         return true;
     }
 
@@ -114,8 +119,7 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.View
         mListener.snackbarRemovedItem();
     }
 
-    public interface ItineraryAdapterCommunication
-    {
+    public interface ItineraryAdapterCommunication {
         void updateTime(int i);
         void snackbarRemovedItem();
     }
@@ -146,6 +150,7 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.View
             mColor = itemView.findViewById(R.id.ivColorItin);
             mCustomEditTextListener = customEditTextListener;
             onItemViewClickedListener = (ItineraryFragment.OnItemViewClickedListener) itemView.getContext();
+            onItineraryReorderedListener = (ItineraryAdapter.OnItineraryReorderedListener) itemView.getContext();
 
             mTime.addTextChangedListener(mCustomEditTextListener);
             itemView.setOnClickListener(this);
@@ -172,9 +177,7 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.View
         }
 
         @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -199,6 +202,10 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.View
         public void afterTextChanged(Editable s) {
 
         }
+    }
+
+    public interface OnItineraryReorderedListener {
+        void showRecalculateButton();
     }
 }
 

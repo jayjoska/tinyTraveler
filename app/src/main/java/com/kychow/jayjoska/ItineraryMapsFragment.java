@@ -24,9 +24,10 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class ItineraryMapsFragment extends Fragment implements RecsFragment.OnItemAddedListener,
-        ItineraryAdapter.ItineraryAdapterCommunication, MapFragment.OnMapListener, ItineraryFragment.OnItemViewClickedListener, MapFragment.OnLocationUpdateListener,
+        ItineraryAdapter.ItineraryAdapterCommunication, MapFragment.OnMapListener,
+        ItineraryAdapter.OnItineraryReorderedListener,
+        ItineraryFragment.OnItemViewClickedListener, MapFragment.OnLocationUpdateListener,
         MapFragment.OnTravelTimeUpdatedListener, MapFragment.OnItineraryMarkerClicked {
-
 
     private RecsFragment.OnItemAddedListener mListener;
     private MapFragment.OnMapListener mapListener;
@@ -35,11 +36,9 @@ public class ItineraryMapsFragment extends Fragment implements RecsFragment.OnIt
     private MapFragment mapFragment;
     private ItineraryFragment itineraryFragment;
 
-
     public ItineraryMapsFragment() {
     }
 
-    // new instance of ItineraryMapsFragment
     public static ItineraryMapsFragment newInstance() {
         ItineraryMapsFragment fragment = new ItineraryMapsFragment();
         Bundle args = new Bundle();
@@ -50,15 +49,12 @@ public class ItineraryMapsFragment extends Fragment implements RecsFragment.OnIt
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (mapFragment == null) {
             mapFragment = new MapFragment();
         }
-
         if (itineraryFragment == null) {
             itineraryFragment = new ItineraryFragment();
         }
-
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.add(R.id.flMapContainer, mapFragment, "ItineraryMap").add(R.id.flItineraryContainer, itineraryFragment, "Itinerary").commit();
     }
@@ -80,7 +76,7 @@ public class ItineraryMapsFragment extends Fragment implements RecsFragment.OnIt
             mapListener = (MapFragment.OnMapListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
-                    + " must implement OnMapdListener");
+                    + " must implement OnMapListener");
         }
         try {
              itemViewClickedListener = (ItineraryFragment.OnItemViewClickedListener) context;
@@ -153,5 +149,10 @@ public class ItineraryMapsFragment extends Fragment implements RecsFragment.OnIt
     @Override
     public void scrollItinerary(String s) {
         itineraryFragment.scrollToItem(s);
+    }
+
+    @Override
+    public void showRecalculateButton() {
+        mapFragment.showRecalculateButton();
     }
 }

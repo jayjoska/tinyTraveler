@@ -28,7 +28,8 @@ public class MainActivity extends AppCompatActivity implements CategoriesFragmen
         RecsFragment.OnSelectedListener, RecsFragment.OnPlacesPopulatedListener,
         RecsFragment.OnItemAddedListener, ItineraryAdapter.ItineraryAdapterCommunication, MapFragment.OnNewAddressListener,
         MapsRecsFragment.OnAddressChangedListener, MapFragment.OnMapListener, MapFragment.OnMarkerClickedListener, ItineraryFragment.OnItemViewClickedListener,
-        MapFragment.OnLocationUpdateListener, MapFragment.OnTravelTimeUpdatedListener, MapFragment.OnItineraryMarkerClicked {
+        MapFragment.OnLocationUpdateListener, MapFragment.OnTravelTimeUpdatedListener, MapFragment.OnItineraryMarkerClicked,
+        ItineraryAdapter.OnItineraryReorderedListener {
 
 
     private static final String TAG = "MainActivity";
@@ -216,6 +217,11 @@ public class MainActivity extends AppCompatActivity implements CategoriesFragmen
     @Override
     public void scrollItinerary(String s) {
         itineraryMapsFragment.scrollItinerary(s);
+    }
+
+    @Override
+    public void showRecalculateButton() {
+        itineraryMapsFragment.showRecalculateButton();
     }
 }
 
