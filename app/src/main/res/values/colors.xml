@@ -19,4 +19,27 @@
     <color name="cornflowerBlue">#6CAEEB</color>
     <color name="light_grey">#f2f2f2</color>
     <color name="white">#FFFFFF</color>
+    
+    <!--COLORS FOR MAP PINS -->
+    <color name="active">#e40d0d</color>
+    <color name="art">#e4d60d</color>
+    <color name="automotive">#1a7996</color>
+    <color name="beauty">#9ce40d</color>
+    <color name="education">#33f5d5</color>
+    <color name="event">#e40dc7</color>
+    <color name="financial">#d60de4</color>
+    <color name="food">#00ff62</color>
+    <color name="health">#137673</color>
+    <color name="home_services">#4c22b4</color>
+    <color name="hotel">#ff9c9c</color>
+    <color name="local_flavor">#fff200</color>
+    <color name="local_services">#aad6d9</color>
+    <color name="mass_media">#5d8bca</color>
+    <color name="nightlife">#4bbcfd</color>
+    <color name="pet">#5600ff</color>
+    <color name="professional_services">#2587ff</color>
+    <color name="government">#9b44ac</color>
+    <color name="religion">#622683</color>
+    <color name="restaurant">#ff6f00</color>
+    <color name="shopping">#a99e2a</color>
 </resources>
