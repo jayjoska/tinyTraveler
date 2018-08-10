@@ -55,11 +55,39 @@ public class Categories {
         put("shopping", R.drawable.shopping);
     }};
 
+    private static HashMap<String, Integer> colorPins = new HashMap<String, Integer>() {{
+        put("active", R.color.active);
+        put("arts", R.color.art);
+        put("auto", R.color.automotive);
+        put("beautysvc", R.color.beauty);
+        put("education", R.color.education);
+        put("eventservices", R.color.event);
+        put("financialservices", R.color.financial);
+        put("food", R.color.food);
+        put("health", R.color.health);
+        put("homeservices", R.color.home_services);
+        put("hotelstravel", R.color.hotel);
+        put("localflavor", R.color.local_flavor);
+        put("localservices", R.color.local_services);
+        put("massmedia", R.color.mass_media);
+        put("nightlife", R.color.nightlife);
+        put("pets", R.color.pet);
+        put("professional", R.color.professional_services);
+        put("publicservicesgovt", R.color.government);
+        put("religiousorgs", R.color.religion);
+        put("restaurants", R.color.restaurant);
+        put("shopping", R.color.shopping);
+    }};
+
     public static HashMap<String, String> getAliasAndTitle() {
         return aliasAndTitle;
     }
 
     public static HashMap<String, Object> getDrawables() {
         return drawables;
+    }
+
+    public static HashMap<String, Integer> getColorPins() {
+        return colorPins;
     }
 }

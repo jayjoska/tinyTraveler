@@ -28,6 +28,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -353,7 +354,7 @@ public class MapFragment extends Fragment {
                             .position(new LatLng(place.getLatitude(), place.getLongitude()))
                             .title(place.getName())
                             .snippet(String.format("Distance: %.2f miles \nPrice: %s", place.getDistance(), place.getPrice()))
-                    );
+                            .icon(getMarkerIcon(Categories.getColorPins().get(place.getCategory()))));
                     builder.include(marker.getPosition());
                 }
                 LatLngBounds bounds = builder.build();
@@ -483,5 +484,12 @@ public class MapFragment extends Fragment {
         int blue = rand.nextInt(256);
 
         return Color.rgb(red, green, blue);
+    }
+
+    public BitmapDescriptor getMarkerIcon(int colorId) {
+        int color = getResources().getColor(colorId);
+        float[] hsv = new float[3];
+        Color.colorToHSV(color, hsv);
+        return BitmapDescriptorFactory.defaultMarker(hsv[0]);
     }
 }
