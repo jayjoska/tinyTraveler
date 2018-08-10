@@ -44,10 +44,11 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:clickable="false"
-        android:src="@android:drawable/ic_menu_compass"
+        android:src="@drawable/direction"
         android:visibility="visible"
         app:backgroundTint="@color/teal"
-        app:fabSize="normal"
+        app:fabSize="mini"
+        android:scaleType="centerCrop"
         app:useCompatPadding="true" />
 
 </RelativeLayout>

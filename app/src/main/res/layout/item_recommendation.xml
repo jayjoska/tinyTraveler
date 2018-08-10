@@ -65,8 +65,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="3dp"
-        android:background="@color/cornflowerBlue"
-        app:srcCompat="@drawable/chevron_right" />
+        app:srcCompat="@drawable/chevron_right_blue" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ivColor"
