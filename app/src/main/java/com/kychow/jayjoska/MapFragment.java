@@ -121,7 +121,7 @@ public class MapFragment extends Fragment {
             }
         });
 
-        mSetLocation = view.findViewById(R.id.tvSetLocation);
+        mSetLocation = view.findViewById(R.id.btnSetLocation);
 
         if (getTag().equals("RecsMap")) {
             mSetLocation.setVisibility(View.VISIBLE);
