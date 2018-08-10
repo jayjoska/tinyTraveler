@@ -25,6 +25,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 /**
@@ -69,6 +70,7 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.View
         holder.mDistance.setText(String.format("%s miles", roundedDistance));
         holder.mTime.setText(String.valueOf(place.getTime()));
         holder.mCost.setText(String.format("$%s", String.valueOf(place.getCost())));
+        holder.mColor.setImageResource(Categories.getColorPins().get(place.getCategory()));
 
         GlideApp.with(context)
                 .load(place.getImgURL())
@@ -130,6 +132,7 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.View
         private TextView mName;
         private TextView mTime;
         private TextView mCost;
+        private CircleImageView mColor;
         private CustomEditTextListener mCustomEditTextListener;
 
         public ViewHolder(View itemView, CustomEditTextListener customEditTextListener) {
@@ -140,6 +143,7 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.View
             mName = itemView.findViewById(R.id.tvItineraryTitle);
             mTime = itemView.findViewById(R.id.tvItineraryTime);
             mCost = itemView.findViewById(R.id.tvItineraryCost);
+            mColor = itemView.findViewById(R.id.ivColorItin);
             mCustomEditTextListener = customEditTextListener;
             onItemViewClickedListener = (ItineraryFragment.OnItemViewClickedListener) itemView.getContext();
 

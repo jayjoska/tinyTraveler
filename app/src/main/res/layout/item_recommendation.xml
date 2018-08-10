@@ -68,4 +68,13 @@
         android:background="@color/cornflowerBlue"
         app:srcCompat="@drawable/chevron_right" />
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/ivColor"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_alignBottom="@+id/tvCategory"
+        android:layout_toRightOf="@+id/tvCategory"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="2dp"/>
+
 </RelativeLayout>

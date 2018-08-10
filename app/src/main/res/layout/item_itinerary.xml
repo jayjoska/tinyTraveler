@@ -82,4 +82,12 @@
         android:layout_marginRight="5dp"
         android:src="@drawable/hamburger" />
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/ivColorItin"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_alignBottom="@+id/tvItineraryDistance"
+        android:layout_toRightOf="@+id/tvItineraryDistance"
+        android:layout_marginLeft="5dp"/>
+
 </RelativeLayout>

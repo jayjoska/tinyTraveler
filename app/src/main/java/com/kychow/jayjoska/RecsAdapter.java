@@ -21,6 +21,7 @@ import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class RecsAdapter extends RecyclerView.Adapter<RecsAdapter.ViewHolder> {
@@ -54,6 +55,7 @@ public class RecsAdapter extends RecyclerView.Adapter<RecsAdapter.ViewHolder> {
             holder.mCategory.setText(Categories.getAliasAndTitle().get(alias));
         }
         holder.mRating.setRating(place.getRating());
+        holder.mColor.setImageResource(Categories.getColorPins().get(place.getCategory()));
 
         GlideApp.with(context)
                 .load(place.getImgURL())
@@ -83,6 +85,7 @@ public class RecsAdapter extends RecyclerView.Adapter<RecsAdapter.ViewHolder> {
         private RatingBar mRating;
         private TextView mDistance;
         private TextView mCategory;
+        private CircleImageView mColor;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -92,6 +95,7 @@ public class RecsAdapter extends RecyclerView.Adapter<RecsAdapter.ViewHolder> {
             mRating = itemView.findViewById(R.id.ratingBar);
             mDistance = itemView.findViewById(R.id.tvDistance);
             mCategory = itemView.findViewById(R.id.tvCategory);
+            mColor = itemView.findViewById(R.id.ivColor);
             mListener = (RecsFragment.OnSelectedListener) itemView.getContext();
 
             itemView.setOnClickListener(this);
