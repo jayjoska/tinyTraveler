@@ -8,7 +8,9 @@
     <FrameLayout
         android:id="@+id/flMap"
         android:layout_width="match_parent"
-        android:layout_height="290dp" />
+        android:layout_height="290dp"
+        android:background="@drawable/layout_shadow"
+        android:paddingBottom="4dp"/>
 
     <FrameLayout
         android:id="@+id/flRecs"
