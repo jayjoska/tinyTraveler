@@ -7,6 +7,7 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -149,7 +150,7 @@ public class RecsFragment extends Fragment {
                     Log.d("RecFragment", "something has been swiped");
                     mRecs.remove(position);
                     mAdapter.notifyItemRemoved(position);
-                    Toast.makeText(getContext(),place.getName() + " was added to itinerary!",Toast.LENGTH_SHORT).show();
+                    Snackbar.make(getView(), place.getName() + " was added to itinerary!",Toast.LENGTH_SHORT).show();
                 } else if (direction == ItemTouchHelper.LEFT) {
                     mRecs.remove(position);
                     mAdapter.notifyItemRemoved(position);
