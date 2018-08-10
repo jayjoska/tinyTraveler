@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="290dp"
         android:background="@drawable/layout_shadow"
-        android:paddingBottom="4dp"/>
+        android:elevation="15dp"
+        android:stateListAnimator="@null"/>
 
     <FrameLayout
         android:id="@+id/flRecs"
