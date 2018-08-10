@@ -60,8 +60,6 @@ import java.util.Random;
  */
 public class MapFragment extends Fragment {
 
-    private OnMapListener mapListener;
-
     private GoogleMap map;
     private Location mCurrentLocation;
     private MapView mapView;
@@ -76,9 +74,9 @@ public class MapFragment extends Fragment {
     private OnLocationUpdateListener mOnLocationUpdated;
     private OnTravelTimeUpdatedListener mOnTravelTimeUpdatedListener;
     private OnItineraryMarkerClicked mOnItineraryMarkerClicked;
+    private OnMapListener mapListener;
 
     private Button mRecalculate;
-    private RecsFragment.OnSelectedListener mOnSelected;
 
     //hacking location
     private Location mLocation;
@@ -103,6 +101,7 @@ public class MapFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_map, container, false);
+
         mapView = view.findViewById(R.id.mvMap);
         mLoading = view.findViewById(R.id.pbLoadingMap);
         mLoading.setVisibility(View.VISIBLE);
@@ -121,7 +120,9 @@ public class MapFragment extends Fragment {
                 mLoading.setVisibility(View.GONE);
             }
         });
-        mSetLocation = view.findViewById(R.id.btnSetLocation);
+
+        mSetLocation = view.findViewById(R.id.tvSetLocation);
+
         if (getTag().equals("RecsMap")) {
             mSetLocation.setVisibility(View.VISIBLE);
             mSetLocation.setOnClickListener(new View.OnClickListener() {
@@ -157,6 +158,7 @@ public class MapFragment extends Fragment {
                 }
             });
         }
+
         if (getTag().equals("ItineraryMap")) {
             mSetLocation.setVisibility(View.INVISIBLE);
             mRecalculate = view.findViewById(R.id.btnRecalculate);
@@ -177,12 +179,14 @@ public class MapFragment extends Fragment {
                 }
             });
         }
+
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         if (mLocation == null) {
             if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                     || ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -192,8 +196,7 @@ public class MapFragment extends Fragment {
                 mLocation = locationManager.getLastKnownLocation(provider);
                 lat = mLocation.getLatitude();
                 lng = mLocation.getLongitude();
-            }
-            else {
+            } else {
                 mLocation = new Location("");
                 lat = 37.484377;
                 lng = -122.148304;
@@ -201,11 +204,32 @@ public class MapFragment extends Fragment {
                 mLocation.setLongitude(lng);
             }
         }
+
+        Bundle bundle = this.getArguments();
+
+        if (bundle != null) {
+            mAddress = bundle.getString("address");
+            Log.d("MapFragment", "bundle is not empty: " + mAddress);
+            try {
+                updateLocation(mAddress);
+                mOnNewAddressListener.requestRecs(mAddress);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ApiException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            Log.d("MapFragment", "bundle is empty");
+        }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
         try {
             mapListener = (OnMapListener) context;
             Log.d("MapFragment", "mapListener has been assigned");
@@ -213,6 +237,7 @@ public class MapFragment extends Fragment {
             throw new ClassCastException(context.toString()
                     + " must implement OnMapListener");
         }
+
         try {
             mOnNewAddressListener = (OnNewAddressListener) context;
         } catch (ClassCastException e) {
@@ -234,12 +259,6 @@ public class MapFragment extends Fragment {
                     + " must implement OnLocationUpdatedListener");
         }
 
-        try {
-            mOnSelected = (RecsFragment.OnSelectedListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString()
-                    + " must implement OnSelectedListener");
-        }
 
         try {
             mOnTravelTimeUpdatedListener = (OnTravelTimeUpdatedListener) context;
@@ -263,7 +282,6 @@ public class MapFragment extends Fragment {
         mOnNewAddressListener = null;
         mOnMarkerClickedListener = null;
         mOnLocationUpdated = null;
-        mOnSelected = null;
         mOnTravelTimeUpdatedListener = null;
     }
 

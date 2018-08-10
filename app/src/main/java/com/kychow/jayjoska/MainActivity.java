@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity implements CategoriesFragmen
     MapsRecsFragment mapsRecsFragment;
     ItineraryMapsFragment itineraryMapsFragment;
     DetailsFragment detailsFragment;
-    Bundle bundle;
 
     public MainActivity() {
     }
@@ -67,6 +66,11 @@ public class MainActivity extends AppCompatActivity implements CategoriesFragmen
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragmentContainer, categoriesFragment)
                 .commit();
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            mapsRecsFragment.setArguments(extras);
+        }
 
         if (categoriesFragment.isFirstTime()) {
             bottomNavigationView.setVisibility(View.GONE);

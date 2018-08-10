@@ -15,11 +15,12 @@
 
         <ImageView
             android:id="@+id/magnify"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:src="@android:drawable/ic_menu_search" />
 
         <AutoCompleteTextView
@@ -32,7 +33,9 @@
             android:background="@android:color/transparent"
             android:hint="Enter Address, City or Zip Code"
             android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:imeOptions="actionSearch"
+            android:singleLine="true"/>
 
     </RelativeLayout>
 
@@ -53,9 +56,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tvOr"
         android:layout_centerInParent="true"
-        android:layout_centerVertical="true"
-        android:text="Use Current Locatiom"
-        android:textColor="@color/cornflowerBlue" />
+        android:text="Use Current Location"
+        android:textColor="@color/cornflowerBlue"/>
 
 
 </RelativeLayout>

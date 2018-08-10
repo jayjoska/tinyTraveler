@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Jayjoska</string>
+    <string name="app_name">Tiny Traveler</string>
     <string name="base_url">https://api.yelp.com/v3</string>
     <string name="google_base_url">https://maps.googleapis.com/maps/api</string>
     <string name="search">/businesses/search</string>
@@ -16,4 +16,7 @@
     <string name="recalculate">Recalculate</string>
     <string name="learn_more">Learn more</string>
     <string name="snackbar_remove">Removed item from itinerary.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
