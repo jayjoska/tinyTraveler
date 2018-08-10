@@ -118,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements CategoriesFragmen
         if (categories != null) {
             mapsRecsFragment.setCategories(categories);
             replaceFragment(mapsRecsFragment);
+            bottomNavigationView.setSelectedItemId(R.id.action_map);
         }
     }
 
