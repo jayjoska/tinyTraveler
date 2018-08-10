@@ -40,6 +40,7 @@ dependencies {
     implementation 'com.google.maps:google-maps-services:0.2.9'
     implementation 'org.slf4j:slf4j-nop:1.7.25'
     // to remove lint error, found in .idea/libraries
+    implementation "com.google.android.gms:play-services-places:$googlePlayVersion"
     implementation "com.google.android.gms:play-services-maps:$googlePlayVersion"
     implementation "com.google.android.gms:play-services-location:$googlePlayVersion"
     implementation "com.github.hotchemi:permissionsdispatcher:$permissionDispatcherVersion"

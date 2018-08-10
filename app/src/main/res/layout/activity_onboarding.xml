@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/lavender"
+    android:padding="10dp">
+
+    <RelativeLayout
+        android:id="@+id/relLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_above="@+id/tvOr"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/white_border"
+        android:elevation="10dp">
+
+        <ImageView
+            android:id="@+id/magnify"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@android:drawable/ic_menu_search" />
+
+        <AutoCompleteTextView
+            android:id="@+id/inputSearch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/magnify"
+            android:layout_marginRight="5dp"
+            android:background="@android:color/transparent"
+            android:hint="Enter Address, City or Zip Code"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tvOr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:text="OR"
+        android:textSize="15dp"
+        android:textColor="@color/cornflowerBlue"/>
+
+    <TextView
+        android:id="@+id/tvCurrentLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvOr"
+        android:layout_centerVertical="true"
+        android:layout_centerInParent="true"
+        android:text="User Current Location"
+        android:textColor="@color/cornflowerBlue"/>
+
+
+</RelativeLayout>
