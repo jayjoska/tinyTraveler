@@ -12,6 +12,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -21,7 +22,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -65,7 +65,7 @@ public class MapFragment extends Fragment {
     private Location mCurrentLocation;
     private MapView mapView;
     private Bundle savedState;
-    private TextView mSetLocation;
+    private FloatingActionButton mSetLocation;
     private ProgressBar mLoading;
     private final static String KEY_LOCATION = "location";
     private final static String TAG = "MapFragemnt";
@@ -120,7 +120,7 @@ public class MapFragment extends Fragment {
                 mLoading.setVisibility(View.GONE);
             }
         });
-        mSetLocation = view.findViewById(R.id.tvSetLocation);
+        mSetLocation = view.findViewById(R.id.btnSetLocation);
         if (getTag().equals("RecsMap")) {
             mSetLocation.setVisibility(View.VISIBLE);
             mSetLocation.setOnClickListener(new View.OnClickListener() {
