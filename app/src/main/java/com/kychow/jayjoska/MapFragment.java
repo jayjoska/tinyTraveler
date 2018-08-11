@@ -203,27 +203,28 @@ public class MapFragment extends Fragment implements ItineraryAdapter.OnItinerar
                 mLocation.setLatitude(lat);
                 mLocation.setLongitude(lng);
             }
-        }
 
-        Bundle bundle = this.getArguments();
+            Bundle bundle = this.getArguments();
 
-        if (bundle != null) {
-            mAddress = bundle.getString("address");
-            Log.d("MapFragment", "bundle is not empty: " + mAddress);
-            try {
-                updateLocation(mAddress);
-                mOnNewAddressListener.requestRecs(mAddress);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ApiException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (bundle != null) {
+                mAddress = bundle.getString("address");
+                Log.d("MapFragment", "bundle is not empty: " + mAddress);
+                try {
+                    updateLocation(mAddress);
+                    mOnNewAddressListener.requestRecs(mAddress);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ApiException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            } else {
+                Log.d("MapFragment", "bundle is empty");
             }
-
-        } else {
-            Log.d("MapFragment", "bundle is empty");
         }
+
     }
 
     @Override
