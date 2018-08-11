@@ -117,13 +117,13 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.View
         notifyItemRemoved(position);
         mListener.updateTime(grabTime());
         mListener.snackbarRemovedItem();
+        onItineraryReorderedListener.showRecalculateButton();
     }
 
     public interface ItineraryAdapterCommunication {
         void updateTime(int i);
         void snackbarRemovedItem();
     }
-
 
     public void clear() {
         mItinerary.clear();
