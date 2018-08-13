@@ -31,7 +31,7 @@
             android:layout_toRightOf="@id/magnify"
             android:layout_marginRight="5dp"
             android:background="@android:color/transparent"
-            android:hint="Enter Address, City or Zip Code"
+            android:hint="Enter a Travel Destination"
             android:textColor="@color/black"
             android:textSize="15sp"
             android:imeOptions="actionSearch"
@@ -44,10 +44,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:layout_marginBottom="5dp"
         android:text="OR"
-        android:textSize="15dp"
+        android:textSize="20dp"
         android:textColor="@color/teal"/>
 
     <TextView

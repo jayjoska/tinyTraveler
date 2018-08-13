@@ -153,7 +153,7 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.View
             onItineraryReorderedListener = (ItineraryAdapter.OnItineraryReorderedListener) itemView.getContext();
 
             mTime.addTextChangedListener(mCustomEditTextListener);
-            itemView.setOnClickListener(this);
+            mImage.setOnClickListener(this);
         }
 
         @Override
