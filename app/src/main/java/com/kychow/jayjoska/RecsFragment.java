@@ -150,7 +150,7 @@ public class RecsFragment extends Fragment {
                     Log.d("RecFragment", "something has been swiped");
                     mRecs.remove(position);
                     mAdapter.notifyItemRemoved(position);
-                    Snackbar.make(getView(), place.getName() + " was added to itinerary!",Toast.LENGTH_SHORT).show();
+                    Snackbar.make(getView(), place.getName() + " was added to itinerary!", 500).show();
                 } else if (direction == ItemTouchHelper.LEFT) {
                     mRecs.remove(position);
                     mAdapter.notifyItemRemoved(position);

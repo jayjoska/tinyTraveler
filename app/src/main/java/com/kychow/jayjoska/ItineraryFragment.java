@@ -144,7 +144,7 @@ public class ItineraryFragment extends Fragment implements ItineraryAdapter.Itin
     @Override
     public void snackbarRemovedItem() {
         Snackbar.make(getActivity().findViewById(R.id.fragmentContainer),
-                getString(R.string.snackbar_remove), Snackbar.LENGTH_SHORT).show();
+                getString(R.string.snackbar_remove), 500).show();
     }
 
     public void clearItinerary() {
