@@ -19,10 +19,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -58,10 +61,11 @@ import java.util.Random;
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
  */
-public class MapFragment extends Fragment implements ItineraryAdapter.OnItineraryReorderedListener{
+public class MapFragment extends Fragment implements ItineraryAdapter.OnItineraryReorderedListener, GoogleApiClient.OnConnectionFailedListener{
 
     private GoogleMap map;
     private Location mCurrentLocation;
+    protected GoogleApiClient mGoogleApiClient;
     private MapView mapView;
     private Bundle savedState;
     private FloatingActionButton mSetLocation;
@@ -75,6 +79,7 @@ public class MapFragment extends Fragment implements ItineraryAdapter.OnItinerar
     private OnTravelTimeUpdatedListener mOnTravelTimeUpdatedListener;
     private OnItineraryMarkerClicked mOnItineraryMarkerClicked;
     private OnMapListener mapListener;
+    private PlaceAutocompleteAdapter mPlaceAutoCompleteAdapter;
 
     private Button mRecalculate;
 
@@ -82,6 +87,8 @@ public class MapFragment extends Fragment implements ItineraryAdapter.OnItinerar
     private Location mLocation;
     private double lat;
     private double lng;
+
+    private static final LatLngBounds LAT_LNG_BOUNDS = new LatLngBounds(new LatLng(-40, -168), new LatLng(71, 136));
 
     public MapFragment() {
     }
@@ -95,11 +102,20 @@ public class MapFragment extends Fragment implements ItineraryAdapter.OnItinerar
             // is not null.
             //mCurrentLocation = savedInstanceState.getParcelable(KEY_LOCATION);
         }
+
+        mGoogleApiClient = new GoogleApiClient
+                .Builder(getContext())
+                .addApi(Places.GEO_DATA_API)
+                .addApi(Places.PLACE_DETECTION_API)
+                .enableAutoManage(getActivity(), this)
+                .build();
     }
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
+
+        mPlaceAutoCompleteAdapter = new PlaceAutocompleteAdapter(getContext(), mGoogleApiClient, LAT_LNG_BOUNDS, null);
 
         mapView = view.findViewById(R.id.mvMap);
         mLoading = view.findViewById(R.id.pbLoadingMap);
@@ -128,7 +144,8 @@ public class MapFragment extends Fragment implements ItineraryAdapter.OnItinerar
                 @Override
                 public void onClick(View v) {
                     final AlertDialog builder = new AlertDialog.Builder(getContext()).create();
-                    final EditText input = new EditText(getContext());
+                    final AutoCompleteTextView input = new AutoCompleteTextView(getContext());
+                    input.setAdapter(mPlaceAutoCompleteAdapter);
                     builder.setTitle("Set location");
                     builder.setView(input);
                     builder.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
@@ -403,6 +420,11 @@ public class MapFragment extends Fragment implements ItineraryAdapter.OnItinerar
                 });
             }
         }
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 
     public interface OnMapListener {

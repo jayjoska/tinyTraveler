@@ -57,20 +57,6 @@ public class OnboardingActivity extends AppCompatActivity implements GoogleApiCl
             }
         });
 
-        /*PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
-
-        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-            @Override
-            public void onPlaceSelected(Place place) {
-
-            }
-
-            @Override
-            public void onError(Status status) {
-
-            }
-        });*/
-
         mGoogleApiClient = new GoogleApiClient
                 .Builder(this)
                 .addApi(Places.GEO_DATA_API)
