@@ -103,17 +103,18 @@ public class MapFragment extends Fragment implements ItineraryAdapter.OnItinerar
             //mCurrentLocation = savedInstanceState.getParcelable(KEY_LOCATION);
         }
 
+    }
+
+    @Override
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_map, container, false);
+
         mGoogleApiClient = new GoogleApiClient
                 .Builder(getContext())
                 .addApi(Places.GEO_DATA_API)
                 .addApi(Places.PLACE_DETECTION_API)
                 .enableAutoManage(getActivity(), this)
                 .build();
-    }
-
-    @Override
-    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_map, container, false);
 
         mPlaceAutoCompleteAdapter = new PlaceAutocompleteAdapter(getContext(), mGoogleApiClient, LAT_LNG_BOUNDS, null);
 
@@ -335,6 +336,9 @@ public class MapFragment extends Fragment implements ItineraryAdapter.OnItinerar
     public void onPause() {
         super.onPause();
         mapView.onPause();
+        super.onPause();
+        mGoogleApiClient.stopAutoManage(getActivity());
+        mGoogleApiClient.disconnect();
     }
 
     @Override

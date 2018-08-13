@@ -95,4 +95,10 @@ public class OnboardingActivity extends AppCompatActivity implements GoogleApiCl
         });
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mGoogleApiClient.stopAutoManage(this);
+        mGoogleApiClient.disconnect();
+    }
 }
