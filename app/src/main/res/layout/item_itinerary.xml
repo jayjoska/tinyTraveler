@@ -18,47 +18,44 @@
         android:layout_width="159dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/ivItineraryPicture"
         android:layout_marginBottom="5dp"
         android:layout_marginRight="5dp"
+        android:layout_toRightOf="@+id/ivItineraryPicture"
         android:text="Name"
         android:textColor="@color/black"
-        android:textSize="18dp" />
+        android:textSize="15dp" />
 
     <TextView
         android:id="@+id/tvItineraryDistance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/ivItineraryPicture"
-        android:layout_below="@id/tvItineraryTitle"
-        android:layout_marginTop="10dp"
+        android:layout_alignStart="@+id/tvItineraryTitle"
+        android:layout_below="@+id/tvItineraryTitle"
+        android:layout_marginTop="-5dp"
         android:text="x miles"
-        android:textSize="12dp"
-        android:textColor="@color/textSecondary" />
+        android:textColor="@color/textSecondary"
+        android:textSize="12dp" />
 
     <EditText
         android:id="@+id/tvItineraryTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/tvMinutes"
-        android:layout_below="@id/tvItineraryTitle"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="25dp"
+        android:layout_centerVertical="true"
+        android:paddingRight="5dp"
+        android:layout_toStartOf="@+id/tvMinutes"
+        android:background="@android:color/transparent"
         android:inputType="number"
         android:text="30"
-        android:textSize="15dp"
-        android:textColor="@color/textSecondary"/>
-
+        android:textColor="@color/textSecondary"
+        android:textColorLink="@color/cornflowerBlue"
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/tvMinutes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="35dp"
-        android:layout_toRightOf="@id/tvMinutes"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
         android:text="@string/minutes"
         android:textColor="@color/textSecondary"
         android:textSize="15dp" />
