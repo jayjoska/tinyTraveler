@@ -23,7 +23,7 @@
         android:layout_toRightOf="@+id/ivItineraryPicture"
         android:text="Name"
         android:textColor="@color/black"
-        android:textSize="15dp" />
+        android:textSize="17dp" />
 
     <TextView
         android:id="@+id/tvItineraryDistance"
@@ -48,9 +48,9 @@
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:text="30"
-        android:textColorLink="@color/lavender"
         android:textColor="@color/currentMarker"
-        android:textSize="15sp" />
+        android:textColorLink="@color/lavender"
+        android:textSize="17sp" />
 
     <TextView
         android:id="@+id/tvMinutes"
@@ -60,7 +60,7 @@
         android:layout_centerVertical="true"
         android:text="@string/minutes"
         android:textColor="@color/textSecondary"
-        android:textSize="15dp" />
+        android:textSize="17dp" />
 
     <TextView
         android:id="@+id/tvItineraryCost"

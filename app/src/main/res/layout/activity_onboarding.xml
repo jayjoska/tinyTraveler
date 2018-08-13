@@ -44,20 +44,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_marginTop="15dp"
         android:layout_marginBottom="5dp"
+        android:layout_marginTop="15dp"
+        android:paddingTop="20dp"
         android:text="OR"
-        android:textSize="20dp"
-        android:textColor="@color/teal"/>
+        android:textColor="@color/teal"
+        android:textSize="20dp" />
 
     <TextView
         android:id="@+id/tvCurrentLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvOr"
-        android:layout_centerInParent="true"
+        android:layout_below="@+id/tvOr"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-5dp"
+        android:paddingTop="20dp"
         android:text="Use Current Location"
-        android:textColor="@color/teal"/>
+        android:textColor="@color/teal"
+        android:textSize="17sp" />
 
 
 </RelativeLayout>
