@@ -127,7 +127,7 @@ public class MapFragment extends Fragment implements ItineraryAdapter.OnItinerar
             mSetLocation.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AlertDialog builder = new AlertDialog.Builder(getContext()).create();
+                    final AlertDialog builder = new AlertDialog.Builder(getContext()).create();
                     final EditText input = new EditText(getContext());
                     builder.setTitle("Set location");
                     builder.setView(input);
@@ -151,6 +151,13 @@ public class MapFragment extends Fragment implements ItineraryAdapter.OnItinerar
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();
+                        }
+                    });
+                    builder.setOnShowListener(new DialogInterface.OnShowListener() {
+                        @Override
+                        public void onShow(DialogInterface dialog) {
+                            builder.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.textSecondary));
+                            builder.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.textSecondary));
                         }
                     });
                     builder.show();
