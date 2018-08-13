@@ -4,7 +4,7 @@
     android:toDegrees="360">
     <shape android:shape="ring" android:innerRadiusRatio="3"
         android:thicknessRatio="8" android:useLevel="false">
-        
+
         <gradient android:type="sweep" android:useLevel="false"
             android:startColor="@color/skyBlue"
             android:endColor="@color/lavender"
