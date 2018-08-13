@@ -71,6 +71,15 @@
         android:textColor="@color/textSecondary"
         android:textSize="12dp" />
 
+    <ImageView
+        android:id="@+id/ivMenu"
+        android:layout_width="20dp"
+        android:layout_height="105dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="5dp"
+        android:src="@drawable/hamburger" />
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ivColorItin"
         android:layout_width="12dp"
