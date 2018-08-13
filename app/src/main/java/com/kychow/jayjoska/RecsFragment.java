@@ -154,7 +154,7 @@ public class RecsFragment extends Fragment {
                 } else if (direction == ItemTouchHelper.LEFT) {
                     mRecs.remove(position);
                     mAdapter.notifyItemRemoved(position);
-                    Toast.makeText(getContext(), place.getName() +  " was removed from recommendations.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), place.getName() +  " was removed from recommendations.", Toast.LENGTH_SHORT).show();
                 }
 
             }

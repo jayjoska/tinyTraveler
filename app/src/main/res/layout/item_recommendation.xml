@@ -20,12 +20,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/ivPicture"
-        android:layout_toLeftOf="@id/ivChevron"
-        android:textSize="15dp"
         android:layout_marginBottom="5dp"
+        android:layout_toLeftOf="@id/ivChevron"
+        android:layout_toRightOf="@+id/ivPicture"
         android:text="Name"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"
+        android:textSize="15dp" />
 
     <RatingBar
         android:id="@+id/ratingBar"
